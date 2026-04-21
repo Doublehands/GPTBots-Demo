@@ -9,16 +9,16 @@
 </style>
 <script>
   window.__SOL_CAP_IMGS__ = {{ {
-    "faq": url_for("static", filename="imgs/公区入口.png"),
-    "rooms": url_for("static", filename="imgs/豪华套房.png"),
-    "events": url_for("static", filename="imgs/酒店婚礼.png"),
+    "faq": url_for("static", filename="imgs/cap-lobby-entrance.png"),
+    "rooms": url_for("static", filename="imgs/cap-deluxe-suite.png"),
+    "events": url_for("static", filename="imgs/cap-hotel-wedding.png"),
   }|tojson }};
   window.__SOL_CAP_REPLY_IMGS__ = {{ {
     "booking": [],
-    "faq": [url_for("static", filename="imgs/公区入口.png"), url_for("static", filename="imgs/泳池.png")],
-    "rooms": [url_for("static", filename="imgs/豪华套房.png"), url_for("static", filename="imgs/行政套房.png")],
+    "faq": [url_for("static", filename="imgs/cap-lobby-entrance.png"), url_for("static", filename="imgs/cap-pool.png")],
+    "rooms": [url_for("static", filename="imgs/cap-deluxe-suite.png"), url_for("static", filename="imgs/cap-executive-suite.png")],
     "service": [],
-    "events": [url_for("static", filename="imgs/酒店婚礼.png")],
+    "events": [url_for("static", filename="imgs/cap-hotel-wedding.png")],
   }|tojson }};
 </script>
 <script>
@@ -186,13 +186,13 @@
                   class="sol-cap-dialog__media js-lightbox-trigger"
                   id="sol-cap-media-0-trigger"
                   aria-label="放大查看回复内配图 1"
-                  data-lightbox-src="{{ url_for('static', filename='imgs/公区入口.png') }}"
+                  data-lightbox-src="{{ url_for('static', filename='imgs/cap-lobby-entrance.png') }}"
                   data-lightbox-alt="酒店公区入口"
                 >
                   <span class="sol-cap-dialog__media-frame">
                     <img
                       id="sol-cap-media-0-img"
-                      src="{{ url_for('static', filename='imgs/公区入口.png') }}"
+                      src="{{ url_for('static', filename='imgs/cap-lobby-entrance.png') }}"
                       alt="酒店公区入口"
                       width="320"
                       height="180"
