@@ -1,0 +1,23 @@
+{# 需传入 project；顶栏按钮 + 弹窗 #}
+<button type="button" class="proj-api-btn" data-api-config-open data-project-slug="{{ project.slug }}">API 配置</button>
+
+<div id="api-config-modal-{{ project.slug }}" class="api-modal" hidden role="dialog" aria-modal="true" aria-labelledby="api-config-title-{{ project.slug }}">
+  <div class="api-modal__panel">
+    <h2 id="api-config-title-{{ project.slug }}" class="api-modal__title">Agent API</h2>
+    <p class="api-modal__hint">配置将保存在本机浏览器。请求由服务端转发至下列地址（便于携带密钥、避免 CORS）。</p>
+    <form class="api-config-form" data-project-slug="{{ project.slug }}">
+      <div class="api-field">
+        <label for="api-url-{{ project.slug }}">API 地址（完整 URL）</label>
+        <input id="api-url-{{ project.slug }}" name="apiUrl" type="url" autocomplete="off" placeholder="https://your-agent.example.com/v1/invoke" />
+      </div>
+      <div class="api-field">
+        <label for="api-key-{{ project.slug }}">API Key（可选，Bearer）</label>
+        <input id="api-key-{{ project.slug }}" name="apiKey" type="password" autocomplete="off" placeholder="sk-…" />
+      </div>
+      <div class="api-modal__actions">
+        <button type="button" class="api-btn api-btn--ghost" data-api-config-close>取消</button>
+        <button type="submit" class="api-btn api-btn--primary">保存</button>
+      </div>
+    </form>
+  </div>
+</div>

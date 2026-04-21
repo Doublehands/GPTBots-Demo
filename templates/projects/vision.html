@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}{{ project.title }} · GPTBots{% endblock %}
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/projects.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/api-config.css') }}" />
+{% endblock %}
+{% block body_class %}page-project{% endblock %}
+{% block body %}
+<div class="proj-shell">
+  <header class="proj-topbar">
+    <a class="proj-back" href="{{ url_for('index') }}">← 返回聚合平台</a>
+    <div class="proj-topbar__actions">
+      {% include 'partials/api_config.html' %}
+      <span class="proj-badge">{{ project.tag }}</span>
+    </div>
+  </header>
+
+  <section class="proj-split" aria-labelledby="vision-title">
+    <div class="proj-split__visual" aria-hidden="true">
+      <div class="proj-split__blob"></div>
+    </div>
+    <div class="proj-split__copy">
+      <h1 id="vision-title">{{ project.title }}</h1>
+      <p>{{ project.subtitle }}。左侧区域可替换为图片预览；下方拖放区可对接上传接口。</p>
+      <div class="proj-dropzone">拖放图片到此处，或点击上传（演示占位）</div>
+    </div>
+  </section>
+
+  <section class="proj-demo-panel proj-demo-panel--light">
+    <p style="margin:0; font-size:0.9375rem; color:#424245;">分析结果将展示于此。后端可返回 JSON 或 Markdown 渲染。</p>
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/api-config.js') }}" defer></script>
+{% endblock %}

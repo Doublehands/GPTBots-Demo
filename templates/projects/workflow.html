@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}{{ project.title }} · GPTBots{% endblock %}
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/projects.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/api-config.css') }}" />
+{% endblock %}
+{% block body_class %}page-project{% endblock %}
+{% block body %}
+<div class="proj-shell">
+  <header class="proj-topbar">
+    <a class="proj-back" href="{{ url_for('index') }}">← 返回聚合平台</a>
+    <div class="proj-topbar__actions">
+      {% include 'partials/api_config.html' %}
+      <span class="proj-badge">{{ project.tag }}</span>
+    </div>
+  </header>
+
+  <section class="proj-bento" aria-labelledby="workflow-title">
+    <article class="proj-bento-card proj-bento__main">
+      <h1 id="workflow-title">{{ project.title }}</h1>
+      <p>{{ project.subtitle }}。画布可替换为 React Flow、Vue Flow 或自研 SVG。</p>
+      <div class="proj-canvas-placeholder">
+        <span class="proj-node proj-node--a">输入</span>
+        <span class="proj-node proj-node--b">模型</span>
+        <span class="proj-node proj-node--c">输出</span>
+      </div>
+    </article>
+    <article class="proj-bento-card proj-bento__mini">
+      <p class="proj-bento__stat">12</p>
+      <p class="proj-bento__label">节点（示例）</p>
+    </article>
+    <article class="proj-bento-card proj-bento__mini">
+      <p class="proj-bento__stat">3</p>
+      <p class="proj-bento__label">并行分支</p>
+    </article>
+    <article class="proj-bento-card proj-bento__side">
+      <p style="margin:0; font-size:0.9375rem; color:#6e6e73;">底部条可放运行、保存、导出配置等操作。</p>
+    </article>
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/api-config.js') }}" defer></script>
+{% endblock %}

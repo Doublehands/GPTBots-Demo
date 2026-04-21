@@ -1,0 +1,247 @@
+/* 商业调查 Demo */
+
+.survey-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+.survey-hero {
+  margin-bottom: 28px;
+}
+
+.survey-hero h1 {
+  font-size: clamp(1.75rem, 4vw, 2.125rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 0 0 10px;
+}
+
+.survey-hero p {
+  margin: 0;
+  color: #6e6e73;
+  line-height: 1.55;
+  font-size: 1.0625rem;
+}
+
+.survey-panel {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: var(--radius-lg, 20px);
+  padding: 22px 22px 20px;
+  margin-bottom: 18px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+}
+
+.survey-panel h2 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  margin: 0 0 14px;
+  letter-spacing: -0.01em;
+}
+
+.survey-textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  font: inherit;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  resize: vertical;
+  background: #fafafa;
+}
+
+.survey-textarea:focus {
+  outline: none;
+  border-color: #0071e3;
+  background: #fff;
+}
+
+.survey-file-input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+.survey-file-drop {
+  border: 2px dashed rgba(0, 0, 0, 0.12);
+  border-radius: 14px;
+  padding: 24px;
+  text-align: center;
+  color: #6e6e73;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  background: rgba(0, 113, 227, 0.03);
+}
+
+.survey-file-drop:hover,
+.survey-file-drop:focus-within {
+  border-color: rgba(0, 113, 227, 0.35);
+  background: rgba(0, 113, 227, 0.06);
+}
+
+.survey-file-list {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+}
+
+.survey-file-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #f5f5f7;
+  margin-bottom: 8px;
+  font-size: 0.875rem;
+}
+
+.survey-file-row__name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.survey-file-row__order {
+  font-size: 0.75rem;
+  color: #86868b;
+  min-width: 2rem;
+}
+
+.survey-icon-btn {
+  font: inherit;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #fff;
+  cursor: pointer;
+}
+
+.survey-icon-btn:hover {
+  background: #fafafa;
+}
+
+.survey-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  font-size: 0.875rem;
+  color: #424245;
+}
+
+.survey-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.survey-btn {
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+}
+
+.survey-btn--primary {
+  background: #0071e3;
+  color: #fff;
+}
+
+.survey-btn--primary:hover:not(:disabled) {
+  background: #0077ed;
+}
+
+.survey-btn--primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.survey-btn--secondary {
+  background: rgba(0, 0, 0, 0.06);
+  color: #1d1d1f;
+}
+
+.survey-queue-meta {
+  font-size: 0.8125rem;
+  color: #86868b;
+  margin-bottom: 10px;
+}
+
+.survey-warnings {
+  font-size: 0.8125rem;
+  color: #b45309;
+  background: rgba(245, 158, 11, 0.12);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+}
+
+.survey-warnings ul {
+  margin: 6px 0 0;
+  padding-left: 1.1rem;
+}
+
+.survey-table-wrap {
+  overflow: auto;
+  max-height: 280px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.survey-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+}
+
+.survey-table th,
+.survey-table td {
+  padding: 8px 10px;
+  text-align: left;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  vertical-align: top;
+}
+
+.survey-table th {
+  position: sticky;
+  top: 0;
+  background: #f5f5f7;
+  font-weight: 600;
+}
+
+.survey-table td:nth-child(3) {
+  max-width: 360px;
+  word-break: break-word;
+  color: #424245;
+}
+
+.survey-log {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  background: #1d1d1f;
+  color: #f5f5f7;
+  border-radius: 12px;
+  padding: 14px 16px;
+  max-height: 320px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.survey-log--empty {
+  color: #86868b;
+}

@@ -1,0 +1,107 @@
+/* 各项目共用的 Agent API 配置弹窗 */
+
+.api-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+}
+
+.api-modal[hidden] {
+  display: none;
+}
+
+.api-modal__panel {
+  width: min(440px, 100%);
+  max-height: min(90vh, 640px);
+  overflow: auto;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.2);
+  padding: 24px 24px 20px;
+}
+
+.api-modal__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 0 0 6px;
+}
+
+.api-modal__hint {
+  font-size: 0.8125rem;
+  color: #6e6e73;
+  line-height: 1.45;
+  margin: 0 0 20px;
+}
+
+.api-field {
+  margin-bottom: 16px;
+}
+
+.api-field label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #424245;
+  margin-bottom: 6px;
+}
+
+.api-field input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  font: inherit;
+  font-size: 0.9375rem;
+  background: #f5f5f7;
+}
+
+.api-field input:focus {
+  outline: none;
+  border-color: #0071e3;
+  background: #fff;
+}
+
+.api-modal__actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.api-btn {
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+}
+
+.api-btn--ghost {
+  background: transparent;
+  color: #0071e3;
+}
+
+.api-btn--primary {
+  background: #0071e3;
+  color: #fff;
+}
+
+.api-btn--ghost:hover {
+  background: rgba(0, 113, 227, 0.08);
+}
+
+.api-btn--primary:hover {
+  background: #0077ed;
+}

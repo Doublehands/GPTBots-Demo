@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}{{ project.title }} · GPTBots{% endblock %}
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/projects.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/api-config.css') }}" />
+{% endblock %}
+{% block body_class %}page-project{% endblock %}
+{% block body %}
+<div class="proj-shell">
+  <header class="proj-topbar">
+    <a class="proj-back" href="{{ url_for('index') }}">← 返回聚合平台</a>
+    <div class="proj-topbar__actions">
+      {% include 'partials/api_config.html' %}
+      <span class="proj-badge">{{ project.tag }}</span>
+    </div>
+  </header>
+
+  <section class="proj-mesh-hero">
+    <div class="proj-mesh-hero__inner">
+      <h1>{{ project.title }}</h1>
+      <p>{{ project.subtitle }}。此处可接入你的对话 API 与流式 SSE。</p>
+      <div class="proj-demo-panel">
+        <strong>演示占位</strong><br />
+        用户消息与模型回复将出现在此区域。开发时在 <code>app.py</code> 中增加路由与模板变量即可。
+      </div>
+    </div>
+  </section>
+
+  <section class="proj-demo-panel proj-demo-panel--light" aria-label="输入区占位">
+    <p style="margin:0 0 12px; font-size:0.875rem; color:#6e6e73;">输入框占位（可替换为表单 POST 或 WebSocket）</p>
+    <div style="display:flex; gap:12px; flex-wrap:wrap;">
+      <input type="text" placeholder="输入问题…" disabled
+        style="flex:1; min-width:200px; padding:12px 14px; border-radius:10px; border:1px solid rgba(0,0,0,0.12); font:inherit; background:#f5f5f7;" />
+      <button type="button" disabled
+        style="padding:12px 20px; border-radius:10px; border:none; background:#0071e3; color:#fff; font-weight:500; cursor:not-allowed; opacity:0.7;">发送</button>
+    </div>
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/api-config.js') }}" defer></script>
+{% endblock %}
