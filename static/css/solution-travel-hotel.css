@@ -52,35 +52,65 @@
   opacity: 0.32;
 }
 
-.sol-topbar {
+/* 顶栏：黑底，左侧极光（跳转 jiguang.cn），右侧锚点导航 */
+.sol-page-head {
   position: sticky;
   top: 0;
-  z-index: 20;
+  z-index: 22;
+  background: #0a0a0a;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.sol-page-head__bar {
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-wrap: wrap;
-  gap: 12px 20px;
-  padding: 14px 24px 16px;
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  backdrop-filter: saturate(180%) blur(20px);
-  background: rgba(245, 245, 247, 0.78);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px 20px;
+  padding: 14px 0 16px;
+  background: #0a0a0a;
+}
+
+.sol-page-head__brand {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+  border-radius: 6px;
+  transition: opacity 0.2s ease;
+}
+
+.sol-page-head__brand:hover {
+  opacity: 0.88;
+}
+
+.sol-page-head__brand:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.65);
+  outline-offset: 4px;
+}
+
+.sol-page-head__brand-img {
+  display: block;
+  height: clamp(30px, 4.2vw, 42px);
+  width: auto;
+  max-width: min(220px, 55vw);
+  object-fit: contain;
+  object-position: left center;
+  filter: brightness(1.15) contrast(1.05);
 }
 
 .sol-topbar__anchors {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
-  gap: 10px 14px;
-  font-size: 1.125rem;
+  gap: 8px 10px;
+  font-size: 1.0625rem;
   font-weight: 600;
-  color: #6e6e73;
+  color: rgba(255, 255, 255, 0.72);
 }
 
 .sol-topbar__anchors a {
-  padding: 12px 22px;
+  padding: 10px 18px;
   border-radius: 999px;
   transition:
     color 0.2s var(--ease-out),
@@ -88,26 +118,27 @@
 }
 
 .sol-topbar__anchors a:hover {
-  color: #1d1d1f;
-  background: rgba(0, 0, 0, 0.05);
-}
-
-/* 首屏 Hero 为深色背景时：顶栏半透明深色 + 浅色字 */
-.page-solution-travel-hotel .sol-topbar {
-  background: rgba(22, 20, 18, 0.42);
-  border-bottom-color: rgba(255, 255, 255, 0.12);
-  -webkit-backdrop-filter: saturate(140%) blur(16px);
-  backdrop-filter: saturate(140%) blur(16px);
-}
-
-.page-solution-travel-hotel .sol-topbar__anchors {
-  color: rgba(255, 255, 255, 0.88);
-  font-size: 1.1875rem;
-}
-
-.page-solution-travel-hotel .sol-topbar__anchors a:hover {
   color: #fff;
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 720px) {
+  .sol-page-head__bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sol-page-head__brand {
+    justify-content: center;
+  }
+
+  .sol-page-head__brand-img {
+    max-width: min(200px, 80vw);
+  }
+
+  .sol-topbar__anchors {
+    justify-content: center;
+  }
 }
 
 .sol-main {
@@ -211,21 +242,6 @@
   font-weight: 400;
   color: rgba(255, 255, 255, 0.92);
   text-shadow: 0 1px 18px rgba(0, 0, 0, 0.25);
-}
-
-/* Hero 与「五大核心能力」之间：合作品牌 logo（尺寸约为原 2×，悬停放大） */
-.sol-brands-strip {
-  position: relative;
-  z-index: 1;
-  margin-top: -56px;
-  margin-bottom: 0;
-  padding: 28px 24px 36px;
-  background: linear-gradient(180deg, rgba(245, 245, 247, 0.96) 0%, #f5f5f7 100%);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-.sol-brands-strip .sol-cap-brands {
-  margin-bottom: 0;
 }
 
 .sol-section-title {

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GPTBots · AI Demo 聚合平台</title>
+  <link rel="stylesheet" href="static/css/base.css" />
+  
+<link rel="stylesheet" href="static/css/hub.css" />
+
+</head>
+<body class="page-hub">
+  
+<a class="skip-link" href="#main">跳到主内容</a>
+<div class="hub-bg" aria-hidden="true">
+  <div class="hub-orb hub-orb--1"></div>
+  <div class="hub-orb hub-orb--2"></div>
+  <div class="hub-orb hub-orb--3"></div>
+  <div class="hub-grid"></div>
+</div>
+
+<header class="hub-header">
+  <div class="hub-header__inner">
+    <span class="hub-logo">GPTBots</span>
+    <nav class="hub-nav" aria-label="主导航">
+      <a href="#projects">项目</a>
+      <span class="hub-nav__group" role="group" aria-label="行业解决方案">
+        <span class="hub-nav__label">行业解决方案</span>
+        <a href="solutions/travel-hotel/index.html">旅游酒店</a>
+      </span>
+      <a href="#about">关于</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="hub-main">
+  <section class="hub-hero">
+    <p class="hub-eyebrow">AI Demo 聚合平台</p>
+    <h1 class="hub-title">探索智能应用<br /><span class="hub-title__muted">一处入口，多种体验</span></h1>
+    <p class="hub-lead">极简界面，独立子系统。选择下方卡片进入对应演示。</p>
+  </section>
+
+  <section id="projects" class="hub-projects" aria-labelledby="projects-heading">
+    <h2 id="projects-heading" class="visually-hidden">项目列表</h2>
+    <ul class="hub-cards">
+      
+      <li>
+        <a class="hub-card hub-card--mesh" href="projects/chat/index.html">
+          <span class="hub-card__tag">LLM</span>
+          <h3 class="hub-card__title">智能对话</h3>
+          <p class="hub-card__subtitle">流式回复 · 多轮上下文</p>
+          <span class="hub-card__cta">进入演示 <span aria-hidden="true">→</span></span>
+        </a>
+      </li>
+      
+      <li>
+        <a class="hub-card hub-card--split" href="projects/vision/index.html">
+          <span class="hub-card__tag">Vision</span>
+          <h3 class="hub-card__title">视觉理解</h3>
+          <p class="hub-card__subtitle">图像解析 · 场景描述</p>
+          <span class="hub-card__cta">进入演示 <span aria-hidden="true">→</span></span>
+        </a>
+      </li>
+      
+      <li>
+        <a class="hub-card hub-card--bento" href="projects/workflow/index.html">
+          <span class="hub-card__tag">Agent</span>
+          <h3 class="hub-card__title">流程编排</h3>
+          <p class="hub-card__subtitle">节点画布 · 可编排 Agent</p>
+          <span class="hub-card__cta">进入演示 <span aria-hidden="true">→</span></span>
+        </a>
+      </li>
+      
+      <li>
+        <a class="hub-card hub-card--survey" href="projects/business-survey/index.html">
+          <span class="hub-card__tag">Survey</span>
+          <h3 class="hub-card__title">商业调查</h3>
+          <p class="hub-card__subtitle">表格逐行 · 演示文稿 / PDF 逐页 · 顺序调用 Agent</p>
+          <span class="hub-card__cta">进入演示 <span aria-hidden="true">→</span></span>
+        </a>
+      </li>
+      
+    </ul>
+  </section>
+
+  <section id="about" class="hub-about">
+    <p>基于 Flask 构建，各项目页面可独立迭代 API 与前端逻辑。</p>
+  </section>
+</main>
+
+<footer class="hub-footer">
+  <small>GPTBots Demo · 本地开发 <code>python app.py</code></small>
+</footer>
+<script src="static/js/hub.js" defer></script>
+
+  
+</body>
+</html>

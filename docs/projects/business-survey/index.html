@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>商业调查 · GPTBots</title>
+  <link rel="stylesheet" href="../../static/css/base.css" />
+  
+<link rel="stylesheet" href="../../static/css/projects.css" />
+<link rel="stylesheet" href="../../static/css/api-config.css" />
+<link rel="stylesheet" href="../../static/css/survey.css" />
+
+</head>
+<body class="page-project">
+  
+<div class="proj-shell survey-page" data-project-slug="business-survey">
+  <header class="proj-topbar">
+    <a class="proj-back" href="../../index.html">← 返回聚合平台</a>
+    <div class="proj-topbar__actions">
+      
+<button type="button" class="proj-api-btn" data-api-config-open data-project-slug="business-survey">API 配置</button>
+
+<div id="api-config-modal-business-survey" class="api-modal" hidden role="dialog" aria-modal="true" aria-labelledby="api-config-title-business-survey">
+  <div class="api-modal__panel">
+    <h2 id="api-config-title-business-survey" class="api-modal__title">Agent API</h2>
+    <p class="api-modal__hint">配置将保存在本机浏览器。请求由服务端转发至下列地址（便于携带密钥、避免 CORS）。</p>
+    <form class="api-config-form" data-project-slug="business-survey">
+      <div class="api-field">
+        <label for="api-url-business-survey">API 地址（完整 URL）</label>
+        <input id="api-url-business-survey" name="apiUrl" type="url" autocomplete="off" placeholder="https://your-agent.example.com/v1/invoke" />
+      </div>
+      <div class="api-field">
+        <label for="api-key-business-survey">API Key（可选，Bearer）</label>
+        <input id="api-key-business-survey" name="apiKey" type="password" autocomplete="off" placeholder="sk-…" />
+      </div>
+      <div class="api-modal__actions">
+        <button type="button" class="api-btn api-btn--ghost" data-api-config-close>取消</button>
+        <button type="submit" class="api-btn api-btn--primary">保存</button>
+      </div>
+    </form>
+  </div>
+</div>
+      <span class="proj-badge">Survey</span>
+    </div>
+  </header>
+
+  <section class="survey-hero">
+    <h1>商业调查</h1>
+    <p>
+      上传 <strong>Excel（.xlsx）</strong>、<strong>演示文稿（.pptx）</strong>、<strong>PDF</strong>，并填写说明性文本。
+      系统将按<strong>文件上传顺序</strong>依次展开：每个表格逐行、每个 PPT 逐页、每个 PDF 逐页，再按该顺序逐条调用你的 Agent API。
+    </p>
+  </section>
+
+  <section class="survey-panel" aria-labelledby="text-heading">
+    <h2 id="text-heading">文本说明（每条请求都会带上）</h2>
+    <label for="survey-global-text" class="visually-hidden">全局说明文本</label>
+    <textarea id="survey-global-text" class="survey-textarea" placeholder="例如：请根据下列材料完成商业调查摘要，输出要点与风险…"></textarea>
+  </section>
+
+  <section class="survey-panel" aria-labelledby="files-heading">
+    <h2 id="files-heading">上传文件（顺序即处理顺序）</h2>
+    <p style="margin:0 0 12px; font-size:0.875rem; color:#6e6e73;">支持 .xlsx、.pptx、.pdf；列表中可用 ↑↓ 调整顺序。旧版 .xls / .ppt 请先另存为新格式。</p>
+    <label id="survey-file-drop" class="survey-file-drop" for="survey-file-input">
+      点击或拖放文件到此处（可多选）
+    </label>
+    <input id="survey-file-input" class="survey-file-input" type="file" multiple accept=".xlsx,.pptx,.pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/pdf" />
+
+    <ul id="survey-file-list" class="survey-file-list" aria-label="已选文件"></ul>
+
+    <label class="survey-check">
+      <input id="survey-skip-first" type="checkbox" />
+      Excel 首行为表头（解析时跳过第一行）
+    </label>
+
+    <div class="survey-actions">
+      <button id="survey-btn-build" type="button" class="survey-btn survey-btn--secondary" disabled>生成处理队列</button>
+      <button id="survey-btn-run" type="button" class="survey-btn survey-btn--primary" disabled>按队列调用 Agent</button>
+    </div>
+  </section>
+
+  <section class="survey-panel" aria-labelledby="queue-heading">
+    <h2 id="queue-heading">队列预览</h2>
+    <p id="survey-queue-meta" class="survey-queue-meta">尚未生成队列</p>
+    <div id="survey-warnings" class="survey-warnings" hidden></div>
+    <div class="survey-table-wrap">
+      <table class="survey-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>类型</th>
+            <th>内容摘要</th>
+          </tr>
+        </thead>
+        <tbody id="survey-queue-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="survey-panel" aria-labelledby="log-heading">
+    <h2 id="log-heading">调用日志</h2>
+    <pre id="survey-log" class="survey-log survey-log--empty" role="log">生成队列并点击「按队列调用 Agent」后，结果将显示在此。</pre>
+  </section>
+</div>
+
+  
+<script src="../../static/js/api-config.js" defer></script>
+<script src="../../static/js/survey.js" defer></script>
+
+</body>
+</html>

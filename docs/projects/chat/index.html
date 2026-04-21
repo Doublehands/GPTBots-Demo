@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>智能对话 · GPTBots</title>
+  <link rel="stylesheet" href="../../static/css/base.css" />
+  
+<link rel="stylesheet" href="../../static/css/projects.css" />
+<link rel="stylesheet" href="../../static/css/api-config.css" />
+
+</head>
+<body class="page-project">
+  
+<div class="proj-shell">
+  <header class="proj-topbar">
+    <a class="proj-back" href="../../index.html">← 返回聚合平台</a>
+    <div class="proj-topbar__actions">
+      
+<button type="button" class="proj-api-btn" data-api-config-open data-project-slug="chat">API 配置</button>
+
+<div id="api-config-modal-chat" class="api-modal" hidden role="dialog" aria-modal="true" aria-labelledby="api-config-title-chat">
+  <div class="api-modal__panel">
+    <h2 id="api-config-title-chat" class="api-modal__title">Agent API</h2>
+    <p class="api-modal__hint">配置将保存在本机浏览器。请求由服务端转发至下列地址（便于携带密钥、避免 CORS）。</p>
+    <form class="api-config-form" data-project-slug="chat">
+      <div class="api-field">
+        <label for="api-url-chat">API 地址（完整 URL）</label>
+        <input id="api-url-chat" name="apiUrl" type="url" autocomplete="off" placeholder="https://your-agent.example.com/v1/invoke" />
+      </div>
+      <div class="api-field">
+        <label for="api-key-chat">API Key（可选，Bearer）</label>
+        <input id="api-key-chat" name="apiKey" type="password" autocomplete="off" placeholder="sk-…" />
+      </div>
+      <div class="api-modal__actions">
+        <button type="button" class="api-btn api-btn--ghost" data-api-config-close>取消</button>
+        <button type="submit" class="api-btn api-btn--primary">保存</button>
+      </div>
+    </form>
+  </div>
+</div>
+      <span class="proj-badge">LLM</span>
+    </div>
+  </header>
+
+  <section class="proj-mesh-hero">
+    <div class="proj-mesh-hero__inner">
+      <h1>智能对话</h1>
+      <p>流式回复 · 多轮上下文。此处可接入你的对话 API 与流式 SSE。</p>
+      <div class="proj-demo-panel">
+        <strong>演示占位</strong><br />
+        用户消息与模型回复将出现在此区域。开发时在 <code>app.py</code> 中增加路由与模板变量即可。
+      </div>
+    </div>
+  </section>
+
+  <section class="proj-demo-panel proj-demo-panel--light" aria-label="输入区占位">
+    <p style="margin:0 0 12px; font-size:0.875rem; color:#6e6e73;">输入框占位（可替换为表单 POST 或 WebSocket）</p>
+    <div style="display:flex; gap:12px; flex-wrap:wrap;">
+      <input type="text" placeholder="输入问题…" disabled
+        style="flex:1; min-width:200px; padding:12px 14px; border-radius:10px; border:1px solid rgba(0,0,0,0.12); font:inherit; background:#f5f5f7;" />
+      <button type="button" disabled
+        style="padding:12px 20px; border-radius:10px; border:none; background:#0071e3; color:#fff; font-weight:500; cursor:not-allowed; opacity:0.7;">发送</button>
+    </div>
+  </section>
+</div>
+
+  
+<script src="../../static/js/api-config.js" defer></script>
+
+</body>
+</html>

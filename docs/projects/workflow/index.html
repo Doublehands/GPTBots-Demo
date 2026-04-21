@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>流程编排 · GPTBots</title>
+  <link rel="stylesheet" href="../../static/css/base.css" />
+  
+<link rel="stylesheet" href="../../static/css/projects.css" />
+<link rel="stylesheet" href="../../static/css/api-config.css" />
+
+</head>
+<body class="page-project">
+  
+<div class="proj-shell">
+  <header class="proj-topbar">
+    <a class="proj-back" href="../../index.html">← 返回聚合平台</a>
+    <div class="proj-topbar__actions">
+      
+<button type="button" class="proj-api-btn" data-api-config-open data-project-slug="workflow">API 配置</button>
+
+<div id="api-config-modal-workflow" class="api-modal" hidden role="dialog" aria-modal="true" aria-labelledby="api-config-title-workflow">
+  <div class="api-modal__panel">
+    <h2 id="api-config-title-workflow" class="api-modal__title">Agent API</h2>
+    <p class="api-modal__hint">配置将保存在本机浏览器。请求由服务端转发至下列地址（便于携带密钥、避免 CORS）。</p>
+    <form class="api-config-form" data-project-slug="workflow">
+      <div class="api-field">
+        <label for="api-url-workflow">API 地址（完整 URL）</label>
+        <input id="api-url-workflow" name="apiUrl" type="url" autocomplete="off" placeholder="https://your-agent.example.com/v1/invoke" />
+      </div>
+      <div class="api-field">
+        <label for="api-key-workflow">API Key（可选，Bearer）</label>
+        <input id="api-key-workflow" name="apiKey" type="password" autocomplete="off" placeholder="sk-…" />
+      </div>
+      <div class="api-modal__actions">
+        <button type="button" class="api-btn api-btn--ghost" data-api-config-close>取消</button>
+        <button type="submit" class="api-btn api-btn--primary">保存</button>
+      </div>
+    </form>
+  </div>
+</div>
+      <span class="proj-badge">Agent</span>
+    </div>
+  </header>
+
+  <section class="proj-bento" aria-labelledby="workflow-title">
+    <article class="proj-bento-card proj-bento__main">
+      <h1 id="workflow-title">流程编排</h1>
+      <p>节点画布 · 可编排 Agent。画布可替换为 React Flow、Vue Flow 或自研 SVG。</p>
+      <div class="proj-canvas-placeholder">
+        <span class="proj-node proj-node--a">输入</span>
+        <span class="proj-node proj-node--b">模型</span>
+        <span class="proj-node proj-node--c">输出</span>
+      </div>
+    </article>
+    <article class="proj-bento-card proj-bento__mini">
+      <p class="proj-bento__stat">12</p>
+      <p class="proj-bento__label">节点（示例）</p>
+    </article>
+    <article class="proj-bento-card proj-bento__mini">
+      <p class="proj-bento__stat">3</p>
+      <p class="proj-bento__label">并行分支</p>
+    </article>
+    <article class="proj-bento-card proj-bento__side">
+      <p style="margin:0; font-size:0.9375rem; color:#6e6e73;">底部条可放运行、保存、导出配置等操作。</p>
+    </article>
+  </section>
+</div>
+
+  
+<script src="../../static/js/api-config.js" defer></script>
+
+</body>
+</html>

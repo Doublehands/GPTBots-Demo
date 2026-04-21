@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>视觉理解 · GPTBots</title>
+  <link rel="stylesheet" href="../../static/css/base.css" />
+  
+<link rel="stylesheet" href="../../static/css/projects.css" />
+<link rel="stylesheet" href="../../static/css/api-config.css" />
+
+</head>
+<body class="page-project">
+  
+<div class="proj-shell">
+  <header class="proj-topbar">
+    <a class="proj-back" href="../../index.html">← 返回聚合平台</a>
+    <div class="proj-topbar__actions">
+      
+<button type="button" class="proj-api-btn" data-api-config-open data-project-slug="vision">API 配置</button>
+
+<div id="api-config-modal-vision" class="api-modal" hidden role="dialog" aria-modal="true" aria-labelledby="api-config-title-vision">
+  <div class="api-modal__panel">
+    <h2 id="api-config-title-vision" class="api-modal__title">Agent API</h2>
+    <p class="api-modal__hint">配置将保存在本机浏览器。请求由服务端转发至下列地址（便于携带密钥、避免 CORS）。</p>
+    <form class="api-config-form" data-project-slug="vision">
+      <div class="api-field">
+        <label for="api-url-vision">API 地址（完整 URL）</label>
+        <input id="api-url-vision" name="apiUrl" type="url" autocomplete="off" placeholder="https://your-agent.example.com/v1/invoke" />
+      </div>
+      <div class="api-field">
+        <label for="api-key-vision">API Key（可选，Bearer）</label>
+        <input id="api-key-vision" name="apiKey" type="password" autocomplete="off" placeholder="sk-…" />
+      </div>
+      <div class="api-modal__actions">
+        <button type="button" class="api-btn api-btn--ghost" data-api-config-close>取消</button>
+        <button type="submit" class="api-btn api-btn--primary">保存</button>
+      </div>
+    </form>
+  </div>
+</div>
+      <span class="proj-badge">Vision</span>
+    </div>
+  </header>
+
+  <section class="proj-split" aria-labelledby="vision-title">
+    <div class="proj-split__visual" aria-hidden="true">
+      <div class="proj-split__blob"></div>
+    </div>
+    <div class="proj-split__copy">
+      <h1 id="vision-title">视觉理解</h1>
+      <p>图像解析 · 场景描述。左侧区域可替换为图片预览；下方拖放区可对接上传接口。</p>
+      <div class="proj-dropzone">拖放图片到此处，或点击上传（演示占位）</div>
+    </div>
+  </section>
+
+  <section class="proj-demo-panel proj-demo-panel--light">
+    <p style="margin:0; font-size:0.9375rem; color:#424245;">分析结果将展示于此。后端可返回 JSON 或 Markdown 渲染。</p>
+  </section>
+</div>
+
+  
+<script src="../../static/js/api-config.js" defer></script>
+
+</body>
+</html>
