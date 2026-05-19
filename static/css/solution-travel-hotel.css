@@ -52,7 +52,7 @@
   opacity: 0.32;
 }
 
-/* 顶栏：黑底，左侧极光（跳转 jiguang.cn），右侧锚点导航 */
+/* 顶栏：黑底，左侧品牌 */
 .sol-page-head {
   position: sticky;
   top: 0;
@@ -63,10 +63,9 @@
 
 .sol-page-head__bar {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: 14px 20px;
+  justify-content: flex-start;
+  gap: 14px;
   padding: 14px 0 16px;
   background: #0a0a0a;
 }
@@ -98,37 +97,70 @@
   filter: brightness(1.15) contrast(1.05);
 }
 
-.sol-topbar__anchors {
+.sol-progress {
+  position: fixed;
+  left: max(16px, env(safe-area-inset-left));
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 26;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
+  flex-direction: column;
   align-items: center;
-  gap: 8px 10px;
-  font-size: 1.0625rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.72);
-}
-
-.sol-topbar__anchors a {
-  padding: 10px 18px;
+  gap: 12px;
+  padding: 10px 8px;
   border-radius: 999px;
-  transition:
-    color 0.2s var(--ease-out),
-    background 0.2s var(--ease-out);
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  backdrop-filter: saturate(180%) blur(12px);
 }
 
-.sol-topbar__anchors a:hover {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.1);
+.sol-progress__dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: rgba(29, 29, 31, 0.22);
+  border: 1px solid rgba(29, 29, 31, 0.18);
+  display: block;
+  text-decoration: none;
+  transition:
+    background 0.25s var(--ease-out),
+    border-color 0.25s var(--ease-out),
+    transform 0.25s var(--ease-out),
+    box-shadow 0.25s var(--ease-out);
+}
+
+.sol-progress__dot:hover {
+  background: rgba(0, 113, 227, 0.5);
+  border-color: rgba(0, 113, 227, 0.6);
+}
+
+.sol-progress__dot.is-passed {
+  background: #6faef6;
+  border-color: #6faef6;
+}
+
+.sol-progress__dot.is-active {
+  background: #0071e3;
+  border-color: #0071e3;
+  transform: scale(1.35);
+  box-shadow: 0 0 0 5px rgba(0, 113, 227, 0.18);
+}
+
+.sol-progress__dot:focus-visible {
+  outline: 2px solid #0071e3;
+  outline-offset: 4px;
+}
+
+@media (max-width: 900px) {
+  .sol-progress {
+    left: 8px;
+  }
 }
 
 @media (max-width: 720px) {
   .sol-page-head__bar {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .sol-page-head__brand {
     justify-content: center;
   }
 
@@ -136,8 +168,15 @@
     max-width: min(200px, 80vw);
   }
 
-  .sol-topbar__anchors {
-    justify-content: center;
+  .sol-progress {
+    left: auto;
+    right: 12px;
+    top: auto;
+    bottom: 18px;
+    transform: none;
+    flex-direction: row;
+    gap: 10px;
+    padding: 8px 10px;
   }
 }
 

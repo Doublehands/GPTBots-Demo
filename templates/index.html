@@ -17,11 +17,8 @@
   <div class="hub-header__inner">
     <span class="hub-logo">GPTBots</span>
     <nav class="hub-nav" aria-label="主导航">
-      <a href="#projects">项目</a>
-      <span class="hub-nav__group" role="group" aria-label="行业解决方案">
-        <span class="hub-nav__label">行业解决方案</span>
-        <a href="{{ url_for('solution_travel_hotel') }}">旅游酒店</a>
-      </span>
+      <a href="#industries">行业案例</a>
+      <a href="{{ url_for('industries_solutions_page') }}">解决方案</a>
       <a href="#about">关于</a>
     </nav>
   </div>
@@ -29,29 +26,18 @@
 
 <main id="main" class="hub-main">
   <section class="hub-hero">
-    <p class="hub-eyebrow">AI Demo 聚合平台</p>
-    <h1 class="hub-title">探索智能应用<br /><span class="hub-title__muted">一处入口，多种体验</span></h1>
-    <p class="hub-lead">极简界面，独立子系统。选择下方卡片进入对应演示。</p>
+    <p class="hub-eyebrow">行业增长案例中心</p>
+    <h1 class="hub-title">先选行业，再看增长路径<br /><span class="hub-title__muted">业务优先，能力内嵌</span></h1>
+    <p class="hub-lead">以行业为入口，以经营结果为导向。进入行业后按营销漏斗查看拉新、转化、复购与复盘案例。</p>
   </section>
 
-  <section id="projects" class="hub-projects" aria-labelledby="projects-heading">
-    <h2 id="projects-heading" class="visually-hidden">项目列表</h2>
-    <ul class="hub-cards">
-      {% for p in projects %}
-      <li>
-        <a class="hub-card hub-card--{{ p.layout }}" href="{{ url_for('project_page', slug=p.slug) }}">
-          <span class="hub-card__tag">{{ p.tag }}</span>
-          <h3 class="hub-card__title">{{ p.title }}</h3>
-          <p class="hub-card__subtitle">{{ p.subtitle }}</p>
-          <span class="hub-card__cta">进入演示 <span aria-hidden="true">→</span></span>
-        </a>
-      </li>
-      {% endfor %}
-    </ul>
+  <section id="industries" class="hub-projects" aria-labelledby="industries-heading">
+    <h2 id="industries-heading" class="visually-hidden">行业列表</h2>
+    <div class="hub-cards">{% for item in industries %}<a class="hub-card hub-card--{{ item.layout }}" href="{{ url_for('industry_page', slug=item.slug) }}"><span class="hub-card__tag">{{ item.tag }} · {{ item.stages_count }}个阶段</span><h3 class="hub-card__title">{{ item.title }}</h3><p class="hub-card__subtitle">{{ item.subtitle }}</p><span class="hub-card__cta">进入行业 <span aria-hidden="true">→</span></span></a>{% endfor %}</div>
   </section>
 
   <section id="about" class="hub-about">
-    <p>基于 Flask 构建，各项目页面可独立迭代 API 与前端逻辑。</p>
+    <p>基于 Flask 构建，当前采用“行业入口 → 行业内漏斗分层”的案例结构，可持续扩展行业与阶段模板。</p>
   </section>
 </main>
 

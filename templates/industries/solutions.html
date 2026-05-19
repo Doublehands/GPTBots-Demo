@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}行业解决方案 · GPTBots{% endblock %}
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/industry.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/industry-solutions.css') }}" />
+{% endblock %}
+{% block body_class %}page-industry page-industry-solutions{% endblock %}
+{% block body %}
+<div class="industry-shell">
+  <header class="industry-topbar">
+    <a class="industry-back" href="{{ url_for('index') }}">← 返回主页</a>
+    <span class="industry-badge">Solutions</span>
+  </header>
+
+  <section class="industry-hero">
+    <h1>行业解决方案</h1>
+    <p>按需进入各行业的独立演示与能力编排页面；漏斗案例仍可从主页「行业案例」进入。</p>
+  </section>
+
+  <p class="solutions-intro">以下为可打开的解决方案卡片，持续扩展中与行业案例中心并行维护。</p>
+
+  <ul class="solutions-grid" aria-label="解决方案列表">
+    {% for item in solutions %}
+    <li class="solutions-item">
+      <a class="solutions-card solutions-card--{{ item.layout }}" href="{{ url_for(item.endpoint) }}">
+        <span class="solutions-card__tag">{{ item.tag }}</span>
+        <h2 class="solutions-card__title">{{ item.title }}</h2>
+        <p class="solutions-card__subtitle">{{ item.subtitle }}</p>
+        <span class="solutions-card__cta">进入方案 <span aria-hidden="true">→</span></span>
+      </a>
+      {% if item.industry_slug %}
+      <div class="solutions-card__meta">
+        <a href="{{ url_for('industry_page', slug=item.industry_slug) }}">同主题 · 营销漏斗案例 →</a>
+      </div>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

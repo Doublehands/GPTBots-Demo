@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}{{ industry.title }} · GPTBots{% endblock %}
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/industry.css') }}" />
+{% endblock %}
+{% block body_class %}page-industry{% endblock %}
+{% block body %}
+<div class="industry-shell">
+  <header class="industry-topbar">
+    <a class="industry-back" href="{{ url_for('index') }}">← 返回行业入口</a>
+    <span class="industry-badge">{{ industry.tag }}</span>
+  </header>
+
+  <section class="industry-hero">
+    <h1>{{ industry.title }}</h1>
+    <p>{{ industry.subtitle }}</p>
+    <div class="industry-nav" aria-label="营销漏斗阶段">
+      {% for stage in industry.stages %}
+      <a class="industry-nav__chip" href="{{ url_for('industry_stage_page', industry_slug=industry.slug, stage_key=stage.key) }}">{{ stage.name }}</a>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="industry-stage-grid" aria-label="阶段案例">
+    {% for stage in industry.stages %}
+    <article id="{{ stage.key }}" class="stage-card">
+      <header class="stage-card__header">
+        <span class="stage-card__name">{{ stage.name }}</span>
+        <h2>{{ stage.title }}</h2>
+        <p class="stage-card__goal">目标：{{ stage.goal }}</p>
+      </header>
+
+      <p class="stage-card__desc">{{ stage.desc }}</p>
+
+      <div class="stage-block">
+        <h3>典型动作</h3>
+        <div class="stage-list">{% for action in stage.actions %}<span class="stage-list__item">{{ action }}</span>{% endfor %}</div>
+      </div>
+
+      <div class="stage-block">
+        <h3>关键指标</h3>
+        <div class="stage-metrics">{% for metric in stage.metrics %}<span>{{ metric }}</span>{% endfor %}</div>
+      </div>
+
+      <div class="stage-block">
+        <h3>可复用能力</h3>
+        <div class="stage-tags">
+          {% for tag in stage.tags %}
+          <span>{{ tag }}</span>
+          {% endfor %}
+        </div>
+      </div>
+
+      {% set first_case = first_case_by_stage.get(stage.key) %}
+      {% if first_case %}
+      <a class="stage-cta" href="{{ url_for('industry_case_page', industry_slug=industry.slug, stage_key=stage.key, case_id=first_case) }}">查看{{ stage.name }}代表案例 →</a>
+      {% else %}
+      <a class="stage-cta" href="{{ url_for('industry_stage_page', industry_slug=industry.slug, stage_key=stage.key) }}">查看{{ stage.name }}案例 →</a>
+      {% endif %}
+    </article>
+    {% endfor %}
+  </section>
+</div>
+{% endblock %}

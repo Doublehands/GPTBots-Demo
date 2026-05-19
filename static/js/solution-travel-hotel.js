@@ -254,6 +254,62 @@
       if (first) setCapPanel(first);
     }
 
+    var progressNav = document.querySelector(".sol-progress");
+    if (progressNav) {
+      var progressLinks = Array.prototype.slice.call(progressNav.querySelectorAll(".sol-progress__dot"));
+      var progressSections = progressLinks
+        .map(function (link) {
+          var id = link.getAttribute("data-target");
+          return id ? document.getElementById(id) : null;
+        })
+        .filter(Boolean);
+
+      function setProgress(index) {
+        progressLinks.forEach(function (link, idx) {
+          var isActive = idx === index;
+          var isPassed = idx < index;
+          link.classList.toggle("is-active", isActive);
+          link.classList.toggle("is-passed", isPassed);
+          if (isActive) {
+            link.setAttribute("aria-current", "true");
+          } else {
+            link.removeAttribute("aria-current");
+          }
+        });
+      }
+
+      function getActiveIndex() {
+        if (!progressSections.length) return 0;
+        var triggerLine = window.scrollY + window.innerHeight * 0.4;
+        var activeIndex = 0;
+        progressSections.forEach(function (section, idx) {
+          if (section.offsetTop <= triggerLine) {
+            activeIndex = idx;
+          }
+        });
+        return activeIndex;
+      }
+
+      var ticking = false;
+      function refreshProgress() {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(function () {
+          setProgress(getActiveIndex());
+          ticking = false;
+        });
+      }
+
+      setProgress(getActiveIndex());
+      window.addEventListener("scroll", refreshProgress, { passive: true });
+      window.addEventListener("resize", refreshProgress);
+      progressLinks.forEach(function (link, idx) {
+        link.addEventListener("click", function () {
+          setProgress(idx);
+        });
+      });
+    }
+
     var lightbox = document.getElementById("sol-lightbox");
     var lightboxImg = document.getElementById("sol-lightbox-img");
     if (!lightbox || !lightboxImg) return;

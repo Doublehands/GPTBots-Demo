@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}{{ industry.title }} · {{ stage.name }} · GPTBots{% endblock %}
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/industry-stage.css') }}" />
+{% endblock %}
+{% block body_class %}page-stage{% endblock %}
+{% block body %}
+<div class="stage-shell">
+  <header class="stage-topbar">
+    <a class="stage-back" href="{{ url_for('index') }}">← 返回行业入口</a>
+    <a class="stage-back" href="{{ url_for('industry_page', slug=industry.slug) }}">返回{{ industry.title }}</a>
+  </header>
+
+  <section class="stage-hero">
+    <p class="stage-kicker">{{ industry.tag }} · {{ stage.name }}</p>
+    <h1>{{ stage.title }}</h1>
+    <p class="stage-subtitle">{{ stage.desc }}</p>
+    <p class="stage-goal">阶段目标：{{ stage.goal }}</p>
+  </section>
+
+  <section class="stage-content">
+    <article class="stage-panel">
+      <h2>典型动作</h2>
+      <div class="chip-list">
+        {% for action in stage.actions %}
+        <span>{{ action }}</span>
+        {% endfor %}
+      </div>
+    </article>
+
+    <article class="stage-panel">
+      <h2>关键指标</h2>
+      <div class="metric-list">
+        {% for metric in stage.metrics %}
+        <span>{{ metric }}</span>
+        {% endfor %}
+      </div>
+    </article>
+
+    <article class="stage-panel">
+      <h2>可复用能力</h2>
+      <div class="tag-list">
+        {% for tag in stage.tags %}
+        <span>{{ tag }}</span>
+        {% endfor %}
+      </div>
+    </article>
+
+    <article class="stage-panel">
+      <h2>代表案例</h2>
+      {% if stage_cases %}
+      <div class="case-list">
+        {% for case in stage_cases %}
+        <a class="case-item" href="{{ url_for('industry_case_page', industry_slug=industry.slug, stage_key=stage.key, case_id=case.id) }}">
+          <strong>{{ case.title }}</strong>
+          <p>{{ case.summary }}</p>
+        </a>
+        {% endfor %}
+      </div>
+      {% else %}
+      <p class="stage-empty">该阶段案例整理中，先查看上一层策略说明。</p>
+      {% endif %}
+    </article>
+  </section>
+
+  <section class="stage-nav" aria-label="阶段切换">
+    {% if prev_stage %}
+    <a class="stage-nav__btn" href="{{ url_for('industry_stage_page', industry_slug=industry.slug, stage_key=prev_stage.key) }}">← {{ prev_stage.name }}</a>
+    {% else %}
+    <span class="stage-nav__btn stage-nav__btn--disabled">← 已是首阶段</span>
+    {% endif %}
+
+    {% if next_stage %}
+    <a class="stage-nav__btn" href="{{ url_for('industry_stage_page', industry_slug=industry.slug, stage_key=next_stage.key) }}">{{ next_stage.name }} →</a>
+    {% else %}
+    <span class="stage-nav__btn stage-nav__btn--disabled">已是末阶段 →</span>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

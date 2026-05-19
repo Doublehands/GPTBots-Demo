@@ -1,0 +1,59 @@
+[
+    {
+        "人群 (targetPopulation)": "",
+        "性别 (gender)": "",
+        "年龄 (age)": "",
+        "身高 (height)": "",
+        "体重 (weight)": "",
+        "bmi": "",
+        "心血管疾病家族史 (familyHistory)": "",
+        "心血管疾病家族史详情 (familyHistoryDetail)": "",
+        "其他慢性病史确认 (otherChronicDisease)": "",
+        "其他慢性病史详情 (otherChronicDiseaseDetail)": ""
+    },
+    {
+        "症状表现 (symptom)": "",
+        "症状表现详情 (symptomDetail)": "",
+        "收缩压 (systolicPressure)": "",
+        "舒张压 (diastolicPressure)": "",
+        "空腹血糖 (fastingGlucose)": "",
+        "糖化血红蛋白 (hba1c)": "",
+        "血脂指标 (lipidProfile)": "",
+        "肝功能指标 (liverFunction)": "",
+        "肾功能指标 (kidneyFunction)": "",
+        "心电图结果 (ecgResult)": "",
+        "心电图结果详情 (ecgResultDetail)": "",
+        "超声心动图结果 (echoResult)": "",
+        "超声心动图结果详情 (echoResultDetail)": "",
+        "负荷试验/心肺运动试验结果 (stressTestResult)": "",
+        "冠状动脉CTA /造影结果 (coronaryCtaResult)": "",
+        "冠状动脉CTA/造影结果详情 (coronaryCtaResultDetail)": "",
+        "24h 动态心电图结果 (holterResult)": "",
+        "心脏磁共振结果 (cmrResult)": "",
+        "心脏磁共振结果详情 (cmrResultDetail)": ""
+    },
+    {
+        "吸烟情况 (smokingStatus)": "",
+        "吸烟情况详情 (smokingDetail)": "",
+        "饮酒情况 (drinkingStatus)": "",
+        "饮酒情况详情 (drinkingDetail)": "",
+        "运动频率 (exerciseFrequency)": "",
+        "运动时长 (exerciseDuration)": "",
+        "饮食情况 (dietPattern)": "",
+        "入睡时间 (bedtime)": "",
+        "睡眠情况 (sleepQuality)": ""
+    },
+    {
+        "用药情况 (medicationStatus)": "",
+        "用药详情 (medicationDetail)": "",
+        "服药依从性 (compliance)": "",
+        "药物不良反应 (adverseReaction)": "",
+        "肝功能异常详情 (liverAbnormalityDetail)": "",
+        "出血症状详情 (bleedingDetail)": "",
+        "头痛低血压详情 (headacheHypotensionDetail)": "",
+        "其他不良反应详情 (otherSideEffectDetail)": "",
+        "随访分类 (visitClassification)": "",
+        "随访小结 (visitSummary)": "",
+        "随访建议 (doctorAdvice)": ""
+    }
+]
