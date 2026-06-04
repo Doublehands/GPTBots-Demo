@@ -9,6 +9,7 @@
 </style>
 <script>
   window.__SOL_CAP_IMGS__ = {{ {
+    "booking": url_for("static", filename="imgs/holiday-inn-dialog-simulation.png"),
     "faq": url_for("static", filename="imgs/cap-lobby-entrance.png"),
     "rooms": url_for("static", filename="imgs/cap-deluxe-suite.png"),
     "events": url_for("static", filename="imgs/cap-hotel-wedding.png"),
@@ -81,10 +82,10 @@
   <div class="sol-hero__bg" aria-hidden="true"></div>
   <div class="sol-hero__scrim" aria-hidden="true"></div>
   <div class="sol-hero__inner">
-    <p class="sol-hero__label">酒店智能体 · 行业方案</p>
-    <h1 id="hero-heading" class="sol-hero__title">AI 智能酒店助手</h1>
+    <p class="sol-hero__label">Holiday Inn · GPTBots + EngageLab</p>
+    <h1 id="hero-heading" class="sol-hero__title">假日酒店全旅程智能服务与营销赋能方案</h1>
     <p class="sol-hero__sub">
-      7×24 在线响应，提供个性化推荐与即时解答，助力直连预订与运营提效；串联智能对话与 EngageLab 消息触达，覆盖从意向到入住的全旅程体验。
+      面向假日酒店负责人，展示从咨询、预订、行前触达、入住服务到离店复购的一整套解决方案：GPTBots 负责 AI Agent 对话与流程执行，EngageLab 负责 APP Push、WebPush、SMS、WhatsApp、Email 与 MA 用户旅程，Livedesk 负责人工协同与工单闭环。
     </p>
   </div>
 </section>
@@ -92,31 +93,69 @@
 <main id="main" class="sol-main">
   <section id="capabilities" class="sol-cap-split-section sol-bleed" aria-labelledby="capabilities-heading">
     <h2 id="capabilities-heading" class="sol-section-title">五大核心能力</h2>
+    <p class="sol-section-sub">
+      以 Holiday Inn 的真实宾客链路组织能力展示，让客户直观看到 GPTBots、EngageLab 与 Livedesk 如何共同提升直订转化、服务效率和复购运营。
+    </p>
 
     <div class="sol-cap-split" id="sol-cap-split">
       <div class="sol-cap-split__list" role="tablist" aria-label="五大核心能力">
         <button type="button" class="sol-cap-row is-active" data-cap-key="booking" role="tab" aria-selected="true" id="sol-cap-tab-booking">
-          <span class="sol-cap-row__title">无缝预订指导</span>
-          <span class="sol-cap-row__desc">以对话引导完成日期、房型与下单路径，降低中途流失。</span>
+          <span class="sol-cap-row__meta">转化 · GPTBots + EngageLab</span>
+          <span class="sol-cap-row__title">直连预订转化</span>
+          <span class="sol-cap-row__desc">AI 引导日期、房型、政策与预约动作，EngageLab 对高意向未订用户持续触达。</span>
         </button>
         <button type="button" class="sol-cap-row" data-cap-key="faq" role="tab" aria-selected="false" id="sol-cap-tab-faq">
-          <span class="sol-cap-row__title">即时 FAQ 支持</span>
-          <span class="sol-cap-row__desc">客房、设施、活动与酒店政策等问题，基于知识库即时答复。</span>
+          <span class="sol-cap-row__meta">服务 · RAG 知识库</span>
+          <span class="sol-cap-row__title">即时 FAQ 与设施咨询</span>
+          <span class="sol-cap-row__desc">客房、设施、会员权益与酒店政策统一口径答复，复杂问题转 Livedesk。</span>
         </button>
         <button type="button" class="sol-cap-row" data-cap-key="rooms" role="tab" aria-selected="false" id="sol-cap-tab-rooms">
-          <span class="sol-cap-row__title">可视化房型发现</span>
-          <span class="sol-cap-row__desc">展示房型、价格与图片，帮助宾客比较并做出预订决策。</span>
+          <span class="sol-cap-row__meta">推荐 · 个性化套餐</span>
+          <span class="sol-cap-row__title">房型与套餐推荐</span>
+          <span class="sol-cap-row__desc">按差旅、亲子、会员等级与预算推荐房型/套餐，并回流到 MA 分群运营。</span>
         </button>
         <button type="button" class="sol-cap-row" data-cap-key="service" role="tab" aria-selected="false" id="sol-cap-tab-service">
-          <span class="sol-cap-row__title">客房服务助手</span>
-          <span class="sol-cap-row__desc">餐饮、洗衣、送物与报修等在对话中受理，可对接工单闭环。</span>
+          <span class="sol-cap-row__meta">住中 · Livedesk 工单</span>
+          <span class="sol-cap-row__title">住中服务与工单闭环</span>
+          <span class="sol-cap-row__desc">送物、餐饮、洗衣、报修等由 GPTBots 收集需求，Livedesk 派单追踪。</span>
         </button>
         <button type="button" class="sol-cap-row" data-cap-key="events" role="tab" aria-selected="false" id="sol-cap-tab-events">
-          <span class="sol-cap-row__title">婚礼及活动信息中心</span>
-          <span class="sol-cap-row__desc">宴会厅、套餐与多媒体介绍，提供联系宴会销售等直达入口。</span>
+          <span class="sol-cap-row__meta">增长 · 会议宴会/复购</span>
+          <span class="sol-cap-row__title">会议宴会与会员复购</span>
+          <span class="sol-cap-row__desc">承接会议婚宴咨询，沉淀线索标签，并通过 EngageLab 培育复购机会。</span>
         </button>
       </div>
       <div class="sol-cap-split__visual" id="sol-cap-preview" aria-live="polite">
+        <article class="sol-cap-showcase">
+          <button
+            type="button"
+            class="sol-cap-showcase__media js-lightbox-trigger"
+            aria-label="查看假日酒店智能服务控制台示意图"
+            data-lightbox-src="{{ url_for('static', filename='imgs/holiday-inn-dialog-simulation.png') }}"
+            data-lightbox-alt="假日酒店智能服务控制台与模拟对话"
+          >
+            <img
+              src="{{ url_for('static', filename='imgs/holiday-inn-dialog-simulation.png') }}"
+              alt="假日酒店智能服务控制台与模拟对话"
+              width="1672"
+              height="941"
+              loading="lazy"
+              decoding="async"
+            />
+          </button>
+          <div class="sol-cap-showcase__body">
+            <p class="sol-cap-showcase__eyebrow">Holiday Inn Scenario</p>
+            <h3 class="sol-cap-showcase__title" id="sol-cap-showcase-title">直连预订转化</h3>
+            <p class="sol-cap-showcase__desc" id="sol-cap-showcase-desc">
+              从官网/WhatsApp 进入的高意向宾客，由 GPTBots 完成房型与政策解释，并把未完成预订交给 EngageLab 继续触达。
+            </p>
+            <ul class="sol-cap-outcomes" aria-label="当前能力带来的业务结果">
+              <li id="sol-cap-outcome-1">减少前台重复答疑</li>
+              <li id="sol-cap-outcome-2">提升直订完成率</li>
+              <li id="sol-cap-outcome-3">保留高价值线索</li>
+            </ul>
+          </div>
+        </article>
         <div class="sol-cap-dialog" id="sol-cap-dialog">
           <div class="sol-cap-dialog__chat">
             <div class="sol-cap-dialog__bubble sol-cap-dialog__bubble--guest" id="sol-cap-guest">
@@ -231,14 +270,28 @@
             <button type="button" class="sol-cap-dialog__action sol-cap-dialog__action--ghost" id="sol-cap-action-secondary">转人工</button>
           </div>
         </div>
+        <div class="sol-cap-product-cards" aria-label="产品职责分工">
+          <article class="sol-cap-product-card sol-cap-product-card--gptbots">
+            <p class="sol-cap-product-card__label">GPTBots</p>
+            <p class="sol-cap-product-card__body" id="sol-cap-gptbots-role">理解宾客意图，调用知识库与流程节点，完成预订说明和服务受理。</p>
+          </article>
+          <article class="sol-cap-product-card sol-cap-product-card--engagelab">
+            <p class="sol-cap-product-card__label">EngageLab</p>
+            <p class="sol-cap-product-card__body" id="sol-cap-engagelab-role">通过 APP Push、WebPush、SMS、WhatsApp、Email 和 MA 用户旅程完成分层触达。</p>
+          </article>
+          <article class="sol-cap-product-card sol-cap-product-card--livedesk">
+            <p class="sol-cap-product-card__label">Livedesk</p>
+            <p class="sol-cap-product-card__body" id="sol-cap-livedesk-role">接管复杂咨询、投诉与工单任务，保证人工服务有优先级和闭环记录。</p>
+          </article>
+        </div>
       </div>
     </div>
   </section>
 
   <section id="livedesk-arch" class="sol-arch" aria-labelledby="livedesk-arch-heading">
-    <h2 id="livedesk-arch-heading" class="sol-section-title">客服平台 + GPTBots：全渠道智能协同</h2>
+    <h2 id="livedesk-arch-heading" class="sol-section-title">EngageLab + Livedesk + GPTBots：全渠道智能协同</h2>
     <p class="sol-arch__lead">
-      宾客从任意渠道进入，<strong>Livedesk</strong> 作为客服平台承接人工协作与工单闭环，<strong>GPTBots Agent</strong> 负责意图理解、知识检索与流程执行，三者协同形成完整服务链路。
+      假日酒店宾客从任意渠道进入，<strong>EngageLab</strong> 负责 APP Push、WebPush、SMS、WhatsApp、Email 与 MA 旅程编排，<strong>Livedesk</strong> 承接人工协作与工单闭环，<strong>GPTBots Agent</strong> 负责意图理解、知识检索与流程执行，形成完整服务链路。
     </p>
 
     <div class="sol-arch__diagram" role="list">
@@ -248,9 +301,9 @@
         </div>
         <h3 class="sol-arch__card-title">全渠道接入</h3>
         <ul class="sol-arch__card-list">
-          <li>Telegram / WhatsApp</li>
-          <li>LINE / Email</li>
-          <li>Web Widget / API</li>
+          <li>APP Push / WebPush</li>
+          <li>SMS / WhatsApp</li>
+          <li>Email / Web Widget / API</li>
         </ul>
       </article>
       <div class="sol-arch__arrow sol-arch__arrow--h" aria-hidden="true">

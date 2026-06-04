@@ -28,54 +28,89 @@
   /** 五大核心能力：右侧对话示例（短文案以适配固定高度、无滚动） */
   var CAP_IMG = {
     booking: {
-      title: "无缝预订指导",
-      guest: "下周五入住、周日离店，两大一小。想要连通房，尽量离电梯远些，含双早。能信用卡担保吗？",
+      title: "直连预订转化",
+      summary: "从假日酒店官网、WhatsApp 或广告落地页进入的高意向宾客，由 GPTBots 完成房型、价格、取消政策和担保说明；EngageLab 对未完成预订用户通过 APP Push、WebPush、SMS、WhatsApp、Email 和 MA 旅程继续触达。",
+      outcomes: ["减少前台重复答疑", "提升直订完成率", "保留高价值线索"],
+      roles: {
+        gptbots: "识别预算、日期、床型和会员诉求，调用房型知识库与预订流程节点。",
+        engagelab: "对未完成预订、价格犹豫和会员权益咨询人群发起 MA 旅程触达。",
+        livedesk: "在企业协议价、特殊担保或投诉场景中人工接管并记录跟进优先级。",
+      },
+      guest: "下周五入住假日酒店、周日离店，两大一小。想要连通房，尽量离电梯远些，含双早。能信用卡担保吗？",
       agent1:
-        "12–14 层家庭连通房可订，已标注远离电梯井一侧。含双早，支持信用卡担保；入住前一日 18:00 前可免费取消。\n\n" +
+        "Holiday Inn 12–14 层家庭连通房可订，已标注远离电梯井一侧。含双早，支持信用卡担保；入住前一日 18:00 前可免费取消。\n\n" +
         "需要我先为您锁价 10 分钟吗？",
       guest2: "先不锁价。儿童早餐怎么算？加床政策呢？",
       agent:
         "儿童 1.2m 以下早餐半价，以上按成人；加床视房型可加，费用以订单为准。\n\n" +
-        "点击「立即预约」打开日历，可选时段并与顾问确认人数、床型与发票信息。",
+        "若您暂不下单，EngageLab 会在 2 小时后通过 WebPush/WhatsApp 发送房型保留提醒；点击「立即预约」可与顾问确认人数、床型与发票信息。",
       primary: "立即预约",
       secondary: "转人工",
     },
     faq: {
-      title: "即时 FAQ 支持",
-      guest: "班车？泳池、健身房要预约吗？加床怎么收费？",
+      title: "即时 FAQ 与设施咨询",
+      summary: "GPTBots 基于假日酒店知识库回答班车、泳池、早餐、停车、会员权益等问题；异常、投诉或高价值咨询由 Livedesk 接管，避免信息断层。",
+      outcomes: ["统一服务口径", "降低人工首响压力", "复杂问题快速升级"],
+      roles: {
+        gptbots: "连接 FAQ、设施、政策、会员权益和周边交通知识库，保持答复一致。",
+        engagelab: "把常问问题沉淀为 MA 标签，为行前提醒、到店欢迎和复购活动分群。",
+        livedesk: "接管高敏感问题、投诉和多语言咨询，并同步 GPTBots 会话上下文。",
+      },
+      guest: "假日酒店有机场班车吗？泳池、健身房要预约吗？加床怎么收费？",
       agent:
-        "网约车优惠与地铁指引可查；泳池 6:30–22:00（高峰可能限流）；加床以订单确认为准。\n\n" +
-        "附图：公区入口与泳池实景。",
+        "机场班车需提前 2 小时预约；泳池 6:30–22:00，高峰可能限流；健身房 24 小时开放；加床以订单房型确认为准。\n\n" +
+        "附图：公区入口与泳池实景。若需要人工确认班车余位，我可以转 Livedesk。",
       primary: "设施一页通",
       secondary: "问前台",
     },
     rooms: {
-      title: "可视化房型发现",
-      guest: "行政 vs 豪华套房？出差要安静写报告，预算约 1500/晚。",
+      title: "房型与套餐推荐",
+      summary: "GPTBots 根据差旅/亲子/会议场景推荐房型和套餐，解释价格、权益和升级理由；EngageLab 根据互动结果更新会员分层和后续营销旅程。",
+      outcomes: ["提升套餐加购", "缩短比价决策", "沉淀会员偏好"],
+      roles: {
+        gptbots: "比较豪华、行政、亲子与长住套餐，结合预算和权益给出可解释推荐。",
+        engagelab: "把房型兴趣、预算区间和权益偏好写入 MA，用于后续 Push/Email 精准触达。",
+        livedesk: "处理团队价、长住协议价、发票和特殊账期等非标需求。",
+      },
+      guest: "假日酒店行政房和豪华套房怎么选？出差要安静写报告，预算约 1500/晚。",
       agent:
-        "豪华：客厅+卧室，桌 1.2m。行政：高楼层+酒廊，桌更宽。\n\n" +
-        "附图对比。要按朝向再筛吗？",
+        "豪华套房适合会客，客厅+卧室；行政房更适合差旅，高楼层、行政酒廊、书桌更宽。\n\n" +
+        "附图对比。若您是 IHG One Rewards 会员，我可以优先推荐含早餐和延迟退房权益的组合。",
       primary: "对比实拍",
       secondary: "报价单",
     },
     service: {
-      title: "客房服务助手",
-      guest: "你好，能送一套洗漱和儿童拖鞋到房间吗？还想晚点送一壶温水。",
+      title: "住中服务与工单闭环",
+      summary: "住中服务由 GPTBots 收集房号、时间、过敏/偏好等关键信息；Livedesk 分派客房、餐饮或工程工单；EngageLab 回写行为，用于满意度和复购旅程。",
+      outcomes: ["减少电话占线", "工单有状态可追踪", "服务偏好可复用"],
+      roles: {
+        gptbots: "在对话中收集服务细节，生成结构化工单并提示预计送达时间。",
+        engagelab: "根据服务行为触发满意度、权益提醒和离店复购 MA 旅程。",
+        livedesk: "分派客房/工程/餐饮任务，设置紧急程度并追踪 SLA 闭环。",
+      },
+      guest: "你好，能送一套洗漱和儿童拖鞋到假日酒店房间吗？还想晚点送一壶温水。",
       agent1:
         "可以。请提供房号、希望送达的大概时间；如有食物过敏或早餐备注，也请说明，我帮您建服务单。",
       guest2: "房号 1808。小朋友牛奶过敏，早餐请不要配乳制品。温水希望约 30 分钟后送到，谢谢。",
       agent:
-        "已记录房号 1808，并生成服务单 HS-240815-018；过敏信息已同步餐饮与客房。\n\n" +
+        "已记录 Holiday Inn 1808 房，并生成服务单 HS-240815-018；过敏信息已同步餐饮与客房。\n\n" +
         "进度见下表，送达前会轻敲门。改时间或加急请告诉我。",
       primary: "看进度",
       secondary: "加急",
     },
     events: {
-      title: "婚礼及活动信息中心",
-      guest: "婚宴约 120 人，明年 5 月周末，想看厅、餐饮与婚房。",
+      title: "会议宴会与会员复购",
+      summary: "GPTBots 承接婚宴、会议、企业活动和会员复购咨询，收集人数、日期、预算和场地偏好；EngageLab 以 MA 旅程持续培育线索，Livedesk 对高价值机会人工跟进。",
+      outcomes: ["宴会线索不流失", "销售跟进更及时", "会员复购可运营"],
+      roles: {
+        gptbots: "询问活动日期、人数、预算、餐饮和房晚需求，输出可转交销售的摘要。",
+        engagelab: "通过 Email、WhatsApp 和 APP Push 持续发送套餐资料、试菜提醒和会员复住权益。",
+        livedesk: "宴会销售或会员运营专员接管高价值咨询，标记重要程度并闭环。",
+      },
+      guest: "假日酒店婚宴约 120 人，明年 5 月周末，想看厅、餐饮与婚房。",
       agent:
-        "大厅约 8m 层高，120 人圆桌；套餐与试菜可约。附图婚礼现场参考。\n\n" +
-        "要锁销售沟通吗？",
+        "大厅约 8m 层高，适合 120 人圆桌；可组合婚房、试菜和宾客房价。附图婚礼现场参考。\n\n" +
+        "我可以把需求摘要同步给 Livedesk 宴会销售，并由 EngageLab 发送套餐资料与试菜提醒。",
       primary: "套餐资料",
       secondary: "约顾问",
     },
@@ -98,6 +133,18 @@
     var serviceAgent1El = document.getElementById("sol-cap-service-agent-1");
     var serviceGuest2El = document.getElementById("sol-cap-service-guest-2");
     var serviceRich = document.getElementById("sol-cap-service-rich");
+    var showcaseTitle = document.getElementById("sol-cap-showcase-title");
+    var showcaseDesc = document.getElementById("sol-cap-showcase-desc");
+    var outcomeEls = [
+      document.getElementById("sol-cap-outcome-1"),
+      document.getElementById("sol-cap-outcome-2"),
+      document.getElementById("sol-cap-outcome-3"),
+    ];
+    var roleEls = {
+      gptbots: document.getElementById("sol-cap-gptbots-role"),
+      engagelab: document.getElementById("sol-cap-engagelab-role"),
+      livedesk: document.getElementById("sol-cap-livedesk-role"),
+    };
     var root = document.getElementById("capabilities");
     if (!data || !guestEl || !agentEl || !primaryEl || !secondaryEl || !root) return;
 
@@ -105,6 +152,17 @@
     agentEl.textContent = data.agent;
     primaryEl.textContent = data.primary;
     secondaryEl.textContent = data.secondary;
+
+    if (showcaseTitle) showcaseTitle.textContent = data.title;
+    if (showcaseDesc) showcaseDesc.textContent = data.summary || "";
+    outcomeEls.forEach(function (el, index) {
+      if (el) el.textContent = data.outcomes && data.outcomes[index] ? data.outcomes[index] : "";
+    });
+    Object.keys(roleEls).forEach(function (role) {
+      if (roleEls[role] && data.roles && data.roles[role]) {
+        roleEls[role].textContent = data.roles[role];
+      }
+    });
 
     if (key === "booking" && data.agent1 != null && bookingAgent1El && guest2El) {
       bookingAgent1El.textContent = data.agent1;

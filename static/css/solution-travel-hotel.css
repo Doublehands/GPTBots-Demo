@@ -598,7 +598,8 @@
   padding-top: 80px;
   padding-bottom: 96px;
   scroll-margin-top: 72px;
-  background: #ececef;
+  background:
+    linear-gradient(180deg, #eef3ee 0%, #f4f5f2 48%, #eceff0 100%);
   border-top: 1px solid rgba(0, 0, 0, 0.06);
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   box-shadow:
@@ -609,7 +610,7 @@
 .sol-cap-split-section .sol-section-title {
   font-size: clamp(1.5rem, 3.2vw, 2.125rem);
   font-weight: 700;
-  letter-spacing: -0.03em;
+  letter-spacing: 0;
   margin-bottom: 14px;
 }
 
@@ -621,7 +622,7 @@
 }
 
 .sol-cap-split-section .sol-section-sub {
-  max-width: 44rem;
+  max-width: 56rem;
   font-size: 1.0625rem;
   line-height: 1.55;
   margin-bottom: 0;
@@ -678,14 +679,14 @@
 
 .sol-cap-split {
   display: grid;
-  grid-template-columns: minmax(260px, 36%) minmax(0, 1fr);
-  gap: 0 32px;
+  grid-template-columns: minmax(280px, 31%) minmax(0, 1fr);
+  gap: 0;
   align-items: stretch;
-  max-width: 1320px;
+  max-width: 1380px;
   margin: 40px auto 0;
-  min-height: 540px;
+  min-height: 680px;
   background: #fff;
-  border-radius: calc(var(--radius-lg) + 4px);
+  border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow:
     0 4px 0 rgba(0, 0, 0, 0.03),
@@ -712,6 +713,7 @@
   display: flex;
   flex-direction: column;
   border-right: 1px solid rgba(0, 0, 0, 0.08);
+  background: #fbfbf8;
 }
 
 @media (max-width: 800px) {
@@ -725,18 +727,18 @@
   display: block;
   width: 100%;
   margin: 0;
-  padding: 22px 24px 18px;
+  padding: 20px 24px 18px;
   text-align: left;
   font: inherit;
   color: inherit;
   cursor: pointer;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-  background: #fff;
-  border-top: 4px solid transparent;
+  background: transparent;
+  border-left: 4px solid transparent;
   transition:
     background 0.2s var(--ease-out),
-    border-top-color 0.2s var(--ease-out),
+    border-left-color 0.2s var(--ease-out),
     box-shadow 0.2s var(--ease-out);
 }
 
@@ -744,11 +746,22 @@
   border-bottom: none;
 }
 
+.sol-cap-row__meta {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.6875rem;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: #2f7d3c;
+  text-transform: uppercase;
+}
+
 .sol-cap-row__title {
   display: block;
   font-size: 1.0625rem;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   color: #1d1d1f;
   margin-bottom: 8px;
 }
@@ -762,13 +775,13 @@
 
 .sol-cap-row:hover,
 .sol-cap-row:focus-visible {
-  background: #faf8f4;
+  background: #f1f7f0;
   outline: none;
 }
 
 .sol-cap-row.is-active {
-  background: #f5f0e8;
-  border-top-color: #1d1d1f;
+  background: #e8f3e8;
+  border-left-color: #2f7d3c;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
@@ -777,24 +790,119 @@
 }
 
 .sol-cap-split__visual {
-  padding: 20px 28px 24px 12px;
-  display: flex;
+  padding: 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 16px;
   align-items: stretch;
-  justify-content: center;
-  background: linear-gradient(145deg, #f0f0f3 0%, #f5f5f7 45%, #ebebef 100%);
+  justify-content: stretch;
+  background:
+    linear-gradient(145deg, #f7f8f4 0%, #f5f5f7 45%, #eef2ef 100%);
 }
 
 @media (max-width: 800px) {
   .sol-cap-split__visual {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
     padding: 20px;
   }
+}
+
+.sol-cap-showcase {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  grid-row: 1 / span 2;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 12px 30px rgba(30, 52, 35, 0.08);
+}
+
+.sol-cap-showcase__media {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: #e8ece7;
+  cursor: zoom-in;
+  text-align: left;
+}
+
+.sol-cap-showcase__media:focus-visible {
+  outline: 2px solid #2f7d3c;
+  outline-offset: -3px;
+}
+
+.sol-cap-showcase__media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  object-fit: cover;
+}
+
+.sol-cap-showcase__body {
+  padding: 16px 16px 18px;
+}
+
+.sol-cap-showcase__eyebrow {
+  margin: 0 0 8px;
+  font-size: 0.7rem;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: #2f7d3c;
+  text-transform: uppercase;
+}
+
+.sol-cap-showcase__title {
+  margin: 0 0 8px;
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: #1d1d1f;
+}
+
+.sol-cap-showcase__desc {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: #4b4b4f;
+}
+
+.sol-cap-outcomes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sol-cap-outcomes li {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  line-height: 1.25;
+  font-weight: 700;
+  color: #204b28;
+  background: rgba(47, 125, 60, 0.1);
+  border: 1px solid rgba(47, 125, 60, 0.18);
 }
 
 .sol-cap-dialog {
   width: 100%;
   max-width: 100%;
   margin: 0;
-  border-radius: var(--radius-md);
+  border-radius: 8px;
   min-height: 520px;
   max-height: 620px;
   height: auto;
@@ -807,6 +915,70 @@
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
   box-sizing: border-box;
   overflow: hidden;
+}
+
+.sol-cap-product-cards {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.sol-cap-product-card {
+  min-width: 0;
+  padding: 14px 14px 13px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04);
+}
+
+.sol-cap-product-card--gptbots {
+  border-color: rgba(46, 55, 255, 0.22);
+}
+
+.sol-cap-product-card--engagelab {
+  border-color: rgba(47, 125, 60, 0.24);
+}
+
+.sol-cap-product-card--livedesk {
+  border-color: rgba(0, 113, 227, 0.2);
+}
+
+.sol-cap-product-card__label {
+  margin: 0 0 7px;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: 0;
+  color: #1d1d1f;
+}
+
+.sol-cap-product-card__body {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.55;
+  color: #5b5b61;
+}
+
+@media (max-width: 1120px) {
+  .sol-cap-split__visual {
+    grid-template-columns: 1fr;
+  }
+
+  .sol-cap-showcase {
+    grid-row: auto;
+  }
+
+  .sol-cap-dialog {
+    min-height: 460px;
+  }
+}
+
+@media (max-width: 720px) {
+  .sol-cap-product-cards {
+    grid-template-columns: 1fr;
+  }
 }
 
 .sol-cap-dialog__chat {
