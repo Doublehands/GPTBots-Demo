@@ -1,8 +1,8 @@
-# Holiday Inn Demo Implementation Plan
+# Aurora Hotel Demo Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Convert the travel-hotel demo into a Holiday Inn full-journey solution showcase with an optimized five-core-capabilities UI and a new generated simulated conversation image.
+**Goal:** Convert the travel-hotel demo into a Aurora Hotel full-journey solution showcase with an optimized five-core-capabilities UI and a new generated simulated conversation image.
 
 **Architecture:** Keep the existing Flask/static architecture. Update the Jinja template, page stylesheet, and page JavaScript in place, then sync the static `docs/` export. Add a small Python unittest file to validate the demo copy, UI hooks, and asset references.
 
@@ -17,7 +17,7 @@
 
 - [ ] **Step 1: Write a failing static validation test**
 
-Create tests that read `templates/solutions/travel-hotel.html`, `static/js/solution-travel-hotel.js`, `static/css/solution-travel-hotel.css`, and `docs/solutions/travel-hotel/index.html`. Assert the new Holiday Inn positioning, product-channel copy, UI class hooks, and generated image reference exist.
+Create tests that read `templates/solutions/travel-hotel.html`, `static/js/solution-travel-hotel.js`, `static/css/solution-travel-hotel.css`, and `docs/solutions/travel-hotel/index.html`. Assert the new Aurora Hotel positioning, product-channel copy, UI class hooks, and generated image reference exist.
 
 - [ ] **Step 2: Run the test and verify it fails**
 
@@ -28,16 +28,16 @@ Expected: FAIL because the new copy, UI classes, and image asset are not impleme
 ### Task 2: Generate And Install Image Asset
 
 **Files:**
-- Create: `static/imgs/holiday-inn-dialog-simulation.png`
-- Create: `docs/static/imgs/holiday-inn-dialog-simulation.png`
+- Create: `static/imgs/aurora-hotel-dialog-simulation.png`
+- Create: `docs/static/imgs/aurora-hotel-dialog-simulation.png`
 
 - [ ] **Step 1: Generate the image**
 
-Use the built-in image generation path to create a polished Holiday Inn intelligent service console image: hotel lobby plus guest chat/service workflow overlay, no watermark, no unreadable tiny text.
+Use the built-in image generation path to create a polished Aurora Hotel intelligent service console image: hotel lobby plus guest chat/service workflow overlay, no watermark, no unreadable tiny text.
 
 - [ ] **Step 2: Move the generated image into the project**
 
-Save the final PNG to `static/imgs/holiday-inn-dialog-simulation.png` and copy it to `docs/static/imgs/holiday-inn-dialog-simulation.png`.
+Save the final PNG to `static/imgs/aurora-hotel-dialog-simulation.png` and copy it to `docs/static/imgs/aurora-hotel-dialog-simulation.png`.
 
 ### Task 3: Update Page Template And Static Export
 
@@ -47,7 +47,7 @@ Save the final PNG to `static/imgs/holiday-inn-dialog-simulation.png` and copy i
 
 - [ ] **Step 1: Update hero and five-capability intro copy**
 
-Make the page explicitly address Holiday Inn and explain the GPTBots + EngageLab + Livedesk split.
+Make the page explicitly address Aurora Hotel and explain the GPTBots + EngageLab + Livedesk split.
 
 - [ ] **Step 2: Add capability UI hooks**
 
@@ -67,7 +67,7 @@ Refine layout, spacing, active states, generated image framing, product cards, a
 
 - [ ] **Step 2: Update capability text data**
 
-Make all five tab states describe Holiday Inn-specific scenarios and include GPTBots, EngageLab, and Livedesk handoff language.
+Make all five tab states describe Aurora Hotel-specific scenarios and include GPTBots, EngageLab, and Livedesk handoff language.
 
 ### Task 5: Verify
 

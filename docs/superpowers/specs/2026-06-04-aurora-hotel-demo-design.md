@@ -1,16 +1,16 @@
-# Holiday Inn Demo Design
+# Aurora Hotel Demo Design
 
 ## Goal
 
-Update the travel-hotel solution page into a direct Holiday Inn sales demo that shows how GPTBots, EngageLab, and Livedesk empower the full guest journey.
+Update the travel-hotel solution page into a direct Aurora Hotel sales demo that shows how GPTBots, EngageLab, and Livedesk empower the full guest journey.
 
 ## Audience
 
-The primary viewer is a Holiday Inn business owner or operations lead. The page should feel like a practical solution walkthrough, not a generic hotel webpage.
+The primary viewer is a Aurora Hotel business owner or operations lead. The page should feel like a practical solution walkthrough, not a generic hotel webpage.
 
 ## Page Logic
 
-The hero positions the demo as a Holiday Inn full-journey intelligent service and marketing solution. The copy explains the product split clearly:
+The hero positions the demo as a Aurora Hotel full-journey intelligent service and marketing solution. The copy explains the product split clearly:
 
 - GPTBots handles AI Agent conversations, knowledge retrieval, personalized recommendations, workflow execution, and service intake.
 - EngageLab handles APP Push, WebPush, SMS, WhatsApp, Email, and MA journey orchestration.
@@ -30,7 +30,7 @@ The five-capability section becomes the main demonstration console:
 
 Use a refined operational UI, closer to a sales console than a marketing hero. The capability area should include:
 
-- A clearer section intro tied to Holiday Inn.
+- A clearer section intro tied to Aurora Hotel.
 - Capability tabs with product tags.
 - A visual panel with the simulated guest conversation.
 - A generated image replacing the current simulated conversation image slot.

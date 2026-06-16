@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>全球化家庭度假集团方案 · 页面方向</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Inter, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: #152019;
+    background: #eef1ec;
+  }
+  button { font: inherit; }
+  .page { max-width: 1500px; margin: 0 auto; padding: 32px; }
+  .intro { max-width: 900px; margin: 0 auto 28px; text-align: center; }
+  .eyebrow { margin: 0 0 8px; color: #2c7650; font-weight: 800; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+  h1 { margin: 0 0 10px; font-size: clamp(30px, 4vw, 48px); line-height: 1.08; }
+  .intro > p:last-child { margin: 0; color: #5f6862; line-height: 1.6; }
+  .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: start; }
+  .direction {
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 18px 46px rgba(30, 43, 34, .13);
+    cursor: pointer;
+    text-align: left;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .direction:hover { transform: translateY(-5px); box-shadow: 0 24px 60px rgba(30, 43, 34, .2); }
+  .direction.selected { border-color: #2e8a59; box-shadow: 0 0 0 4px rgba(46,138,89,.16), 0 24px 60px rgba(30,43,34,.2); }
+  .preview { height: 600px; overflow: hidden; background: #111; }
+  .section { position: relative; overflow: hidden; }
+  .section img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .section::after { content: ""; position: absolute; inset: 0; pointer-events: none; }
+  .copy { position: relative; z-index: 2; }
+  .mini-kicker { font-size: 7px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; opacity: .82; }
+  .mini-title { margin-top: 4px; font-size: 17px; line-height: 1.05; font-weight: 800; }
+  .mini-copy { margin-top: 5px; max-width: 75%; font-size: 7px; line-height: 1.35; opacity: .8; }
+  .hero { height: 150px; display: flex; align-items: center; padding: 22px; color: white; }
+  .hero::after { background: linear-gradient(90deg, rgba(10,27,20,.74), rgba(10,27,20,.15)); }
+  .touch { height: 150px; padding: 14px; display: grid; grid-template-columns: 1fr 1.15fr; gap: 10px; color: white; }
+  .touch::after { background: linear-gradient(110deg, rgba(9,30,22,.72), rgba(12,42,31,.2)); }
+  .channel-pills { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px; align-content: center; }
+  .channel-pills span { padding: 7px; border-radius: 5px; background: rgba(255,255,255,.9); color: #183526; font-size: 7px; font-weight: 800; box-shadow: 0 4px 12px rgba(0,0,0,.15); }
+  .lobby { height: 185px; padding: 16px; display: flex; align-items: center; justify-content: center; }
+  .lobby::after { background: linear-gradient(180deg, rgba(5,17,12,.06), rgba(5,17,12,.36)); }
+  .service-ui { position: relative; z-index: 2; width: 90%; height: 125px; display: grid; grid-template-columns: 1fr .62fr; gap: 8px; padding: 8px; border-radius: 8px; background: rgba(255,255,255,.88); backdrop-filter: blur(8px); box-shadow: 0 12px 28px rgba(0,0,0,.24); }
+  .desk, .agent { border-radius: 6px; padding: 8px; }
+  .desk { background: #0d5738; color: white; }
+  .agent { background: #f3f5f0; }
+  .desk strong, .agent strong { display: block; font-size: 8px; }
+  .lines { display: grid; gap: 5px; margin-top: 8px; }
+  .lines i { display: block; height: 6px; border-radius: 4px; background: rgba(255,255,255,.18); }
+  .agent .lines i { background: #dce7dc; }
+  .journey { height: 115px; padding: 14px; background: #f6f4ed; }
+  .journey-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; margin-top: 10px; }
+  .journey-row span { padding: 9px 5px; border-radius: 6px; background: white; font-size: 7px; font-weight: 800; text-align: center; box-shadow: 0 5px 12px rgba(42,51,45,.08); }
+  .value { height: 72px; padding: 12px 14px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; background: #173b2b; color: white; }
+  .value div { border-left: 1px solid rgba(255,255,255,.22); padding-left: 7px; }
+  .value strong { display: block; font-size: 11px; }
+  .value span { font-size: 6px; opacity: .72; }
+  .body { padding: 18px; }
+  .tag { display: inline-flex; margin-bottom: 8px; padding: 4px 8px; border-radius: 999px; background: #e2f2e6; color: #236844; font-size: 10px; font-weight: 800; }
+  .body h2 { margin: 0 0 8px; font-size: 20px; }
+  .body p { margin: 0; min-height: 62px; color: #69716b; font-size: 13px; line-height: 1.5; }
+  .recommended .tag { background: #256f49; color: #fff; }
+  .recommended .preview { box-shadow: inset 0 0 0 3px #256f49; }
+
+  /* B: operations-led */
+  .ops .hero { height: 120px; }
+  .ops .touch { height: 210px; grid-template-columns: .75fr 1.25fr; }
+  .ops .channel-pills { grid-template-columns: repeat(3, 1fr); }
+  .ops .lobby { height: 145px; }
+  .ops .journey { height: 75px; }
+  .ops .journey-row { margin-top: 7px; }
+  .ops .value { height: 50px; }
+
+  /* C: family story */
+  .story .hero { height: 190px; align-items: end; }
+  .story .touch { height: 120px; grid-template-columns: 1.2fr .8fr; }
+  .story .lobby { height: 150px; }
+  .story .journey { height: 90px; background: #fff7e8; }
+  .story .value { height: 50px; background: #275a55; }
+  @media (max-width: 1000px) {
+    .grid { grid-template-columns: 1fr; }
+    .preview { height: 520px; }
+    .direction { max-width: 600px; margin: 0 auto; width: 100%; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="intro">
+    <p class="eyebrow">Page direction comparison</p>
+    <h1>全球化家庭度假集团 · 三种页面叙事</h1>
+    <p>三种方案都保留 Aurora Hotel 模拟品牌，不出现真实客户或旗下品牌名称。点击卡片选择你偏好的页面节奏。</p>
+  </header>
+
+  <section class="grid">
+    <button class="direction recommended" data-choice="a-cinematic" onclick="toggleSelect(this)">
+      <div class="preview cinematic">
+        <section class="section hero">
+          <img src="/files/resort-hero.png" alt="">
+          <div class="copy">
+            <div class="mini-kicker">Aurora Hotel · Family Resort Intelligence</div>
+            <div class="mini-title">全球化家庭度假集团<br>全旅程智能服务解决方案</div>
+            <div class="mini-copy">主动触达、智能管家接待、人工护航，覆盖住前、住中与住后。</div>
+          </div>
+        </section>
+        <section class="section touch">
+          <img src="/files/family-scene.png" alt="">
+          <div class="copy">
+            <div class="mini-kicker">EngageLab Journey Hub</div>
+            <div class="mini-title">在宾客需要之前<br>主动抵达</div>
+            <div class="mini-copy">围绕家庭度假决策与出行节点，编排跨渠道触达。</div>
+          </div>
+          <div class="channel-pills">
+            <span>APP Push</span><span>WebPush</span><span>SMS</span><span>WhatsApp</span><span>Email</span><span>MA Journey</span>
+          </div>
+        </section>
+        <section class="section lobby">
+          <img src="/files/lobby.png" alt="">
+          <div class="service-ui">
+            <div class="desk"><strong>Livedesk · Human Care</strong><div class="lines"><i></i><i></i><i></i><i></i></div></div>
+            <div class="agent"><strong>GPTBots AI Agent</strong><div class="lines"><i></i><i></i><i></i><i></i></div></div>
+          </div>
+        </section>
+        <section class="journey">
+          <div class="mini-kicker">Guest journey</div>
+          <div class="journey-row"><span>住前 · 发现与预订</span><span>住中 · 管家与服务</span><span>住后 · 会员与复购</span></div>
+        </section>
+        <section class="value"><div><strong>24/7</strong><span>智能管家服务</span></div><div><strong>One View</strong><span>宾客上下文贯通</span></div><div><strong>Closed Loop</strong><span>触达至复购闭环</span></div></section>
+      </div>
+      <div class="body">
+        <span class="tag">推荐</span>
+        <h2>A. 电影式场景推进</h2>
+        <p>每一屏是一幕真实度假场景：触达中枢先铺陈，大堂再聚焦 AI Agent 与人工协作，最后用旅程和价值收口。</p>
+      </div>
+    </button>
+
+    <button class="direction" data-choice="b-operations" onclick="toggleSelect(this)">
+      <div class="preview ops">
+        <section class="section hero">
+          <img src="/files/resort-hero.png" alt="">
+          <div class="copy">
+            <div class="mini-kicker">Global Family Resort Group</div>
+            <div class="mini-title">集团级智能宾客运营中枢</div>
+            <div class="mini-copy">统一触达、统一服务、统一数据。</div>
+          </div>
+        </section>
+        <section class="section touch">
+          <img src="/files/family-scene.png" alt="">
+          <div class="copy">
+            <div class="mini-kicker">Omnichannel orchestration</div>
+            <div class="mini-title">多渠道触达与 MA 编排</div>
+            <div class="mini-copy">突出集团运营视角、分群、转化和数据回流。</div>
+          </div>
+          <div class="channel-pills">
+            <span>APP</span><span>Web</span><span>SMS</span><span>WA</span><span>Email</span><span>MA</span>
+          </div>
+        </section>
+        <section class="section lobby">
+          <img src="/files/lobby.png" alt="">
+          <div class="service-ui">
+            <div class="desk"><strong>Livedesk Service Center</strong><div class="lines"><i></i><i></i><i></i></div></div>
+            <div class="agent"><strong>GPTBots Agent Network</strong><div class="lines"><i></i><i></i><i></i></div></div>
+          </div>
+        </section>
+        <section class="journey"><div class="journey-row"><span>Acquire</span><span>Serve</span><span>Retain</span></div></section>
+        <section class="value"><div><strong>Global</strong></div><div><strong>Unified</strong></div><div><strong>Scalable</strong></div></section>
+      </div>
+      <div class="body">
+        <span class="tag">集团视角</span>
+        <h2>B. 运营中枢式</h2>
+        <p>更像集团数字化方案汇报，重点突出统一运营、跨区域复制和数据能力；逻辑强，但情绪感染力较弱。</p>
+      </div>
+    </button>
+
+    <button class="direction" data-choice="c-family-story" onclick="toggleSelect(this)">
+      <div class="preview story">
+        <section class="section hero">
+          <img src="/files/resort-hero.png" alt="">
+          <div class="copy">
+            <div class="mini-kicker">Every family, one seamless journey</div>
+            <div class="mini-title">让每一次家庭度假<br>从期待开始被照顾</div>
+            <div class="mini-copy">以家庭宾客故事为主线，产品能力退居幕后。</div>
+          </div>
+        </section>
+        <section class="section touch">
+          <img src="/files/family-scene.png" alt="">
+          <div class="copy"><div class="mini-title">出发前，主动送达<br>恰到好处的信息</div></div>
+          <div class="channel-pills"><span>提醒</span><span>权益</span><span>交通</span><span>活动</span></div>
+        </section>
+        <section class="section lobby">
+          <img src="/files/lobby.png" alt="">
+          <div class="service-ui">
+            <div class="agent"><strong>24 小时 AI 度假管家</strong><div class="lines"><i></i><i></i><i></i></div></div>
+            <div class="desk"><strong>人工团队温度护航</strong><div class="lines"><i></i><i></i><i></i></div></div>
+          </div>
+        </section>
+        <section class="journey"><div class="journey-row"><span>期待</span><span>陪伴</span><span>再次相遇</span></div></section>
+        <section class="value"><div><strong>懂家庭</strong></div><div><strong>懂场景</strong></div><div><strong>有温度</strong></div></section>
+      </div>
+      <div class="body">
+        <span class="tag">情绪价值</span>
+        <h2>C. 家庭旅程故事式</h2>
+        <p>强调家庭宾客体验与温度，视觉最柔和；但产品边界和集团级技术价值需要额外说明。</p>
+      </div>
+    </button>
+  </section>
+</main>
+</body>
+</html>

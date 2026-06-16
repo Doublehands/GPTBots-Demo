@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aurora Capabilities Layout</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #101412;
+    color: #f7f8f5;
+  }
+  .page {
+    min-height: 100vh;
+    padding: 28px;
+    background:
+      radial-gradient(circle at 12% 8%, rgba(117, 185, 138, .26), transparent 32%),
+      linear-gradient(135deg, #0f1512 0%, #1f261f 48%, #0e1110 100%);
+  }
+  .intro {
+    max-width: 1140px;
+    margin: 0 auto 20px;
+  }
+  .eyebrow {
+    margin: 0 0 8px;
+    color: #bce8c4;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+  h1 {
+    margin: 0 0 10px;
+    font-size: clamp(28px, 4vw, 42px);
+    line-height: 1.08;
+  }
+  .intro p {
+    max-width: 760px;
+    margin: 0;
+    color: rgba(247,248,245,.78);
+    line-height: 1.55;
+  }
+  .mock {
+    max-width: 1280px;
+    margin: 0 auto;
+    border: 1px solid rgba(255,255,255,.16);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 28px 80px rgba(0,0,0,.42);
+    background: #151a17;
+  }
+  .stage {
+    position: relative;
+    min-height: min(76vh, 760px);
+    isolation: isolate;
+  }
+  .stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(90deg, rgba(8,12,10,.72) 0%, rgba(8,12,10,.28) 32%, rgba(8,12,10,.08) 62%, rgba(8,12,10,.46) 100%), url("/files/aurora-hotel-dialog-simulation.png");
+    background-size: cover;
+    background-position: center;
+    z-index: -2;
+  }
+  .stage::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(10,15,12,.1), rgba(10,15,12,.54));
+    z-index: -1;
+  }
+  .rail {
+    position: absolute;
+    left: clamp(18px, 4vw, 42px);
+    top: 50%;
+    transform: translateY(-50%);
+    width: min(250px, 28vw);
+    display: grid;
+    gap: 12px;
+  }
+  .channel {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    align-items: center;
+    gap: 12px;
+    min-height: 64px;
+    padding: 10px 14px;
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 14px;
+    background: rgba(255,255,255,.88);
+    color: #172018;
+    box-shadow: 0 10px 24px rgba(0,0,0,.18);
+  }
+  .channel.is-active {
+    border-color: rgba(89, 188, 105, .85);
+    box-shadow: 0 0 0 3px rgba(89,188,105,.25), 0 16px 30px rgba(0,0,0,.26);
+  }
+  .icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: #31a967;
+    color: #fff;
+    font-weight: 800;
+  }
+  .channel:nth-child(2) .icon { background: #249ec1; }
+  .channel:nth-child(5) .icon { background: #ed8f27; }
+  .channel:nth-child(6) .icon { background: #6656d9; }
+  .label strong {
+    display: block;
+    font-size: 18px;
+  }
+  .label span {
+    display: block;
+    margin-top: 2px;
+    color: rgba(23,32,24,.7);
+    font-size: 12px;
+  }
+  .panel {
+    position: absolute;
+    right: clamp(22px, 5vw, 58px);
+    bottom: clamp(22px, 5vw, 52px);
+    width: min(430px, 36vw);
+    padding: 22px;
+    border: 1px solid rgba(255,255,255,.24);
+    border-radius: 16px;
+    background: rgba(15, 24, 18, .78);
+    backdrop-filter: blur(18px) saturate(150%);
+    box-shadow: 0 26px 60px rgba(0,0,0,.35);
+  }
+  .panel h2 {
+    margin: 0 0 8px;
+    font-size: 24px;
+  }
+  .panel p {
+    margin: 0 0 16px;
+    color: rgba(247,248,245,.8);
+    line-height: 1.52;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .chips span {
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.12);
+    font-size: 12px;
+    color: #e9f7e8;
+  }
+  .message {
+    border-radius: 12px;
+    background: rgba(255,255,255,.92);
+    color: #192018;
+    padding: 14px;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .caption {
+    max-width: 1280px;
+    margin: 18px auto 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .option {
+    padding: 16px;
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 14px;
+    background: rgba(255,255,255,.08);
+  }
+  .option strong {
+    display: block;
+    margin-bottom: 7px;
+    color: #ffffff;
+  }
+  .option p {
+    margin: 0;
+    color: rgba(247,248,245,.72);
+    line-height: 1.45;
+    font-size: 14px;
+  }
+  .recommend {
+    border-color: rgba(94,207,117,.55);
+    background: rgba(70,148,81,.18);
+  }
+  @media (max-width: 860px) {
+    .page { padding: 18px; }
+    .stage { min-height: 760px; }
+    .rail {
+      left: 16px;
+      right: 16px;
+      top: 18px;
+      transform: none;
+      width: auto;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .channel {
+      grid-template-columns: 34px 1fr;
+      min-height: 54px;
+      padding: 8px 10px;
+    }
+    .icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+    }
+    .label strong { font-size: 15px; }
+    .panel {
+      left: 16px;
+      right: 16px;
+      bottom: 18px;
+      width: auto;
+    }
+    .caption { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+  <section class="intro">
+    <p class="eyebrow">Recommended replacement</p>
+    <h1>五大核心能力改成“图片同款”互动控制台</h1>
+    <p>用 Aurora Hotel 大图作为整块背景，左侧 App Push 等按钮变为真实可点击 UI；点击后更新右侧说明、标签与模拟消息。原来的五个能力卡片全部移除。</p>
+  </section>
+  <section class="mock">
+    <div class="stage">
+      <div class="rail" aria-label="Channel buttons">
+        <div class="channel is-active"><div class="icon">A</div><div class="label"><strong>APP Push</strong><span>In-App Messages</span></div></div>
+        <div class="channel"><div class="icon">W</div><div class="label"><strong>WebPush</strong><span>Browser Notifications</span></div></div>
+        <div class="channel"><div class="icon">S</div><div class="label"><strong>SMS</strong><span>Text Messages</span></div></div>
+        <div class="channel"><div class="icon">WA</div><div class="label"><strong>WhatsApp</strong><span>Messaging</span></div></div>
+        <div class="channel"><div class="icon">E</div><div class="label"><strong>Email</strong><span>Email Campaigns</span></div></div>
+        <div class="channel"><div class="icon">MA</div><div class="label"><strong>MA Journey</strong><span>Automation Flow</span></div></div>
+      </div>
+      <aside class="panel">
+        <h2>APP Push · 行前入住提醒</h2>
+        <p>EngageLab 根据预订状态触发行前提醒，GPTBots 承接回复和加购咨询，Livedesk 处理特殊要求。</p>
+        <div class="chips">
+          <span>到店前 24h</span>
+          <span>房型偏好</span>
+          <span>机场接送</span>
+          <span>会员权益</span>
+        </div>
+        <div class="message">Aurora Hotel：明天 15:00 可办理入住。点击确认早餐偏好、机场接送和延迟退房权益。</div>
+      </aside>
+    </div>
+  </section>
+  <section class="caption">
+    <div class="option recommend">
+      <strong>A. 推荐：大图背景 + DOM 按钮 + 信息浮层</strong>
+      <p>最贴近你说的“网页和图片一样”，同时按钮真实可点、文案可控、移动端可折叠。</p>
+    </div>
+    <div class="option">
+      <strong>B. 热区方案：只在图片上盖透明点击区</strong>
+      <p>最像原图，但可维护性差，换图或移动端容易错位。</p>
+    </div>
+    <div class="option">
+      <strong>C. 重绘控制台：完全用 HTML/CSS 复刻</strong>
+      <p>交互最强，但工期更长，而且不如直接用图的酒店场景真实。</p>
+    </div>
+  </section>
+</main>
+</body>
+</html>

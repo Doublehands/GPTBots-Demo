@@ -221,6 +221,11 @@
   overflow: hidden;
 }
 
+.sol-hero--cover.sol-bleed {
+  padding-left: 0;
+  padding-right: 0;
+}
+
 .sol-hero__bg {
   position: absolute;
   inset: 0;
@@ -1240,6 +1245,721 @@
 
 .sol-cap-dialog__reply-attachments .sol-cap-dialog__media:hover .sol-cap-dialog__media-frame {
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+/* 五大核心能力 · 纯背景 + HTML 控制台 */
+.sol-cap-console {
+  position: relative;
+  max-width: 1480px;
+  min-height: min(88vh, 860px);
+  margin: 44px auto 0;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #172018;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow:
+    0 30px 80px rgba(31, 27, 20, 0.22),
+    0 3px 0 rgba(255, 255, 255, 0.35) inset;
+}
+
+.sol-cap-console__background {
+  position: absolute;
+  inset: 0;
+  background-color: #172018;
+  background-image: var(--sol-cap-bg, url("../imgs/cap-deluxe-suite.png"));
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transform: scale(1.015);
+  transition: opacity 0.24s ease;
+}
+
+.sol-cap-console__background.is-changing {
+  opacity: 0;
+}
+
+.sol-cap-console__scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(13, 20, 15, 0.74) 0%, rgba(13, 20, 15, 0.22) 34%, rgba(13, 20, 15, 0.05) 60%, rgba(13, 20, 15, 0.42) 100%),
+    linear-gradient(180deg, rgba(13, 20, 15, 0.04) 0%, rgba(13, 20, 15, 0.45) 100%);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sol-cap-console__background {
+    transition: none;
+  }
+}
+
+.sol-cap-console__inner {
+  position: relative;
+  z-index: 1;
+  min-height: inherit;
+  display: grid;
+  grid-template-columns: minmax(200px, 250px) minmax(620px, 1fr) minmax(220px, 270px);
+  grid-template-rows: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(18px, 2.2vw, 30px);
+  padding: clamp(26px, 4vw, 56px);
+}
+
+.sol-cap-channel-rail {
+  display: grid;
+  gap: 12px;
+  align-self: center;
+}
+
+.sol-cap-channel {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 66px;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #172018;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.2);
+  transition:
+    transform 0.2s var(--ease-out),
+    box-shadow 0.2s var(--ease-out),
+    border-color 0.2s var(--ease-out),
+    background 0.2s var(--ease-out);
+}
+
+.sol-cap-channel:hover {
+  transform: translateX(5px);
+  background: #fff;
+}
+
+.sol-cap-channel:focus-visible {
+  outline: 2px solid #8fdf99;
+  outline-offset: 3px;
+}
+
+.sol-cap-channel.is-active {
+  border-color: rgba(42, 142, 74, 0.86);
+  box-shadow:
+    0 0 0 3px rgba(42, 142, 74, 0.22),
+    0 16px 34px rgba(0, 0, 0, 0.24);
+}
+
+.sol-cap-channel__icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  color: #fff;
+  background: #2d9a5e;
+}
+
+.sol-cap-channel[data-cap-channel="webpush"] .sol-cap-channel__icon {
+  background: #278fb8;
+}
+
+.sol-cap-channel[data-cap-channel="email"] .sol-cap-channel__icon {
+  background: #e78b2c;
+}
+
+.sol-cap-channel[data-cap-channel="ma"] .sol-cap-channel__icon {
+  background: #6256d8;
+}
+
+.sol-cap-channel[data-cap-channel="livedesk"] .sol-cap-channel__icon {
+  background: #d65043;
+}
+
+.sol-cap-channel[data-cap-channel="agent"] .sol-cap-channel__icon {
+  background: #2c65e9;
+}
+
+.sol-cap-channel__text {
+  min-width: 0;
+}
+
+.sol-cap-channel__text strong,
+.sol-cap-channel__text span {
+  display: block;
+}
+
+.sol-cap-channel__text strong {
+  font-size: 1rem;
+  line-height: 1.15;
+  font-weight: 800;
+}
+
+.sol-cap-channel__text span {
+  margin-top: 4px;
+  font-size: 0.72rem;
+  line-height: 1.2;
+  color: rgba(23, 32, 24, 0.68);
+}
+
+.sol-cap-dashboard {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  min-height: 560px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  box-shadow:
+    0 26px 70px rgba(0, 0, 0, 0.28),
+    0 0 0 2px rgba(47, 59, 50, 0.16);
+  -webkit-backdrop-filter: blur(16px) saturate(145%);
+  backdrop-filter: blur(16px) saturate(145%);
+}
+
+.sol-cap-dashboard__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 22px 18px;
+  color: #eaf7ed;
+  background:
+    linear-gradient(180deg, rgba(10, 80, 46, 0.95), rgba(6, 56, 39, 0.98)),
+    #08442d;
+}
+
+.sol-cap-dashboard__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.sol-cap-dashboard__mark,
+.sol-cap-phone__avatar {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, transparent 0 24%, #f4d18a 25% 36%, transparent 37%),
+    linear-gradient(225deg, transparent 0 24%, #7bdc91 25% 36%, transparent 37%),
+    #0f7041;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28);
+}
+
+.sol-cap-dashboard__menu {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sol-cap-dashboard__menu li {
+  padding: 9px 10px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: rgba(234, 247, 237, 0.84);
+}
+
+.sol-cap-dashboard__menu li.is-active {
+  background: rgba(255, 255, 255, 0.13);
+  color: #fff;
+}
+
+.sol-cap-dashboard__main {
+  min-width: 0;
+  padding: 22px;
+}
+
+.sol-cap-dashboard__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.sol-cap-dashboard__eyebrow {
+  margin: 0 0 4px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  color: #2d7a43;
+}
+
+.sol-cap-dashboard__head h3 {
+  margin: 0 0 7px;
+  font-size: clamp(1.25rem, 2.1vw, 1.72rem);
+  line-height: 1.15;
+  letter-spacing: 0;
+  color: #172018;
+}
+
+.sol-cap-dashboard__head p {
+  max-width: 36rem;
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: rgba(29, 29, 31, 0.68);
+}
+
+.sol-cap-dashboard__status,
+.sol-cap-card-head span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  white-space: nowrap;
+  border-radius: 999px;
+  padding: 5px 9px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #236332;
+  background: rgba(47, 125, 60, 0.12);
+}
+
+.sol-cap-dashboard__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 0.72fr);
+  gap: 14px;
+}
+
+.sol-cap-chat-card,
+.sol-cap-ticket-card,
+.sol-cap-profile-card {
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(31, 45, 35, 0.1);
+  box-shadow: 0 10px 24px rgba(31, 45, 35, 0.08);
+}
+
+.sol-cap-chat-card {
+  padding: 16px;
+}
+
+.sol-cap-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.sol-cap-card-head strong {
+  font-size: 0.84rem;
+  color: #172018;
+}
+
+.sol-cap-chat {
+  display: grid;
+  gap: 12px;
+}
+
+.sol-cap-chat__bubble {
+  max-width: 84%;
+  margin: 0;
+  padding: 11px 13px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.sol-cap-chat__bubble--guest {
+  background: #f3f5f1;
+  color: #172018;
+}
+
+.sol-cap-chat__bubble--agent {
+  justify-self: end;
+  background: #e5f1e4;
+  color: #18391f;
+}
+
+.sol-cap-chat__offer {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  width: min(100%, 420px);
+  padding: 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(47, 125, 60, 0.12);
+}
+
+.sol-cap-chat__thumb {
+  display: block;
+  width: 72px;
+  height: 54px;
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(47, 125, 60, 0.16), rgba(231, 139, 44, 0.1)),
+    url("../imgs/cap-deluxe-suite.png") center / cover no-repeat;
+}
+
+.sol-cap-chat__offer strong,
+.sol-cap-chat__offer span {
+  display: block;
+}
+
+.sol-cap-chat__offer strong {
+  font-size: 0.86rem;
+  color: #172018;
+}
+
+.sol-cap-chat__offer span {
+  margin-top: 3px;
+  font-size: 0.72rem;
+  color: rgba(29, 29, 31, 0.62);
+}
+
+.sol-cap-chat__offer button {
+  min-height: 36px;
+  border: none;
+  border-radius: 8px;
+  padding: 0 12px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #fff;
+  background: #0c5a36;
+  cursor: pointer;
+}
+
+.sol-cap-chat__offer button:focus-visible {
+  outline: 2px solid #0c5a36;
+  outline-offset: 2px;
+}
+
+.sol-cap-side-stack {
+  display: grid;
+  gap: 14px;
+}
+
+.sol-cap-ticket-card,
+.sol-cap-profile-card {
+  padding: 15px;
+}
+
+.sol-cap-ticket-card h4 {
+  margin: 0 0 6px;
+  font-size: 0.95rem;
+  color: #172018;
+}
+
+.sol-cap-ticket-card p {
+  margin: 0 0 14px;
+  font-size: 0.76rem;
+  line-height: 1.45;
+  color: rgba(29, 29, 31, 0.66);
+}
+
+.sol-cap-ticket-steps {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0 0 0 22px;
+  font-size: 0.76rem;
+  color: rgba(29, 29, 31, 0.62);
+}
+
+.sol-cap-ticket-steps li::marker {
+  color: rgba(47, 125, 60, 0.42);
+}
+
+.sol-cap-ticket-steps li.is-done,
+.sol-cap-ticket-steps li.is-active {
+  color: #172018;
+  font-weight: 800;
+}
+
+.sol-cap-profile-card__name {
+  margin: 0 0 10px;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #172018;
+}
+
+.sol-cap-profile-card dl {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+}
+
+.sol-cap-profile-card dl div {
+  display: grid;
+  grid-template-columns: 78px minmax(0, 1fr);
+  gap: 8px;
+}
+
+.sol-cap-profile-card dt,
+.sol-cap-profile-card dd {
+  margin: 0;
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+.sol-cap-profile-card dt {
+  color: rgba(29, 29, 31, 0.48);
+}
+
+.sol-cap-profile-card dd {
+  color: rgba(29, 29, 31, 0.76);
+}
+
+.sol-cap-phone {
+  align-self: center;
+  min-height: 540px;
+  border-radius: 8px;
+  padding: 12px;
+  background: #111;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.34);
+}
+
+.sol-cap-phone__bar,
+.sol-cap-phone__head,
+.sol-cap-phone__input {
+  display: flex;
+  align-items: center;
+}
+
+.sol-cap-phone__bar {
+  justify-content: space-between;
+  padding: 7px 8px 9px;
+  color: #1d1d1f;
+  background: #fff;
+  border-radius: 8px 8px 0 0;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.sol-cap-phone__head {
+  gap: 9px;
+  padding: 9px 12px;
+  background: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+.sol-cap-phone__head strong,
+.sol-cap-phone__head span {
+  display: block;
+}
+
+.sol-cap-phone__head strong {
+  font-size: 0.78rem;
+  color: #1d1d1f;
+}
+
+.sol-cap-phone__head span {
+  font-size: 0.68rem;
+  color: #2f7d3c;
+}
+
+.sol-cap-phone__chat {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  min-height: 400px;
+  padding: 14px 10px;
+  background: linear-gradient(180deg, #fbfbfb 0%, #f2f4f1 100%);
+}
+
+.sol-cap-phone__bubble {
+  max-width: 88%;
+  margin: 0;
+  padding: 10px 11px;
+  border-radius: 8px;
+  font-size: 0.72rem;
+  line-height: 1.42;
+  color: #1d1d1f;
+}
+
+.sol-cap-phone__bubble--guest {
+  justify-self: end;
+  background: #ddedda;
+}
+
+.sol-cap-phone__bubble--agent {
+  justify-self: start;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.sol-cap-phone__input {
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px;
+  background: #fff;
+  border-radius: 0 0 8px 8px;
+}
+
+.sol-cap-phone__input span {
+  flex: 1;
+  min-height: 30px;
+  border-radius: 999px;
+  padding: 8px 10px;
+  background: #f4f4f5;
+  font-size: 0.68rem;
+  color: #9a9aa0;
+}
+
+.sol-cap-phone__input button {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  background: #0c5a36;
+}
+
+.sol-cap-journey {
+  grid-column: 2 / 4;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.2);
+}
+
+.sol-cap-journey__arrow {
+  display: none;
+}
+
+.sol-cap-journey__step {
+  min-width: 0;
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  padding: 9px 8px;
+  border-radius: 8px;
+  color: rgba(29, 29, 31, 0.66);
+  text-align: center;
+}
+
+.sol-cap-journey__step span {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #2f7d3c;
+  background: rgba(47, 125, 60, 0.12);
+}
+
+.sol-cap-journey__step strong {
+  font-size: 0.8rem;
+  color: #1d1d1f;
+}
+
+.sol-cap-journey__step em {
+  font-style: normal;
+  font-size: 0.68rem;
+  line-height: 1.25;
+}
+
+.sol-cap-journey__step.is-active {
+  background: rgba(47, 125, 60, 0.1);
+}
+
+.sol-cap-journey__step.is-active span {
+  color: #fff;
+  background: #2f7d3c;
+}
+
+@media (max-width: 1220px) {
+  .sol-cap-console__inner {
+    grid-template-columns: minmax(180px, 230px) minmax(0, 1fr);
+    grid-template-rows: auto auto auto;
+  }
+
+  .sol-cap-phone {
+    grid-column: 1 / -1;
+    width: min(360px, 100%);
+    min-height: 420px;
+    justify-self: center;
+  }
+
+  .sol-cap-phone__chat {
+    min-height: 270px;
+  }
+
+  .sol-cap-journey {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 920px) {
+  .sol-cap-console {
+    min-height: 0;
+  }
+
+  .sol-cap-console__inner {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  .sol-cap-channel-rail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sol-cap-dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .sol-cap-dashboard__nav {
+    display: none;
+  }
+
+  .sol-cap-dashboard__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sol-cap-journey {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .sol-cap-split-section {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .sol-cap-channel-rail,
+  .sol-cap-journey {
+    grid-template-columns: 1fr;
+  }
+
+  .sol-cap-channel {
+    min-height: 58px;
+  }
+
+  .sol-cap-dashboard__main {
+    padding: 16px;
+  }
+
+  .sol-cap-dashboard__head {
+    display: grid;
+  }
+
+  .sol-cap-chat__offer {
+    grid-template-columns: 1fr;
+  }
+
+  .sol-cap-chat__thumb {
+    display: none;
+  }
 }
 
 #livedesk-arch {

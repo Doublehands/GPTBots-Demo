@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GPTBots Flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- ============================================================= -->
+<!--  只改这个 FLOW 对象。不要动下面的 <style> 和 <script>。        -->
+<!--  ONLY edit this FLOW object. Do NOT touch the CSS/JS below.    -->
+<!-- ============================================================= -->
+<script>
+const FLOW = {
+  title: "Aurora 酒店 AI 客服 Agent · Flow",
+  nodes: [
+    { id:1, type:"start", name:"User Input", sub:"Livedesk 网页客服入口", col:0, row:4 },
+    { id:2, type:"variable", name:"初始化会话上下文", sub:"保存 URL / Livedesk 联系方式", col:1, row:4,
+      prompt:`变量赋值:
+- channel_source = {{sys_conversation_source}}
+- browser_entry_url = {{browser_current_url}}
+- browser_referrer_url = {{browser_source_url}}
+- livedesk_contact_id = {{ld_contact_id}}
+- guest_name / guest_phone / guest_email = LiveDesk 联系人信息
+
+成功/失败都继续路由,避免因属性缺失阻塞客服。` },
+    { id:3, type:"classifier", name:"主意图路由", sub:"7 类 · 单一路由", col:2, row:4,
+      prompt:`分类:
+1. 直连预订咨询
+2. 即时 FAQ 与设施咨询
+3. 房型与套餐推荐
+4. 住中服务与工单
+5. 会议宴会与复购线索
+6. 明确要求人工/投诉/高风险
+7. 其他
+
+规则:
+- 只选择一个最匹配分类。
+- 用户同时提出多个问题时,优先处理更紧急或更明确的事项。
+- 投诉、安全、隐私、明确要求人工最高优先级。
+
+边界样例:
+“我想订下周五两晚” → 直连预订咨询
+“泳池几点关?” → FAQ
+“行政房和套房怎么选?” → 房型推荐
+“1808 需要儿童拖鞋” → 住中服务
+“120 人婚宴有没有厅?” → 会议宴会
+“我要投诉,马上找人” → 人工/高风险` },
+    { id:4, type:"knowledge", name:"FAQ/设施知识检索", sub:"FAQ / 设施 / 政策 / 会员", col:3, row:1,
+      prompt:`知识库:
+- Aurora Hotel FAQ 与政策库
+- Aurora Hotel 房型与套餐库
+- Aurora Hotel 会议宴会资料库
+- 会员权益与服务标准库
+
+配置:
+- 强制调用
+- 问题增强开启
+- 混合搜索
+- 相关性 0.55 起
+- 召回数量 5
+- 内容多时开启重排` },
+    { id:5, type:"responder", name:"FAQ/设施答复", sub:"基于知识库回答", col:4, row:1,
+      prompt:`你是 Aurora 酒店 AI 客服助手,通过 Livedesk 网页客服组件服务宾客。
+
+目标:
+1. 基于知识数据回答 FAQ、设施、政策、会员权益。
+2. 简洁、礼貌、可执行。
+3. 知识数据无答案时不要编造,说明需要前台或人工确认。
+4. 价格、房态、库存、取消政策等易变信息不凭空给数值。
+5. 语言跟随用户,默认中文。
+
+输出:
+- 直接回答
+- 多事项用短列表
+- 最后给下一步建议` },
+    { id:6, type:"chatgather", name:"预订需求采集", sub:"日期 / 人数 / 房型 / 会员", col:3, row:3,
+      prompt:`采集字段:
+- check_in_date
+- check_out_date
+- guest_count
+- room_preference
+- budget_range 可选
+- member_status 可选
+- contact_info: 若 ld_phone 或 ld_email 已有则不重复索要
+
+控制:
+- 超 6 轮未采齐走采集失败
+- 先回应需求,再只问缺失字段` },
+    { id:7, type:"workflow", name:"查询房态与价格", sub:"hotel_availability_quote", col:4, row:3,
+      prompt:`Workflow: hotel_availability_quote
+
+入参:
+- check_in_date
+- check_out_date
+- guest_count
+- room_preference
+- member_status
+- contact_id
+
+输出:
+- available_rooms
+- quote_summary
+- booking_policy_summary
+- handoff_required
+- error_message` },
+    { id:8, type:"responder", name:"预订引导回复", sub:"解释结果与下一步", col:5, row:3,
+      prompt:`你是 Aurora 酒店 AI 预订助手。
+
+规则:
+1. 只使用 Workflow 返回的房型、价格、库存和政策。
+2. handoff_required 为 true 时说明原因并建议转 Livedesk 人工。
+3. 没有可用房型时给替代日期/偏好调整建议。
+4. 用户暂不下单时,可说明 EngageLab 后续可触达,但不承诺具体时间。
+
+结构:
+- 确认需求
+- 推荐/结果摘要
+- 政策或注意事项
+- 下一步` },
+    { id:9, type:"chatgather", name:"房型套餐偏好采集", sub:"场景 / 预算 / 偏好", col:3, row:5,
+      prompt:`采集字段:
+- stay_scenario: 差旅/亲子/休闲/会议/长住
+- budget_range 可选
+- room_preference: 安静、高楼层、办公桌、亲子设施、行政酒廊等
+- member_status 可选
+
+超 5 轮未采齐走采集失败。` },
+    { id:20, type:"knowledge", name:"房型套餐知识检索", sub:"房型 / 套餐 / 会员权益", col:4, row:5,
+      prompt:`知识库:
+- Aurora Hotel 房型与套餐库
+- 会员权益与服务标准库
+
+配置:
+- 强制调用
+- 问题增强开启
+- 混合搜索
+- 相关性 0.55 起
+- 召回数量 5
+- 内容多时开启重排
+
+说明:
+房型推荐分支使用独立知识搜索,避免 FAQ 分支与推荐分支共用一个“有结果”出口导致双回复。` },
+    { id:10, type:"responder", name:"房型套餐推荐", sub:"知识库 + 偏好", col:5, row:5,
+      prompt:`你是 Aurora 酒店房型与套餐推荐助手。
+
+规则:
+1. 推荐必须能从知识数据中找到依据。
+2. 不编造价格、库存或实时优惠。
+3. 会员权益优先解释,但不承诺未确认权益。
+4. 每个推荐说明适合原因和需确认事项。
+5. 企业价、长住价、特殊账期建议转人工。` },
+    { id:11, type:"chatgather", name:"住中服务采集", sub:"房号 / 项目 / 时间 / 紧急度", col:3, row:7,
+      prompt:`采集字段:
+- room_number
+- service_items: 送物、餐饮、洗衣、报修等
+- preferred_time
+- special_notes 可选
+- urgency: 普通/加急/紧急
+
+超 5 轮未采齐走采集失败。` },
+    { id:12, type:"workflow", name:"创建/查询服务工单", sub:"livedesk_service_ticket", col:4, row:7,
+      prompt:`Workflow: livedesk_service_ticket
+
+入参:
+- ld_conversation_id
+- ld_contact_id
+- room_number
+- service_items
+- preferred_time
+- special_notes
+- urgency
+
+输出:
+- ticket_id
+- ticket_status
+- eta
+- assigned_team
+- handoff_required` },
+    { id:13, type:"responder", name:"服务进度回复", sub:"工单摘要 / ETA / 加急", col:5, row:7,
+      prompt:`你是 Aurora 酒店住中服务助手。
+
+规则:
+1. 创建成功时返回工单号、服务项目、预计处理时间和注意事项。
+2. handoff_required 或工单异常时说明将转 Livedesk 人工处理。
+3. 紧急/投诉/安全类问题建议人工接管。
+4. 不承诺 Workflow 结果外的送达时间。` },
+    { id:14, type:"chatgather", name:"会议宴会线索采集", sub:"活动 / 日期 / 人数 / 联系人", col:3, row:9,
+      prompt:`采集字段:
+- event_type
+- event_date
+- attendee_count
+- budget_range 可选
+- catering_need 可选
+- room_nights_need 可选
+- contact_info: LiveDesk 已有则不重复索要
+
+超 6 轮未采齐走采集失败。` },
+    { id:15, type:"workflow", name:"创建销售线索/MA 标签", sub:"event_lead_ma_sync", col:4, row:9,
+      prompt:`Workflow: event_lead_ma_sync
+
+入参:
+- ld_conversation_id
+- ld_contact_id
+- event_type
+- event_date
+- attendee_count
+- budget_range
+- catering_need
+- room_nights_need
+- browser_entry_url
+
+输出:
+- lead_id
+- lead_priority
+- ma_tags
+- handoff_required` },
+    { id:16, type:"responder", name:"线索确认回复", sub:"销售跟进 / EngageLab 触达", col:5, row:9,
+      prompt:`你是 Aurora 酒店会议宴会与会员复购咨询助手。
+
+规则:
+1. 确认已记录的核心需求,不展示内部字段名。
+2. 如生成 lead_id,说明宴会/销售顾问将跟进。
+3. lead_priority 高或 handoff_required 为 true 时建议转人工/销售队列。
+4. 可说明后续可能通过 EngageLab 的 Email、WhatsApp、APP Push 等发送资料,不承诺具体时间。` },
+    { id:17, type:"responder", name:"兜底澄清", sub:"无法分类 / 无知识结果", col:5, row:1,
+      prompt:`当前问题没有被明确分类,或知识库没有找到可靠答案。
+
+请做到:
+1. 不要编造答案。
+2. 说明可帮助范围: 预订、设施政策、房型套餐、住中服务、会议宴会、转人工。
+3. 询问用户希望先处理哪一项。
+4. 用户表达不满、投诉或紧急情况时建议转人工。` },
+    { id:18, type:"human", name:"转 Livedesk 人工", sub:"终端 · 坐席/队列接管", col:6, row:6.5,
+      prompt:`三方系统: Livedesk
+
+队列建议:
+- urgent_service_queue
+- reservation_specialist_queue
+- hotel_service_queue
+- event_sales_queue
+
+转交摘要:
+- ld_conversation_id
+- ld_contact_id
+- 用户原始输入
+- 已采集字段摘要
+- 建议优先级
+- 是否需要 EngageLab MA 后续触达` },
+    { id:19, type:"end", name:"Output", sub:"自动回复出口", col:7, row:4 },
+  ],
+  edges: [
+    [1,2],
+    [2,3,"成功"], [2,3,"失败"],
+    [3,4,"FAQ/设施"], [3,6,"预订"], [3,9,"房型套餐"], [3,11,"住中服务"], [3,14,"会议宴会/复购"], [3,18,"人工/投诉"], [3,17,"其他"], [3,18,"异常分支"],
+    [4,5,"有结果"], [4,17,"无结果"],
+    [5,19],
+    [6,7,"完成采集"], [6,18,"采集失败"],
+    [7,8], [8,19],
+    [9,20,"完成采集"], [9,17,"采集失败"],
+    [20,10,"有结果"], [20,17,"无结果"],
+    [10,19],
+    [11,12,"完成采集"], [11,18,"采集失败"],
+    [12,13], [13,19],
+    [14,15,"完成采集"], [14,18,"采集失败"],
+    [15,16], [16,19],
+    [17,19],
+  ],
+};
+</script>
+
+<style>
+:root{
+  --bg:#f6f8fb; --ink:#1e293b; --mut:#64748b; --dim:#94a3b8;
+  --line:#e2e8f0; --edge:#cbd5e1; --edge-hot:#2563eb;
+  --start:#475569; --start-bg:#f1f5f9;
+  --llm:#2563eb; --llm-bg:#eff6ff;
+  --responder:#0891b2; --responder-bg:#ecfeff;
+  --classifier:#7c3aed; --classifier-bg:#f5f3ff;
+  --condition:#d97706; --condition-bg:#fffbeb;
+  --ifelse:#0284c7; --ifelse-bg:#f0f9ff;
+  --knowledge:#059669; --knowledge-bg:#ecfdf5;
+  --variable:#db2777; --variable-bg:#fdf2f8;
+  --workflow:#ea580c; --workflow-bg:#fff7ed;
+  --tools:#0d9488; --tools-bg:#f0fdfa;
+  --cards:#64748b; --cards-bg:#f8fafc;
+  --message:#6366f1; --message-bg:#eef2ff;
+  --human:#dc2626; --human-bg:#fef2f2;
+  --formgather:#16a34a; --formgather-bg:#f0fdf4;
+  --chatgather:#65a30d; --chatgather-bg:#f7fee7;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);
+  font-family:"Plus Jakarta Sans",system-ui,sans-serif;overflow:hidden}
+.topbar{position:fixed;top:0;left:0;right:0;height:62px;z-index:30;display:flex;
+  align-items:center;gap:14px;padding:0 24px;background:#ffffffe6;backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.topbar h1{font-size:17px;font-weight:800;margin:0;letter-spacing:-.01em}
+.topbar .tag{font-size:10px;font-weight:700;letter-spacing:.12em;color:#2563eb;
+  background:#eff6ff;border:1px solid #dbeafe;border-radius:6px;padding:3px 9px;text-transform:uppercase}
+.topbar .hint{margin-left:auto;font-size:11px;color:var(--dim)}
+
+#vp{position:fixed;inset:62px 0 0 0;overflow:hidden;cursor:grab;
+  background:radial-gradient(circle at 1px 1px,#e2e8f0 1px,transparent 0) 0 0/26px 26px,var(--bg)}
+#vp.grab{cursor:grabbing}
+#cv{position:absolute;top:0;left:0;transform-origin:0 0}
+#edges{position:absolute;top:0;left:0;overflow:visible}
+
+.nd{position:absolute;width:172px;background:#fff;border:2px solid var(--c,#cbd5e1);
+  border-radius:14px;padding:11px 13px;cursor:pointer;
+  box-shadow:0 1px 2px rgba(15,23,42,.04),0 6px 16px -8px rgba(15,23,42,.12);
+  transition:transform .14s,box-shadow .14s;z-index:5}
+.nd:hover{transform:translateY(-2px);box-shadow:0 8px 24px -8px rgba(15,23,42,.22);z-index:8}
+.nd .tp{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--c)}
+.nd .nm{font-size:13px;font-weight:700;margin-top:3px;line-height:1.25;color:var(--ink)}
+.nd .sb{font-size:10.5px;color:var(--mut);margin-top:4px;line-height:1.35;font-weight:500}
+.nd .pin{position:absolute;right:10px;top:9px;font-size:11px;color:var(--c)}
+.nd.diamond .dm{position:absolute;left:11px;top:-11px;width:18px;height:18px;background:var(--cbg);
+  border:2px solid var(--c);transform:rotate(45deg);border-radius:4px}
+.nd.sel{box-shadow:0 0 0 3px var(--cbg),0 0 0 4px var(--c)}
+.nd.dim{opacity:.35}
+
+.t-start,.t-end{--c:var(--start);--cbg:var(--start-bg)}
+.t-llm{--c:var(--llm);--cbg:var(--llm-bg)}
+.t-responder{--c:var(--responder);--cbg:var(--responder-bg)}
+.t-classifier{--c:var(--classifier);--cbg:var(--classifier-bg)}
+.t-condition{--c:var(--condition);--cbg:var(--condition-bg)}
+.t-ifelse{--c:var(--ifelse);--cbg:var(--ifelse-bg)}
+.t-knowledge{--c:var(--knowledge);--cbg:var(--knowledge-bg)}
+.t-variable{--c:var(--variable);--cbg:var(--variable-bg)}
+.t-workflow{--c:var(--workflow);--cbg:var(--workflow-bg)}
+.t-tools{--c:var(--tools);--cbg:var(--tools-bg)}
+.t-cards{--c:var(--cards);--cbg:var(--cards-bg)}
+.t-message{--c:var(--message);--cbg:var(--message-bg)}
+.t-human{--c:var(--human);--cbg:var(--human-bg)}
+.t-formgather{--c:var(--formgather);--cbg:var(--formgather-bg)}
+.t-chatgather{--c:var(--chatgather);--cbg:var(--chatgather-bg)}
+.nd{background:var(--cbg)}
+
+.elabel{position:absolute;font-size:9.5px;font-weight:600;color:var(--mut);background:#fff;
+  border:1px solid var(--line);border-radius:6px;padding:2px 7px;transform:translate(-50%,-50%);
+  pointer-events:none;z-index:6;white-space:nowrap}
+
+.zoom{position:fixed;bottom:22px;left:22px;z-index:30;display:flex;gap:5px;background:#fff;
+  border:1px solid var(--line);border-radius:12px;padding:6px;box-shadow:0 4px 14px -6px rgba(15,23,42,.2)}
+.zoom button{width:34px;height:34px;border:none;background:transparent;color:var(--mut);
+  font-size:18px;cursor:pointer;border-radius:8px}
+.zoom button:hover{background:#f1f5f9;color:var(--ink)}
+.zoom .lvl{min-width:50px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--dim);font-weight:600}
+
+.legend{position:fixed;bottom:22px;right:22px;z-index:30;display:flex;gap:11px;flex-wrap:wrap;
+  max-width:600px;background:#ffffffe6;border:1px solid var(--line);border-radius:12px;
+  padding:10px 14px;font-size:10px;color:var(--mut);font-weight:600;
+  box-shadow:0 4px 14px -6px rgba(15,23,42,.15)}
+.legend i{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:5px;vertical-align:-1px;border:2px solid}
+
+.panel{position:fixed;top:62px;right:0;height:calc(100vh - 62px);width:min(460px,92vw);z-index:40;
+  background:#fff;border-left:1px solid var(--line);box-shadow:-24px 0 50px -24px rgba(15,23,42,.3);
+  transform:translateX(100%);transition:.3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+.panel.open{transform:none}
+.ph{padding:22px 24px 16px;border-bottom:1px solid var(--line);position:relative}
+.ph .tp{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--pc,#2563eb)}
+.ph h3{margin:7px 0 0;font-size:21px;font-weight:800}
+.pclose{position:absolute;top:18px;right:18px;width:30px;height:30px;border:1px solid var(--line);
+  background:#fff;border-radius:8px;cursor:pointer;font-size:16px;color:var(--mut);z-index:2}
+.pclose:hover{color:var(--ink);background:#f8fafc}
+.pb{padding:20px 24px;overflow:auto;font-size:13px;line-height:1.6;color:var(--mut)}
+.pb h5{color:var(--ink);font-size:11px;letter-spacing:.06em;text-transform:uppercase;margin:0 0 9px}
+pre{white-space:pre-wrap;background:#f8fafc;border:1px solid var(--line);border-radius:10px;
+  padding:14px;font-size:12px;line-height:1.55;color:#334155;font-family:ui-monospace,monospace;margin:0}
+.empty{color:var(--dim);font-style:italic}
+.backdrop{position:fixed;inset:0;z-index:35;background:rgba(15,23,42,.18);opacity:0;
+  pointer-events:none;transition:.25s}
+.backdrop.show{opacity:1;pointer-events:auto}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <h1 id="title">GPTBots Flow</h1>
+  <span class="tag">Flow</span>
+  <span class="hint">拖拽平移 · 滚轮缩放 · 点节点看详情</span>
+</div>
+<div id="vp"><div id="cv"><svg id="edges"><defs>
+  <marker id="ar" markerWidth="8" markerHeight="8" refX="6.5" refY="3" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L6.5,3 L0,6 Z" fill="#cbd5e1"/></marker>
+  <marker id="arh" markerWidth="8" markerHeight="8" refX="6.5" refY="3" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L6.5,3 L0,6 Z" fill="#2563eb"/></marker>
+</defs></svg></div></div>
+<div class="zoom"><button id="zo">−</button><div class="lvl" id="zl">100%</div><button id="zi">+</button></div>
+<div class="legend" id="leg"></div>
+<div class="backdrop" id="bd"></div>
+<aside class="panel" id="pnl"><button class="pclose" id="pc">×</button>
+  <div class="ph"><div class="tp" id="ptp"></div><h3 id="phh"></h3></div>
+  <div class="pb" id="pbb"></div>
+</aside>
+
+<script>
+const TYPE_LABEL={start:"开始",end:"结束",llm:"大模型",responder:"Responder",classifier:"分类器",
+  condition:"条件判断",ifelse:"If/Else",knowledge:"知识搜索",variable:"变量赋值",workflow:"Workflow",
+  tools:"Tools",cards:"卡片",message:"消息透传",human:"人工服务",formgather:"表单采集",chatgather:"对话采集"};
+const DIAMOND=new Set(["condition","ifelse"]);
+const X=c=>48+c*242, Y=r=>48+r*124;
+document.getElementById('title').textContent=FLOW.title||"GPTBots Flow";
+
+const cv=document.getElementById('cv'),svg=document.getElementById('edges'),els={};
+const byId={}; FLOW.nodes.forEach(n=>byId[n.id]=n);
+FLOW.nodes.forEach(n=>{
+  const d=document.createElement('div');
+  d.className='nd t-'+n.type+(DIAMOND.has(n.type)?' diamond':'');
+  d.style.left=X(n.col)+'px';d.style.top=Y(n.row)+'px';
+  d.innerHTML=(DIAMOND.has(n.type)?'<span class="dm"></span>':'')+
+    `<span class="tp">${TYPE_LABEL[n.type]||n.type}</span><div class="nm">${n.name}</div>`+
+    (n.sub?`<div class="sb">${n.sub}</div>`:'')+(n.prompt?'<span class="pin">◆</span>':'');
+  d.onclick=e=>{e.stopPropagation();openNode(n.id);};
+  cv.appendChild(d);els[n.id]=d;
+});
+
+function box(id){const e=els[id];return{l:e.offsetLeft,t:e.offsetTop,w:e.offsetWidth,h:e.offsetHeight};}
+function draw(){
+  [...svg.querySelectorAll('path')].forEach(p=>p.remove());
+  document.querySelectorAll('.elabel').forEach(l=>l.remove());
+  let maxX=0,maxY=0; FLOW.nodes.forEach(n=>{maxX=Math.max(maxX,X(n.col)+200);maxY=Math.max(maxY,Y(n.row)+140);});
+  cv.style.width=maxX+'px';cv.style.height=maxY+'px';
+  svg.setAttribute('width',maxX);svg.setAttribute('height',maxY);
+  FLOW.edges.forEach(([a,b,lab])=>{
+    if(!els[a]||!els[b])return;
+    const s=box(a),t=box(b);
+    const sx=s.l+s.w,sy=s.t+s.h/2,tx=t.l,ty=t.t+t.h/2;
+    const back=tx<sx,off=Math.max(40,Math.abs(tx-sx)*0.5);
+    let d;
+    if(back){const bow=Math.max(s.t,t.t)+s.h+44;d=`M${sx},${sy} C${sx+off},${bow} ${tx-off},${bow} ${tx},${ty}`;}
+    else d=`M${sx},${sy} C${sx+off},${sy} ${tx-off},${ty} ${tx},${ty}`;
+    const p=document.createElementNS('http://www.w3.org/2000/svg','path');
+    p.setAttribute('d',d);p.setAttribute('fill','none');p.setAttribute('stroke','var(--edge)');
+    p.setAttribute('stroke-width','2');p.setAttribute('marker-end','url(#ar)');
+    if(back)p.setAttribute('stroke-dasharray','6 4');
+    p.dataset.a=a;p.dataset.b=b;svg.appendChild(p);
+    if(lab){const m=document.createElement('div');m.className='elabel';
+      m.style.left=((sx+tx)/2)+'px';m.style.top=(back?Math.max(s.t,t.t)+s.h+44:(sy+ty)/2)+'px';
+      m.textContent=lab;cv.appendChild(m);}
+  });
+}
+draw();
+
+const vp=document.getElementById('vp');let sc=1,ox=0,oy=0,drag=false,dx,dy;
+function apply(){cv.style.transform=`translate(${ox}px,${oy}px) scale(${sc})`;document.getElementById('zl').textContent=Math.round(sc*100)+'%';}
+vp.addEventListener('mousedown',e=>{if(e.target.closest('.nd'))return;drag=true;vp.classList.add('grab');dx=e.clientX-ox;dy=e.clientY-oy;});
+window.addEventListener('mousemove',e=>{if(!drag)return;ox=e.clientX-dx;oy=e.clientY-dy;apply();});
+window.addEventListener('mouseup',()=>{drag=false;vp.classList.remove('grab');});
+vp.addEventListener('wheel',e=>{e.preventDefault();const r=vp.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top,pre=sc;
+  sc=Math.min(2.2,Math.max(.3,sc*(e.deltaY<0?1.12:.89)));ox=mx-(mx-ox)*(sc/pre);oy=my-(my-oy)*(sc/pre);apply();},{passive:false});
+document.getElementById('zi').onclick=()=>{sc=Math.min(2.2,sc*1.15);apply();};
+document.getElementById('zo').onclick=()=>{sc=Math.max(.3,sc*.87);apply();};
+function fit(){const r=vp.getBoundingClientRect(),cw=cv.offsetWidth,ch=cv.offsetHeight;
+  sc=Math.min(r.width/cw,r.height/ch,1)*0.92;ox=(r.width-cw*sc)/2;oy=Math.max(20,(r.height-ch*sc)/2);apply();}
+setTimeout(fit,60);window.addEventListener('resize',fit);
+
+const LG=[["分类器","classifier"],["条件","condition"],["If/Else","ifelse"],["知识","knowledge"],
+  ["大模型","llm"],["Responder","responder"],["Workflow","workflow"],["Tools","tools"],["变量","variable"],
+  ["卡片","cards"],["消息透传","message"],["人工服务","human"],["表单采集","formgather"],["对话采集","chatgather"]];
+document.getElementById('leg').innerHTML=LG.map(([t,k])=>`<span><i style="border-color:var(--${k});background:var(--${k}-bg)"></i>${t}</span>`).join('');
+
+const pnl=document.getElementById('pnl'),bd=document.getElementById('bd');
+const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+function hl(id){
+  Object.values(els).forEach(e=>e.classList.remove('sel','dim'));
+  svg.querySelectorAll('path').forEach(p=>{p.setAttribute('stroke','var(--edge)');p.setAttribute('stroke-width','2');p.setAttribute('marker-end','url(#ar)');});
+  if(!id)return;
+  const keep=new Set([id]);FLOW.edges.forEach(([a,b])=>{if(a==id)keep.add(b);if(b==id)keep.add(a);});
+  Object.keys(els).forEach(k=>els[k].classList.toggle('dim',!keep.has(+k)));
+  els[id].classList.add('sel');els[id].classList.remove('dim');
+  svg.querySelectorAll('path').forEach(p=>{if(p.dataset.a==id||p.dataset.b==id){p.setAttribute('stroke','var(--edge-hot)');p.setAttribute('stroke-width','2.6');p.setAttribute('marker-end','url(#arh)');}});
+}
+function openNode(id){const n=byId[id];
+  document.getElementById('ptp').textContent=TYPE_LABEL[n.type]||n.type;
+  document.getElementById('phh').textContent=n.name;
+  document.querySelector('.ph .tp').style.setProperty('--pc',getComputedStyle(els[id]).getPropertyValue('--c'));
+  const pb=document.getElementById('pbb');
+  let html=n.sub?`<h5>说明</h5><div>${esc(n.sub)}</div>`:'';
+  if(n.prompt)html+=`<h5>Prompt / 条件</h5><pre>${esc(n.prompt)}</pre>`;
+  if(!html)html=`<div class="empty">该节点无附加说明</div>`;
+  pb.innerHTML=html;pnl.classList.add('open');bd.classList.add('show');hl(id);
+}
+function closeP(){pnl.classList.remove('open');bd.classList.remove('show');hl(null);}
+document.getElementById('pc').onclick=closeP;bd.onclick=closeP;
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeP();});
+</script>
+</body>
+</html>

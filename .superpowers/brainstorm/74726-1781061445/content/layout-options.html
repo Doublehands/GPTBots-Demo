@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>酒店页面布局方向</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 40px;
+      color: #18211d;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #eef1ed;
+    }
+    h1 { margin: 0 0 8px; font-size: 30px; }
+    .intro { margin: 0 0 28px; color: #66706b; }
+    .options {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+    .option {
+      overflow: hidden;
+      cursor: pointer;
+      border: 2px solid transparent;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 16px 40px rgba(35, 48, 41, 0.1);
+      transition: transform .2s ease, border-color .2s ease;
+    }
+    .option:hover { transform: translateY(-3px); }
+    .option.selected { border-color: #14734c; }
+    .preview { height: 440px; background: #f7f7f3; }
+    .hero {
+      position: relative;
+      height: 118px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      color: white;
+      text-align: center;
+      background: url("/files/hero-hotel-lobby.png") center/cover;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(30, 22, 18, .42);
+    }
+    .hero strong { position: relative; width: 80%; font-size: 15px; }
+    .section-title { padding: 16px 18px 10px; font-size: 13px; font-weight: 700; }
+    .console {
+      position: relative;
+      height: 280px;
+      margin: 0 14px;
+      overflow: hidden;
+      border-radius: 13px;
+      background: #26322c;
+    }
+    .console::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: .62;
+      background-position: center;
+      background-size: cover;
+    }
+    .console::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(11, 24, 18, .8), rgba(11, 24, 18, .18));
+    }
+    .channel-bg::before { background-image: url("/files/cap-deluxe-suite.png"); }
+    .carousel-bg::before { background-image: url("/files/cap-pool.png"); }
+    .rail {
+      position: absolute;
+      z-index: 2;
+      top: 14px;
+      left: 12px;
+      width: 78px;
+      display: grid;
+      gap: 7px;
+    }
+    .rail span {
+      padding: 7px 8px;
+      color: rgba(255,255,255,.78);
+      font-size: 8px;
+      border-radius: 7px;
+      background: rgba(255,255,255,.12);
+    }
+    .rail span:first-child { color: #173927; background: #d7f3e3; }
+    .panel {
+      position: absolute;
+      z-index: 2;
+      top: 16px;
+      right: 12px;
+      bottom: 16px;
+      left: 102px;
+      padding: 13px;
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 10px;
+      background: rgba(250,252,250,.91);
+      backdrop-filter: blur(8px);
+    }
+    .panel-title { width: 60%; height: 9px; margin-bottom: 12px; border-radius: 8px; background: #254837; }
+    .panel-grid { display: grid; grid-template-columns: 1.4fr .8fr; gap: 9px; height: 190px; }
+    .panel-grid i { display: block; border-radius: 7px; background: #e4ebe6; }
+    .panel-grid i:last-child { background: #d8e5dc; }
+    .collage {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 3px;
+      opacity: .68;
+    }
+    .collage img { width: 100%; height: 100%; object-fit: cover; }
+    .collage img:first-child { grid-row: 1 / span 2; }
+    .collage + .rail, .collage ~ .panel { z-index: 3; }
+    .dots {
+      position: absolute;
+      z-index: 3;
+      right: 18px;
+      bottom: 22px;
+      display: flex;
+      gap: 4px;
+    }
+    .dots b { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,.5); }
+    .dots b:first-child { width: 14px; border-radius: 5px; background: #fff; }
+    .body { padding: 16px 18px 20px; }
+    .choice { font-size: 11px; font-weight: 700; color: #14734c; }
+    h2 { margin: 5px 0 7px; font-size: 18px; }
+    p { line-height: 1.55; }
+    .body p { min-height: 60px; margin: 0; font-size: 13px; color: #66706b; }
+    .recommended {
+      display: inline-block;
+      margin-left: 6px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      color: #fff;
+      font-size: 10px;
+      background: #14734c;
+    }
+    @media (max-width: 980px) {
+      body { padding: 24px; }
+      .options { grid-template-columns: 1fr; }
+      .preview { height: 410px; }
+    }
+  </style>
+</head>
+<body>
+  <h1>触达渠道背景怎么组织？</h1>
+  <p class="intro">三个方案都会把顶部酒店大堂 Hero 延伸到页面两侧，并让触达渠道脱离大堂图。</p>
+  <div class="options">
+    <article class="option" data-choice="channel-specific" onclick="toggleSelect(this)">
+      <div class="preview">
+        <div class="hero"><strong>Aurora 酒店全旅程智能服务与营销赋能方案</strong></div>
+        <div class="section-title">五大核心能力 / 触达渠道</div>
+        <div class="console channel-bg">
+          <div class="rail"><span>APP Push</span><span>WebPush</span><span>SMS</span><span>WhatsApp</span><span>Email</span></div>
+          <div class="panel"><div class="panel-title"></div><div class="panel-grid"><i></i><i></i></div></div>
+        </div>
+      </div>
+      <div class="body">
+        <span class="choice">方案 A</span><span class="recommended">推荐</span>
+        <h2>按渠道切换场景背景</h2>
+        <p>点击不同渠道时同步切换客房、泳池、宴会等背景。内容与场景关联最清晰，也最能体现“多张图片”。</p>
+      </div>
+    </article>
+
+    <article class="option" data-choice="collage" onclick="toggleSelect(this)">
+      <div class="preview">
+        <div class="hero"><strong>Aurora 酒店全旅程智能服务与营销赋能方案</strong></div>
+        <div class="section-title">五大核心能力 / 触达渠道</div>
+        <div class="console">
+          <div class="collage">
+            <img src="/files/cap-executive-suite.png" alt="">
+            <img src="/files/cap-hotel-wedding.png" alt="">
+            <img src="/files/cap-pool.png" alt="">
+          </div>
+          <div class="rail"><span>APP Push</span><span>WebPush</span><span>SMS</span><span>WhatsApp</span><span>Email</span></div>
+          <div class="panel"><div class="panel-title"></div><div class="panel-grid"><i></i><i></i></div></div>
+        </div>
+      </div>
+      <div class="body">
+        <span class="choice">方案 B</span>
+        <h2>固定多图拼贴背景</h2>
+        <p>始终展示三张酒店场景图，视觉更丰富，但控制台后方信息会更繁杂，移动端也更难保持清楚。</p>
+      </div>
+    </article>
+
+    <article class="option" data-choice="carousel" onclick="toggleSelect(this)">
+      <div class="preview">
+        <div class="hero"><strong>Aurora 酒店全旅程智能服务与营销赋能方案</strong></div>
+        <div class="section-title">五大核心能力 / 触达渠道</div>
+        <div class="console carousel-bg">
+          <div class="rail"><span>APP Push</span><span>WebPush</span><span>SMS</span><span>WhatsApp</span><span>Email</span></div>
+          <div class="panel"><div class="panel-title"></div><div class="panel-grid"><i></i><i></i></div></div>
+          <div class="dots"><b></b><b></b><b></b><b></b></div>
+        </div>
+      </div>
+      <div class="body">
+        <span class="choice">方案 C</span>
+        <h2>独立自动轮播背景</h2>
+        <p>背景图片自动轮播，与渠道切换互不关联。动态感强，但可能分散用户对渠道内容和交互状态的注意力。</p>
+      </div>
+    </article>
+  </div>
+</body>
+</html>
