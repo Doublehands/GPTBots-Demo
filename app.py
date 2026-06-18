@@ -416,11 +416,15 @@ def industry_page(slug: str):
     for stage in detail["stages"]:
         cases = _stage_cases(slug, stage["key"])
         first_case_by_stage[stage["key"]] = cases[0]["id"] if cases else None
+    industry_solution = next(
+        (item for item in SOLUTIONS if item["industry_slug"] == slug), None
+    )
     return render_template(
         "industries/detail.html",
         industry=detail,
         industries=INDUSTRIES,
         first_case_by_stage=first_case_by_stage,
+        industry_solution=industry_solution,
     )
 
 

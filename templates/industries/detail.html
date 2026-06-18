@@ -21,6 +21,16 @@
     </div>
   </section>
 
+  {% if industry_solution %}
+  <section class="industry-solution-cta">
+    <div class="industry-solution-cta__inner">
+      <h2>独立解决方案演示</h2>
+      <p>{{ industry_solution.subtitle }}</p>
+      <a class="stage-cta" href="{{ url_for(industry_solution.endpoint) }}">查看{{ industry_solution.title }}解决方案 →</a>
+    </div>
+  </section>
+  {% endif %}
+
   <section class="industry-stage-grid" aria-label="阶段案例">
     {% for stage in industry.stages %}
     <article id="{{ stage.key }}" class="stage-card">
