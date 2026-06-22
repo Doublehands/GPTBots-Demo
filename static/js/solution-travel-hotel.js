@@ -1,459 +1,383 @@
 (function () {
   "use strict";
 
-  var CAP_ROOM =
-    typeof window !== "undefined" && window.__SOL_CAP_IMGS__ && typeof window.__SOL_CAP_IMGS__ === "object"
-      ? window.__SOL_CAP_IMGS__
-      : {};
+  var DEMO_BRAND = "Aurora Hotel";
+  var SCRIPT_BASE_URL =
+    document.currentScript && document.currentScript.src ? document.currentScript.src : document.baseURI;
+  var transitionTimers = new WeakMap();
 
-  var CAP_REPLY =
-    typeof window !== "undefined" && window.__SOL_CAP_REPLY_IMGS__ && typeof window.__SOL_CAP_REPLY_IMGS__ === "object"
-      ? window.__SOL_CAP_REPLY_IMGS__
-      : {};
-
-  /** 与回复内配图顺序一一对应 */
-  var CAP_REPLY_ALT = {
-    faq: ["公区入口", "户外泳池"],
-    rooms: ["豪华套房", "行政套房"],
-    events: ["酒店婚礼现场"],
+  var TOUCHPOINT_CHANNELS = {
+    app: {
+      moment: "抵达前 72 小时",
+      title: "一家人的假期，从从容出发开始",
+      message: "入住提醒、机场接送、儿童俱乐部开放时间与早餐偏好已经为您整理好。",
+      segment: "已预订的亲子家庭",
+      trigger: "入住前 72 小时自动触发",
+      objective: "降低行前不确定性并采集服务偏好",
+    },
+    webpush: {
+      moment: "官网浏览后 30 分钟",
+      title: "继续刚才心动的海岛家庭套餐",
+      message: "您浏览的家庭套房仍可预订，灵活取消政策和儿童餐权益可以继续向智能管家咨询。",
+      segment: "浏览房型但未完成预订的家庭",
+      trigger: "高意向页面退出后自动召回",
+      objective: "承接未完成预订并提升转化信心",
+    },
+    sms: {
+      moment: "关键服务节点",
+      title: "重要信息，用更高到达率及时确认",
+      message: "接驳车辆已确认，司机将在航班抵达后于 3 号出口等候；服务变更可直接进入智能管家。",
+      segment: "需要关键节点确认的宾客",
+      trigger: "订单、接驳、工单或紧急状态变化",
+      objective: "确保关键信息及时送达并减少服务遗漏",
+    },
+    whatsapp: {
+      moment: "跨境咨询与行前沟通",
+      title: "让国际宾客用熟悉的方式开始对话",
+      message: "Airport transfer, family room options and children's activities are ready for your trip planning.",
+      segment: "海外与多语言宾客",
+      trigger: "宾客订阅或跨境旅程节点触发",
+      objective: "降低语言与渠道门槛并连接连续服务",
+    },
+    email: {
+      moment: "长内容与高价值方案",
+      title: "把完整度假方案送进家庭决策清单",
+      message: "房型对比、亲子活动日历、餐饮套餐和会员权益已整理为一封可回看的度假建议。",
+      segment: "需要详细方案的家庭与团体客户",
+      trigger: "资料申请、方案生成或会务线索形成",
+      objective: "支撑长决策链并沉淀打开与点击行为",
+    },
+    ma: {
+      moment: "全旅程自动编排",
+      title: "每个行为，都成为下一次恰当服务的信号",
+      message: "从预订提醒到住中关怀、满意度回访与下一季家庭活动，旅程按宾客状态持续推进。",
+      segment: "不同生命周期与偏好的宾客分群",
+      trigger: "行为、标签、订单与服务状态共同驱动",
+      objective: "形成从获客、服务到复购的持续经营闭环",
+    },
   };
 
-  function getReplyImageUrls(key) {
-    var list = CAP_REPLY[key];
-    if (Array.isArray(list) && list.length) return list;
-    var one = CAP_ROOM[key];
-    return one ? [one] : [];
+  var CONCIERGE_MODES = {
+    agent: {
+      status: "GPTBots · 24/7 Online",
+      title: "懂目的地，也记得每个家庭的偏好",
+      role: "多语言问答、知识检索、个性化推荐、需求采集与服务流程引导。",
+      guest: "两个孩子分别 5 岁和 9 岁，明天上午有什么适合全家的活动？",
+      reply: "结合天气、年龄和您上次偏好的户外项目，我建议 09:30 的家庭帆船体验；我也可以一起确认早餐时段和接驳。",
+      action: "采集参加人数并发起活动预约",
+      actionStatus: "AI Handling",
+      steps: [
+        { text: "理解意图与家庭信息", state: "complete" },
+        { text: "调用度假村知识与偏好", state: "active" },
+        { text: "复杂场景转人工并保留上下文", state: "" },
+      ],
+      assurance: "标准需求由 AI 即时闭环，敏感、紧急或高价值场景由人工无缝接手。",
+    },
+    livedesk: {
+      status: "Livedesk · Human Priority",
+      title: "复杂时刻，由真正理解现场的人继续服务",
+      role: "投诉、紧急住中服务、复杂政策、高价值机会，以及工单优先级、SLA 与闭环。",
+      guest: "孩子身体不舒服，房间也需要尽快调整到离电梯更近的位置。",
+      reply: "AI 已整理房号、家庭成员、当前需求和可用房型。人工坐席已接手，并将同步前台与值班经理优先处理。",
+      action: "创建高优先级工单并同步现场团队",
+      actionStatus: "Human Assigned",
+      steps: [
+        { text: "AI 汇总诉求与完整会话", state: "complete" },
+        { text: "Livedesk 分配高优先级坐席", state: "complete" },
+        { text: "现场团队处理并回写结果", state: "active" },
+      ],
+      assurance: "宾客无需重复描述问题，人工团队从完整上下文继续处理并负责结果。",
+    },
+  };
+
+  var GUEST_JOURNEY = {
+    prestay: {
+      image: "../imgs/journey-prestay-family-v2.png",
+      alt: "一家人共同规划度假行程",
+      number: "01",
+      moment: "Pre-stay · 住前",
+      title: "把行前不确定，变成值得期待的准备",
+      scenario: "从目的地与套餐咨询，到未完成预订召回、交通指引、儿童活动和餐饮偏好采集。",
+      engagelab: "识别旅程节点并主动触达",
+      gptbots: "承接问答、推荐与信息采集",
+      livedesk: "处理复杂政策与高价值机会",
+      outcome: "提高响应与预订信心，让服务准备发生在到店之前",
+    },
+    instay: {
+      image: "../imgs/journey-instay-family-v2.png",
+      alt: "一家人在度假村享受连续服务",
+      number: "02",
+      moment: "In-stay · 住中",
+      title: "每一个即时需求，都能找到最快的处理路径",
+      scenario: "设施与活动问答、餐饮和客房需求、维修工单、服务进度，以及紧急或敏感问题升级。",
+      engagelab: "在欢迎、活动与服务节点发送关怀",
+      gptbots: "即时受理高频需求并创建结构化任务",
+      livedesk: "接管紧急场景并协调现场闭环",
+      outcome: "缩短等待与重复沟通，让现场团队把精力留给真正需要判断的服务",
+    },
+    poststay: {
+      image: "../imgs/journey-poststay-family-v2.png",
+      alt: "宾客离店后继续获得会员与复购服务",
+      number: "03",
+      moment: "Post-stay · 住后",
+      title: "离店不是结束，而是下一次家庭记忆的开始",
+      scenario: "满意度回访、发票积分与遗失物咨询、会员权益提醒、个性化复购和季节活动培育。",
+      engagelab: "按满意度、偏好与季节编排持续旅程",
+      gptbots: "处理售后问答并推荐下一次合适方案",
+      livedesk: "跟进客诉恢复与高价值复购机会",
+      outcome: "沉淀可复用家庭偏好，把一次入住转化为长期宾客关系",
+    },
+  };
+
+  function setText(id, value) {
+    var element = document.getElementById(id);
+    if (element && value != null) element.textContent = value;
   }
 
-  /** 五大核心能力：右侧对话示例（短文案以适配固定高度、无滚动） */
-  var CAP_IMG = {
-    booking: {
-      title: "直连预订转化",
-      summary: "从假日酒店官网、WhatsApp 或广告落地页进入的高意向宾客，由 GPTBots 完成房型、价格、取消政策和担保说明；EngageLab 对未完成预订用户通过 APP Push、WebPush、SMS、WhatsApp、Email 和 MA 旅程继续触达。",
-      outcomes: ["减少前台重复答疑", "提升直订完成率", "保留高价值线索"],
-      roles: {
-        gptbots: "识别预算、日期、床型和会员诉求，调用房型知识库与预订流程节点。",
-        engagelab: "对未完成预订、价格犹豫和会员权益咨询人群发起 MA 旅程触达。",
-        livedesk: "在企业协议价、特殊担保或投诉场景中人工接管并记录跟进优先级。",
-      },
-      guest: "下周五入住假日酒店、周日离店，两大一小。想要连通房，尽量离电梯远些，含双早。能信用卡担保吗？",
-      agent1:
-        "Holiday Inn 12–14 层家庭连通房可订，已标注远离电梯井一侧。含双早，支持信用卡担保；入住前一日 18:00 前可免费取消。\n\n" +
-        "需要我先为您锁价 10 分钟吗？",
-      guest2: "先不锁价。儿童早餐怎么算？加床政策呢？",
-      agent:
-        "儿童 1.2m 以下早餐半价，以上按成人；加床视房型可加，费用以订单为准。\n\n" +
-        "若您暂不下单，EngageLab 会在 2 小时后通过 WebPush/WhatsApp 发送房型保留提醒；点击「立即预约」可与顾问确认人数、床型与发票信息。",
-      primary: "立即预约",
-      secondary: "转人工",
-    },
-    faq: {
-      title: "即时 FAQ 与设施咨询",
-      summary: "GPTBots 基于假日酒店知识库回答班车、泳池、早餐、停车、会员权益等问题；异常、投诉或高价值咨询由 Livedesk 接管，避免信息断层。",
-      outcomes: ["统一服务口径", "降低人工首响压力", "复杂问题快速升级"],
-      roles: {
-        gptbots: "连接 FAQ、设施、政策、会员权益和周边交通知识库，保持答复一致。",
-        engagelab: "把常问问题沉淀为 MA 标签，为行前提醒、到店欢迎和复购活动分群。",
-        livedesk: "接管高敏感问题、投诉和多语言咨询，并同步 GPTBots 会话上下文。",
-      },
-      guest: "假日酒店有机场班车吗？泳池、健身房要预约吗？加床怎么收费？",
-      agent:
-        "机场班车需提前 2 小时预约；泳池 6:30–22:00，高峰可能限流；健身房 24 小时开放；加床以订单房型确认为准。\n\n" +
-        "附图：公区入口与泳池实景。若需要人工确认班车余位，我可以转 Livedesk。",
-      primary: "设施一页通",
-      secondary: "问前台",
-    },
-    rooms: {
-      title: "房型与套餐推荐",
-      summary: "GPTBots 根据差旅/亲子/会议场景推荐房型和套餐，解释价格、权益和升级理由；EngageLab 根据互动结果更新会员分层和后续营销旅程。",
-      outcomes: ["提升套餐加购", "缩短比价决策", "沉淀会员偏好"],
-      roles: {
-        gptbots: "比较豪华、行政、亲子与长住套餐，结合预算和权益给出可解释推荐。",
-        engagelab: "把房型兴趣、预算区间和权益偏好写入 MA，用于后续 Push/Email 精准触达。",
-        livedesk: "处理团队价、长住协议价、发票和特殊账期等非标需求。",
-      },
-      guest: "假日酒店行政房和豪华套房怎么选？出差要安静写报告，预算约 1500/晚。",
-      agent:
-        "豪华套房适合会客，客厅+卧室；行政房更适合差旅，高楼层、行政酒廊、书桌更宽。\n\n" +
-        "附图对比。若您是 IHG One Rewards 会员，我可以优先推荐含早餐和延迟退房权益的组合。",
-      primary: "对比实拍",
-      secondary: "报价单",
-    },
-    service: {
-      title: "住中服务与工单闭环",
-      summary: "住中服务由 GPTBots 收集房号、时间、过敏/偏好等关键信息；Livedesk 分派客房、餐饮或工程工单；EngageLab 回写行为，用于满意度和复购旅程。",
-      outcomes: ["减少电话占线", "工单有状态可追踪", "服务偏好可复用"],
-      roles: {
-        gptbots: "在对话中收集服务细节，生成结构化工单并提示预计送达时间。",
-        engagelab: "根据服务行为触发满意度、权益提醒和离店复购 MA 旅程。",
-        livedesk: "分派客房/工程/餐饮任务，设置紧急程度并追踪 SLA 闭环。",
-      },
-      guest: "你好，能送一套洗漱和儿童拖鞋到假日酒店房间吗？还想晚点送一壶温水。",
-      agent1:
-        "可以。请提供房号、希望送达的大概时间；如有食物过敏或早餐备注，也请说明，我帮您建服务单。",
-      guest2: "房号 1808。小朋友牛奶过敏，早餐请不要配乳制品。温水希望约 30 分钟后送到，谢谢。",
-      agent:
-        "已记录 Holiday Inn 1808 房，并生成服务单 HS-240815-018；过敏信息已同步餐饮与客房。\n\n" +
-        "进度见下表，送达前会轻敲门。改时间或加急请告诉我。",
-      primary: "看进度",
-      secondary: "加急",
-    },
-    events: {
-      title: "会议宴会与会员复购",
-      summary: "GPTBots 承接婚宴、会议、企业活动和会员复购咨询，收集人数、日期、预算和场地偏好；EngageLab 以 MA 旅程持续培育线索，Livedesk 对高价值机会人工跟进。",
-      outcomes: ["宴会线索不流失", "销售跟进更及时", "会员复购可运营"],
-      roles: {
-        gptbots: "询问活动日期、人数、预算、餐饮和房晚需求，输出可转交销售的摘要。",
-        engagelab: "通过 Email、WhatsApp 和 APP Push 持续发送套餐资料、试菜提醒和会员复住权益。",
-        livedesk: "宴会销售或会员运营专员接管高价值咨询，标记重要程度并闭环。",
-      },
-      guest: "假日酒店婚宴约 120 人，明年 5 月周末，想看厅、餐饮与婚房。",
-      agent:
-        "大厅约 8m 层高，适合 120 人圆桌；可组合婚房、试菜和宾客房价。附图婚礼现场参考。\n\n" +
-        "我可以把需求摘要同步给 Livedesk 宴会销售，并由 EngageLab 发送套餐资料与试菜提醒。",
-      primary: "套餐资料",
-      secondary: "约顾问",
-    },
-  };
+  function prefersReducedMotion() {
+    return (
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    );
+  }
 
-  function setCapPanel(key) {
-    var data = CAP_IMG[key];
-    var guestEl = document.getElementById("sol-cap-guest");
-    var agentEl = document.getElementById("sol-cap-agent");
-    var primaryEl = document.getElementById("sol-cap-action-primary");
-    var secondaryEl = document.getElementById("sol-cap-action-secondary");
-    var img0 = document.getElementById("sol-cap-media-0-img");
-    var trig0 = document.getElementById("sol-cap-media-0-trigger");
-    var img1 = document.getElementById("sol-cap-media-1-img");
-    var trig1 = document.getElementById("sol-cap-media-1-trigger");
-    var att = document.getElementById("sol-cap-reply-attachments");
-    var bookingRow = document.getElementById("sol-cap-booking-row");
-    var bookingAgent1El = document.getElementById("sol-cap-booking-agent-1");
-    var guest2El = document.getElementById("sol-cap-guest-2");
-    var serviceAgent1El = document.getElementById("sol-cap-service-agent-1");
-    var serviceGuest2El = document.getElementById("sol-cap-service-guest-2");
-    var serviceRich = document.getElementById("sol-cap-service-rich");
-    var showcaseTitle = document.getElementById("sol-cap-showcase-title");
-    var showcaseDesc = document.getElementById("sol-cap-showcase-desc");
-    var outcomeEls = [
-      document.getElementById("sol-cap-outcome-1"),
-      document.getElementById("sol-cap-outcome-2"),
-      document.getElementById("sol-cap-outcome-3"),
-    ];
-    var roleEls = {
-      gptbots: document.getElementById("sol-cap-gptbots-role"),
-      engagelab: document.getElementById("sol-cap-engagelab-role"),
-      livedesk: document.getElementById("sol-cap-livedesk-role"),
-    };
-    var root = document.getElementById("capabilities");
-    if (!data || !guestEl || !agentEl || !primaryEl || !secondaryEl || !root) return;
-
-    guestEl.textContent = data.guest;
-    agentEl.textContent = data.agent;
-    primaryEl.textContent = data.primary;
-    secondaryEl.textContent = data.secondary;
-
-    if (showcaseTitle) showcaseTitle.textContent = data.title;
-    if (showcaseDesc) showcaseDesc.textContent = data.summary || "";
-    outcomeEls.forEach(function (el, index) {
-      if (el) el.textContent = data.outcomes && data.outcomes[index] ? data.outcomes[index] : "";
-    });
-    Object.keys(roleEls).forEach(function (role) {
-      if (roleEls[role] && data.roles && data.roles[role]) {
-        roleEls[role].textContent = data.roles[role];
-      }
-    });
-
-    if (key === "booking" && data.agent1 != null && bookingAgent1El && guest2El) {
-      bookingAgent1El.textContent = data.agent1;
-      guest2El.textContent = data.guest2;
-      bookingAgent1El.hidden = false;
-      bookingAgent1El.classList.remove("is-hidden");
-      bookingAgent1El.setAttribute("aria-hidden", "false");
-      guest2El.hidden = false;
-      guest2El.classList.remove("is-hidden");
-      guest2El.setAttribute("aria-hidden", "false");
-    } else if (bookingAgent1El && guest2El) {
-      bookingAgent1El.hidden = true;
-      bookingAgent1El.classList.add("is-hidden");
-      bookingAgent1El.setAttribute("aria-hidden", "true");
-      guest2El.hidden = true;
-      guest2El.classList.add("is-hidden");
-      guest2El.setAttribute("aria-hidden", "true");
+  function transitionPanel(panel, render) {
+    if (!panel || prefersReducedMotion()) {
+      render();
+      if (panel) panel.classList.remove("is-transitioning");
+      return;
     }
 
-    if (key === "service" && data.agent1 != null && serviceAgent1El && serviceGuest2El) {
-      serviceAgent1El.textContent = data.agent1;
-      serviceGuest2El.textContent = data.guest2;
-      serviceAgent1El.hidden = false;
-      serviceAgent1El.classList.remove("is-hidden");
-      serviceAgent1El.setAttribute("aria-hidden", "false");
-      serviceGuest2El.hidden = false;
-      serviceGuest2El.classList.remove("is-hidden");
-      serviceGuest2El.setAttribute("aria-hidden", "false");
-    } else if (serviceAgent1El && serviceGuest2El) {
-      serviceAgent1El.hidden = true;
-      serviceAgent1El.classList.add("is-hidden");
-      serviceAgent1El.setAttribute("aria-hidden", "true");
-      serviceGuest2El.hidden = true;
-      serviceGuest2El.classList.add("is-hidden");
-      serviceGuest2El.setAttribute("aria-hidden", "true");
+    var previousTimer = transitionTimers.get(panel);
+    if (previousTimer) window.clearTimeout(previousTimer);
+    panel.classList.add("is-transitioning");
+
+    var timer = window.setTimeout(function () {
+      render();
+      window.requestAnimationFrame(function () {
+        panel.classList.remove("is-transitioning");
+        transitionTimers.delete(panel);
+      });
+    }, 90);
+    transitionTimers.set(panel, timer);
+  }
+
+  function setupTabs(config) {
+    var root = document.getElementById(config.rootId);
+    var panel = document.getElementById(config.panelId);
+    if (!root || !panel) return;
+
+    var tabs = Array.prototype.slice.call(root.querySelectorAll(config.tabSelector));
+    if (!tabs.length) return;
+
+    function activate(key, focusTab) {
+      var activeTab = null;
+      tabs.forEach(function (tab) {
+        var active = tab.getAttribute(config.dataAttribute) === key;
+        tab.classList.toggle("is-active", active);
+        tab.setAttribute("aria-selected", active ? "true" : "false");
+        tab.setAttribute("tabindex", active ? "0" : "-1");
+        if (active) activeTab = tab;
+      });
+
+      if (!activeTab) return;
+      panel.setAttribute("aria-labelledby", activeTab.id);
+      transitionPanel(panel, function () {
+        config.render(key);
+      });
+      if (focusTab) activeTab.focus();
     }
 
-    if (key === "booking") {
-      primaryEl.classList.add("is-hidden");
-      primaryEl.hidden = true;
-    } else {
-      primaryEl.classList.remove("is-hidden");
-      primaryEl.hidden = false;
-    }
+    tabs.forEach(function (tab, index) {
+      tab.addEventListener("click", function () {
+        activate(tab.getAttribute(config.dataAttribute), false);
+      });
 
-    var urls = getReplyImageUrls(key);
-    var alts = CAP_REPLY_ALT[key] || [];
-
-    if (key === "booking") {
-      if (bookingRow) {
-        bookingRow.hidden = false;
-        bookingRow.classList.remove("is-hidden");
-      }
-      if (serviceRich) {
-        serviceRich.hidden = true;
-        serviceRich.classList.add("is-hidden");
-      }
-      if (att) {
-        att.hidden = true;
-        att.classList.add("is-hidden");
-      }
-    } else if (key === "service") {
-      if (bookingRow) {
-        bookingRow.hidden = true;
-        bookingRow.classList.add("is-hidden");
-      }
-      if (serviceRich) {
-        serviceRich.hidden = false;
-        serviceRich.classList.remove("is-hidden");
-      }
-      if (att) {
-        att.hidden = true;
-        att.classList.add("is-hidden");
-      }
-    } else {
-      if (bookingRow) {
-        bookingRow.hidden = true;
-        bookingRow.classList.add("is-hidden");
-      }
-      if (serviceRich) {
-        serviceRich.hidden = true;
-        serviceRich.classList.add("is-hidden");
-      }
-      if (att) {
-        att.hidden = false;
-        att.classList.remove("is-hidden");
-      }
-
-      if (img0 && trig0 && urls[0]) {
-        img0.src = urls[0];
-        img0.alt = alts[0] || data.title + " 配图";
-        trig0.setAttribute("data-lightbox-src", urls[0]);
-        trig0.setAttribute("data-lightbox-alt", img0.alt);
-      }
-
-      if (img1 && trig1) {
-        if (urls[1]) {
-          img1.src = urls[1];
-          img1.alt = alts[1] || data.title + " 配图 2";
-          trig1.setAttribute("data-lightbox-src", urls[1]);
-          trig1.setAttribute("data-lightbox-alt", img1.alt);
-          trig1.hidden = false;
-          trig1.classList.remove("is-hidden");
+      tab.addEventListener("keydown", function (event) {
+        var nextIndex;
+        if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+          nextIndex = (index + 1) % tabs.length;
+        } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+          nextIndex = (index - 1 + tabs.length) % tabs.length;
+        } else if (event.key === "Home") {
+          nextIndex = 0;
+        } else if (event.key === "End") {
+          nextIndex = tabs.length - 1;
         } else {
-          img1.removeAttribute("src");
-          img1.alt = "";
-          trig1.removeAttribute("data-lightbox-src");
-          trig1.removeAttribute("data-lightbox-alt");
-          trig1.hidden = true;
-          trig1.classList.add("is-hidden");
+          return;
         }
-      }
-
-      if (att) {
-        att.setAttribute("data-count", urls.length > 1 ? "2" : "1");
-      }
-    }
-
-    root.querySelectorAll(".sol-cap-row").forEach(function (btn) {
-      var active = btn.getAttribute("data-cap-key") === key;
-      btn.classList.toggle("is-active", active);
-      btn.setAttribute("aria-selected", active ? "true" : "false");
+        event.preventDefault();
+        activate(tabs[nextIndex].getAttribute(config.dataAttribute), true);
+      });
     });
+
+    activate(config.defaultKey, false);
   }
+
+  function renderTouchpoint(key) {
+    var data = TOUCHPOINT_CHANNELS[key];
+    if (!data) return;
+    setText("touchpoint-moment", data.moment);
+    setText("touchpoint-title", data.title);
+    setText("touchpoint-message", data.message);
+    setText("touchpoint-segment", data.segment);
+    setText("touchpoint-trigger", data.trigger);
+    setText("touchpoint-objective", data.objective);
+  }
+
+  function renderConcierge(key) {
+    var data = CONCIERGE_MODES[key];
+    if (!data) return;
+    setText("concierge-status", data.status);
+    setText("concierge-title", data.title);
+    setText("concierge-role", data.role);
+    setText("concierge-guest", data.guest);
+    setText("concierge-reply", data.reply);
+    setText("concierge-action", data.action);
+    setText("concierge-action-status", data.actionStatus);
+    setText("concierge-assurance", data.assurance);
+
+    var steps = document.getElementById("concierge-steps");
+    if (steps) {
+      steps.replaceChildren();
+      data.steps.forEach(function (step) {
+        var item = document.createElement("li");
+        item.textContent = step.text;
+        if (step.state) item.classList.add("is-" + step.state);
+        steps.appendChild(item);
+      });
+    }
+  }
+
+  function renderJourney(key) {
+    var data = GUEST_JOURNEY[key];
+    if (!data) return;
+    var image = document.getElementById("journey-image");
+    if (image) {
+      image.src = new URL(data.image, SCRIPT_BASE_URL).href;
+      image.alt = data.alt;
+    }
+    var number = document.querySelector(".sol-journey-stage__number");
+    if (number) number.textContent = data.number;
+    setText("journey-moment", data.moment);
+    setText("journey-title", data.title);
+    setText("journey-scenario", data.scenario);
+    setText("journey-engagelab", "EngageLab · " + data.engagelab);
+    setText("journey-gptbots", "GPTBots · " + data.gptbots);
+    setText("journey-livedesk", "Livedesk · " + data.livedesk);
+    setText("journey-outcome", data.outcome);
+  }
+
+  window.AuroraResortDemo = {
+    TOUCHPOINT_CHANNELS: TOUCHPOINT_CHANNELS,
+    CONCIERGE_MODES: CONCIERGE_MODES,
+    GUEST_JOURNEY: GUEST_JOURNEY,
+  };
 
   document.addEventListener("DOMContentLoaded", function () {
-    var root = document.getElementById("capabilities");
-    if (root) {
-      function bindRow(el) {
-        var key = el.getAttribute("data-cap-key");
-        if (!key || !CAP_IMG[key]) return;
+    setupTabs({
+      rootId: "engagement-hub",
+      panelId: "engagement-panel",
+      tabSelector: "[data-touchpoint]",
+      dataAttribute: "data-touchpoint",
+      defaultKey: "app",
+      render: renderTouchpoint,
+    });
 
-        el.addEventListener("mouseenter", function () {
-          setCapPanel(key);
-        });
-        el.addEventListener("focus", function () {
-          setCapPanel(key);
-        });
-        el.addEventListener("click", function () {
-          setCapPanel(key);
-        });
-      }
+    setupTabs({
+      rootId: "concierge-lobby",
+      panelId: "concierge-panel",
+      tabSelector: "[data-concierge-mode]",
+      dataAttribute: "data-concierge-mode",
+      defaultKey: "agent",
+      render: renderConcierge,
+    });
 
-      root.querySelectorAll(".sol-cap-row").forEach(bindRow);
+    setupTabs({
+      rootId: "guest-journey",
+      panelId: "journey-panel",
+      tabSelector: "[data-journey-stage]",
+      dataAttribute: "data-journey-stage",
+      defaultKey: "prestay",
+      render: renderJourney,
+    });
 
-      var first = Object.keys(CAP_IMG)[0];
-      if (first) setCapPanel(first);
+    var messageAction = document.querySelector(".sol-message-action");
+    if (messageAction) {
+      messageAction.addEventListener("click", function () {
+        document.getElementById("concierge-lobby").scrollIntoView({ behavior: "smooth" });
+      });
     }
 
     var progressNav = document.querySelector(".sol-progress");
     if (progressNav) {
       var progressLinks = Array.prototype.slice.call(progressNav.querySelectorAll(".sol-progress__dot"));
-      var progressSections = progressLinks
+      var sections = progressLinks
         .map(function (link) {
-          var id = link.getAttribute("data-target");
-          return id ? document.getElementById(id) : null;
+          return document.getElementById(link.getAttribute("data-target"));
         })
         .filter(Boolean);
 
-      function setProgress(index) {
-        progressLinks.forEach(function (link, idx) {
-          var isActive = idx === index;
-          var isPassed = idx < index;
-          link.classList.toggle("is-active", isActive);
-          link.classList.toggle("is-passed", isPassed);
-          if (isActive) {
-            link.setAttribute("aria-current", "true");
-          } else {
-            link.removeAttribute("aria-current");
-          }
-        });
-      }
-
-      function getActiveIndex() {
-        if (!progressSections.length) return 0;
-        var triggerLine = window.scrollY + window.innerHeight * 0.4;
+      function updateProgress() {
+        var triggerLine = window.scrollY + window.innerHeight * 0.42;
         var activeIndex = 0;
-        progressSections.forEach(function (section, idx) {
-          if (section.offsetTop <= triggerLine) {
-            activeIndex = idx;
-          }
+        sections.forEach(function (section, index) {
+          if (section.offsetTop <= triggerLine) activeIndex = index;
         });
-        return activeIndex;
+        progressLinks.forEach(function (link, index) {
+          link.classList.toggle("is-active", index === activeIndex);
+          link.classList.toggle("is-passed", index < activeIndex);
+          if (index === activeIndex) link.setAttribute("aria-current", "true");
+          else link.removeAttribute("aria-current");
+        });
       }
 
       var ticking = false;
-      function refreshProgress() {
+      function requestProgressUpdate() {
         if (ticking) return;
         ticking = true;
         window.requestAnimationFrame(function () {
-          setProgress(getActiveIndex());
+          updateProgress();
           ticking = false;
         });
       }
 
-      setProgress(getActiveIndex());
-      window.addEventListener("scroll", refreshProgress, { passive: true });
-      window.addEventListener("resize", refreshProgress);
-      progressLinks.forEach(function (link, idx) {
-        link.addEventListener("click", function () {
-          setProgress(idx);
-        });
-      });
+      updateProgress();
+      window.addEventListener("scroll", requestProgressUpdate, { passive: true });
+      window.addEventListener("resize", requestProgressUpdate);
     }
 
-    var lightbox = document.getElementById("sol-lightbox");
-    var lightboxImg = document.getElementById("sol-lightbox-img");
-    if (!lightbox || !lightboxImg) return;
+    var modal = document.getElementById("sol-calendly-modal");
+    var openButton = document.getElementById("sol-cap-open-booking");
+    var lastFocus = null;
 
-    var closeEls = lightbox.querySelectorAll("[data-lightbox-close]");
-    var lastTrigger = null;
-
-    function openLightbox(trigger) {
-      var src = trigger.getAttribute("data-lightbox-src");
-      if (!src) return;
-      var alt = trigger.getAttribute("data-lightbox-alt") || "";
-      lastTrigger = trigger;
-      lightboxImg.src = src;
-      lightboxImg.alt = alt;
-      lightbox.hidden = false;
-      lightbox.setAttribute("aria-hidden", "false");
+    function openModal() {
+      if (!modal) return;
+      lastFocus = document.activeElement;
+      modal.hidden = false;
+      modal.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
-      var closeBtn = lightbox.querySelector(".sol-lightbox__close");
-      if (closeBtn) closeBtn.focus();
+      var closeButton = modal.querySelector(".sol-calendly-modal__close");
+      if (closeButton) closeButton.focus();
     }
 
-    function closeLightbox() {
-      lightbox.hidden = true;
-      lightbox.setAttribute("aria-hidden", "true");
-      lightboxImg.src = "";
-      lightboxImg.alt = "";
+    function closeModal() {
+      if (!modal) return;
+      modal.hidden = true;
+      modal.setAttribute("aria-hidden", "true");
       document.body.style.overflow = "";
-      if (lastTrigger) lastTrigger.focus();
+      if (lastFocus) lastFocus.focus();
     }
 
-    document.querySelectorAll(".js-lightbox-trigger").forEach(function (trigger) {
-      trigger.addEventListener("click", function () {
-        openLightbox(trigger);
-      });
-      trigger.addEventListener("keydown", function (event) {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          openLightbox(trigger);
-        }
-      });
-    });
-
-    closeEls.forEach(function (el) {
-      el.addEventListener("click", closeLightbox);
-    });
-
-    var calendlyModal = document.getElementById("sol-calendly-modal");
-    var openBookingBtn = document.getElementById("sol-cap-open-booking");
-
-    function openCalendlyModal() {
-      if (!calendlyModal) return;
-      calendlyModal.hidden = false;
-      calendlyModal.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden";
-      var closeBtn = calendlyModal.querySelector(".sol-calendly-modal__close");
-      if (closeBtn) closeBtn.focus();
-    }
-
-    function closeCalendlyModal() {
-      if (!calendlyModal) return;
-      calendlyModal.hidden = true;
-      calendlyModal.setAttribute("aria-hidden", "true");
-      document.body.style.overflow = "";
-      if (openBookingBtn) openBookingBtn.focus();
-    }
-
-    if (openBookingBtn) {
-      openBookingBtn.addEventListener("click", openCalendlyModal);
-    }
-
-    if (calendlyModal) {
-      calendlyModal.querySelectorAll("[data-calendly-close]").forEach(function (el) {
-        el.addEventListener("click", closeCalendlyModal);
+    if (openButton) openButton.addEventListener("click", openModal);
+    if (modal) {
+      modal.querySelectorAll("[data-calendly-close]").forEach(function (element) {
+        element.addEventListener("click", closeModal);
       });
     }
 
     document.addEventListener("keydown", function (event) {
-      if (event.key !== "Escape") return;
-      if (calendlyModal && !calendlyModal.hidden) {
-        closeCalendlyModal();
-        return;
-      }
-      if (lightbox && !lightbox.hidden) {
-        closeLightbox();
-      }
+      if (event.key === "Escape" && modal && !modal.hidden) closeModal();
     });
-
   });
 })();

@@ -109,6 +109,29 @@ class TravelHotelDemoTest(unittest.TestCase):
                 self.assertTrue((ROOT / "static/imgs" / image_name).exists())
                 self.assertTrue((ROOT / "docs/static/imgs" / image_name).exists())
 
+    def test_widget_hint_uses_responsive_safe_area_positioning(self):
+        css_artifacts = [
+            self.read("static/css/solution-travel-hotel.css"),
+            self.read("docs/static/css/solution-travel-hotel.css"),
+        ]
+
+        for css in css_artifacts:
+            with self.subTest(artifact_length=len(css)):
+                self.assertIn("--sol-widget-button-size", css)
+                self.assertIn("env(safe-area-inset-right)", css)
+                self.assertIn("env(safe-area-inset-bottom)", css)
+                self.assertIn("max-width: calc(100vw - 32px);", css)
+                self.assertIn("pointer-events: none;", css)
+                self.assertIn(".sol-widget-hint::after", css)
+
+                mobile_css = css[css.index("@media (max-width: 640px)") :]
+                mobile_hint = mobile_css[
+                    mobile_css.index(".sol-widget-hint") : mobile_css.index(
+                        "@media (prefers-reduced-motion: reduce)"
+                    )
+                ]
+                self.assertNotIn("display: none", mobile_hint)
+
     def test_interaction_modules_and_accessibility_hooks_are_present(self):
         template = self.read("templates/solutions/travel-hotel.html")
         js = self.read("static/js/solution-travel-hotel.js")

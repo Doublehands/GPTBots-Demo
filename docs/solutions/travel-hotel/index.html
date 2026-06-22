@@ -3,33 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>旅游酒店行业解决方案 · GPTBots</title>
+  <title>全球家庭度假集团全旅程智能服务解决方案</title>
   <link rel="stylesheet" href="../../static/css/base.css" />
   
 <link rel="stylesheet" href="../../static/css/solution-travel-hotel.css" />
-<style>
-  .sol-hero--cover .sol-hero__bg {
-    background-image: url("../../static/imgs/hero-hotel-lobby.png");
-  }
-</style>
-<script>
-  window.__SOL_CAP_IMGS__ = {"booking": "../../static/imgs/holiday-inn-dialog-simulation.png", "events": "../../static/imgs/cap-hotel-wedding.png", "faq": "../../static/imgs/cap-lobby-entrance.png", "rooms": "../../static/imgs/cap-deluxe-suite.png"};
-  window.__SOL_CAP_REPLY_IMGS__ = {"booking": [], "events": ["../../static/imgs/cap-hotel-wedding.png"], "faq": ["../../static/imgs/cap-lobby-entrance.png", "../../static/imgs/cap-pool.png"], "rooms": ["../../static/imgs/cap-deluxe-suite.png", "../../static/imgs/cap-executive-suite.png"], "service": []};
-</script>
 <script>
   (function(d,t) {
     var BASE_URL="https://livedesk.engagelab.com";
     var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
     g.src=BASE_URL+"/console/livedesk/widget/sdk.js";
-    g.defer = true;
-    g.async = true;
+    g.defer=true;
+    g.async=true;
     s.parentNode.insertBefore(g,s);
     g.onload=function(){
       window.livedeskSDK.run({
-        websiteToken: '8rPbGyNFpQ2yesYePQoYMgdX',
-        baseUrl: BASE_URL
-      })
-    }
+        websiteToken:"8rPbGyNFpQ2yesYePQoYMgdX",
+        baseUrl:BASE_URL
+      });
+    };
   })(document,"script");
 </script>
 <script src="../../static/js/solution-travel-hotel.js" defer></script>
@@ -38,654 +29,230 @@
 <body class="page-solution-travel-hotel">
   
 <a class="skip-link" href="#main">跳到主内容</a>
-<div class="sol-bg" aria-hidden="true">
-  <div class="sol-bg__orb sol-bg__orb--1"></div>
-  <div class="sol-bg__orb sol-bg__orb--2"></div>
-  <div class="sol-bg__orb sol-bg__orb--3"></div>
-</div>
 
-<header class="sol-page-head sol-bleed">
-  <div class="sol-page-head__bar">
-    <a
-      class="sol-page-head__brand"
-      href="https://www.jiguang.cn/"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="极光官网"
-    >
-      <img
-        class="sol-page-head__brand-img"
-        src="../../static/imgs/jiguang-logo.svg"
-        alt="极光"
-        width="140"
-        height="40"
-        loading="eager"
-        decoding="async"
-      />
-    </a>
-  </div>
+<header class="sol-page-head">
+  <a class="sol-page-head__brand" href="https://www.jiguang.cn/" target="_blank" rel="noopener noreferrer" aria-label="极光官网">
+    <img src="../../static/imgs/jiguang-logo.svg" alt="极光" width="140" height="40" />
+  </a>
+  <span class="sol-page-head__demo">Industry Solution Demo</span>
 </header>
 
 <nav class="sol-progress" aria-label="页面进度导航">
-  <a class="sol-progress__dot" href="#capabilities" data-target="capabilities" aria-label="跳转到五大核心能力"></a>
-  <a class="sol-progress__dot" href="#livedesk-arch" data-target="livedesk-arch" aria-label="跳转到协同架构"></a>
-  <a class="sol-progress__dot" href="#journey" data-target="journey" aria-label="跳转到用户旅程"></a>
-  <a class="sol-progress__dot" href="#build-ai-agent" data-target="build-ai-agent" aria-label="跳转到构建智能体"></a>
+  <a class="sol-progress__dot is-active" href="#resort-hero" data-target="resort-hero" aria-label="全球家庭度假方案"></a>
+  <a class="sol-progress__dot" href="#engagement-hub" data-target="engagement-hub" aria-label="全旅程主动触达"></a>
+  <a class="sol-progress__dot" href="#concierge-lobby" data-target="concierge-lobby" aria-label="智能管家与人工护航"></a>
+  <a class="sol-progress__dot" href="#guest-journey" data-target="guest-journey" aria-label="住前住中住后旅程"></a>
+  <a class="sol-progress__dot" href="#group-value" data-target="group-value" aria-label="集团级价值"></a>
 </nav>
 
-<section class="sol-hero sol-hero--cover sol-bleed" aria-labelledby="hero-heading">
-  <div class="sol-hero__bg" aria-hidden="true"></div>
-  <div class="sol-hero__scrim" aria-hidden="true"></div>
-  <div class="sol-hero__inner">
-    <p class="sol-hero__label">Holiday Inn · GPTBots + EngageLab</p>
-    <h1 id="hero-heading" class="sol-hero__title">假日酒店全旅程智能服务与营销赋能方案</h1>
-    <p class="sol-hero__sub">
-      面向假日酒店负责人，展示从咨询、预订、行前触达、入住服务到离店复购的一整套解决方案：GPTBots 负责 AI Agent 对话与流程执行，EngageLab 负责 APP Push、WebPush、SMS、WhatsApp、Email 与 MA 用户旅程，Livedesk 负责人工协同与工单闭环。
+<section id="resort-hero" class="sol-scene sol-hero-scene" aria-labelledby="hero-heading">
+  <img class="sol-scene__image" src="../../static/imgs/resort-hero-family-v2.png" alt="" width="1920" height="1080" loading="eager" decoding="async" />
+  <div class="sol-scene__scrim sol-scene__scrim--hero" aria-hidden="true"></div>
+  <div class="sol-scene__content sol-hero-scene__content">
+    <p class="sol-eyebrow">Aurora Hotel · Global Family Resort Experience</p>
+    <h1 id="hero-heading">全球化家庭度假集团全旅程智能服务解决方案</h1>
+    <p class="sol-hero-scene__lead">
+      不止是 AI 客服，而是一套覆盖住前、住中、住后的宾客经营体系：
+      EngageLab 主动触达，GPTBots 提供 24 小时智能管家，Livedesk 以人工服务为复杂场景护航。
     </p>
+    <div class="sol-hero-scene__promise" aria-label="解决方案三大角色">
+      <span><strong>EngageLab</strong> 主动经营旅程</span>
+      <span><strong>GPTBots</strong> 连续理解与服务</span>
+      <span><strong>Livedesk</strong> 人工判断与闭环</span>
+    </div>
   </div>
+  <a class="sol-scene__next" href="#engagement-hub" aria-label="查看全旅程主动触达">
+    <span aria-hidden="true">↓</span>
+  </a>
 </section>
 
 <main id="main" class="sol-main">
-  <section id="capabilities" class="sol-cap-split-section sol-bleed" aria-labelledby="capabilities-heading">
-    <h2 id="capabilities-heading" class="sol-section-title">五大核心能力</h2>
-    <p class="sol-section-sub">
-      以 Holiday Inn 的真实宾客链路组织能力展示，让客户直观看到 GPTBots、EngageLab 与 Livedesk 如何共同提升直订转化、服务效率和复购运营。
-    </p>
+  <section id="engagement-hub" class="sol-scene sol-engagement" aria-labelledby="engagement-heading">
+    <img class="sol-scene__image" src="../../static/imgs/resort-engagement-family-v2.png" alt="" width="1920" height="1080" loading="lazy" decoding="async" />
+    <div class="sol-scene__scrim sol-scene__scrim--engagement" aria-hidden="true"></div>
+    <div class="sol-scene__content sol-engagement__content">
+      <header class="sol-scene-head">
+        <p class="sol-eyebrow">Scene 01 · EngageLab</p>
+        <h2 id="engagement-heading">在宾客开口前，<br />主动经营每一次度假期待</h2>
+        <p>把预订提醒、交通指引、会员权益、亲子活动和目的地灵感，送到正确客群的正确时刻。</p>
+      </header>
 
-    <div class="sol-cap-split" id="sol-cap-split">
-      <div class="sol-cap-split__list" role="tablist" aria-label="五大核心能力">
-        <button type="button" class="sol-cap-row is-active" data-cap-key="booking" role="tab" aria-selected="true" id="sol-cap-tab-booking">
-          <span class="sol-cap-row__meta">转化 · GPTBots + EngageLab</span>
-          <span class="sol-cap-row__title">直连预订转化</span>
-          <span class="sol-cap-row__desc">AI 引导日期、房型、政策与预约动作，EngageLab 对高意向未订用户持续触达。</span>
-        </button>
-        <button type="button" class="sol-cap-row" data-cap-key="faq" role="tab" aria-selected="false" id="sol-cap-tab-faq">
-          <span class="sol-cap-row__meta">服务 · RAG 知识库</span>
-          <span class="sol-cap-row__title">即时 FAQ 与设施咨询</span>
-          <span class="sol-cap-row__desc">客房、设施、会员权益与酒店政策统一口径答复，复杂问题转 Livedesk。</span>
-        </button>
-        <button type="button" class="sol-cap-row" data-cap-key="rooms" role="tab" aria-selected="false" id="sol-cap-tab-rooms">
-          <span class="sol-cap-row__meta">推荐 · 个性化套餐</span>
-          <span class="sol-cap-row__title">房型与套餐推荐</span>
-          <span class="sol-cap-row__desc">按差旅、亲子、会员等级与预算推荐房型/套餐，并回流到 MA 分群运营。</span>
-        </button>
-        <button type="button" class="sol-cap-row" data-cap-key="service" role="tab" aria-selected="false" id="sol-cap-tab-service">
-          <span class="sol-cap-row__meta">住中 · Livedesk 工单</span>
-          <span class="sol-cap-row__title">住中服务与工单闭环</span>
-          <span class="sol-cap-row__desc">送物、餐饮、洗衣、报修等由 GPTBots 收集需求，Livedesk 派单追踪。</span>
-        </button>
-        <button type="button" class="sol-cap-row" data-cap-key="events" role="tab" aria-selected="false" id="sol-cap-tab-events">
-          <span class="sol-cap-row__meta">增长 · 会议宴会/复购</span>
-          <span class="sol-cap-row__title">会议宴会与会员复购</span>
-          <span class="sol-cap-row__desc">承接会议婚宴咨询，沉淀线索标签，并通过 EngageLab 培育复购机会。</span>
-        </button>
-      </div>
-      <div class="sol-cap-split__visual" id="sol-cap-preview" aria-live="polite">
-        <article class="sol-cap-showcase">
-          <button
-            type="button"
-            class="sol-cap-showcase__media js-lightbox-trigger"
-            aria-label="查看假日酒店智能服务控制台示意图"
-            data-lightbox-src="../../static/imgs/holiday-inn-dialog-simulation.png"
-            data-lightbox-alt="假日酒店智能服务控制台与模拟对话"
-          >
-            <img
-              src="../../static/imgs/holiday-inn-dialog-simulation.png"
-              alt="假日酒店智能服务控制台与模拟对话"
-              width="1672"
-              height="941"
-              loading="lazy"
-              decoding="async"
-            />
+      <div class="sol-engagement__console">
+        <div class="sol-tablist sol-tablist--channels" role="tablist" aria-label="EngageLab 触达渠道">
+          <button class="sol-tab is-active" id="touchpoint-tab-app" type="button" role="tab" aria-selected="true" aria-controls="engagement-panel" tabindex="0" data-touchpoint="app">
+            <span class="sol-tab__icon" aria-hidden="true">AP</span><span>APP Push</span>
           </button>
-          <div class="sol-cap-showcase__body">
-            <p class="sol-cap-showcase__eyebrow">Holiday Inn Scenario</p>
-            <h3 class="sol-cap-showcase__title" id="sol-cap-showcase-title">直连预订转化</h3>
-            <p class="sol-cap-showcase__desc" id="sol-cap-showcase-desc">
-              从官网/WhatsApp 进入的高意向宾客，由 GPTBots 完成房型与政策解释，并把未完成预订交给 EngageLab 继续触达。
-            </p>
-            <ul class="sol-cap-outcomes" aria-label="当前能力带来的业务结果">
-              <li id="sol-cap-outcome-1">减少前台重复答疑</li>
-              <li id="sol-cap-outcome-2">提升直订完成率</li>
-              <li id="sol-cap-outcome-3">保留高价值线索</li>
-            </ul>
-          </div>
-        </article>
-        <div class="sol-cap-dialog" id="sol-cap-dialog">
-          <div class="sol-cap-dialog__chat">
-            <div class="sol-cap-dialog__bubble sol-cap-dialog__bubble--guest" id="sol-cap-guest">
-              下周五～周日两大一小，要连通房，离电梯稍远、含早，能信用卡担保吗？
-            </div>
-            <div
-              class="sol-cap-dialog__bubble sol-cap-dialog__bubble--agent sol-cap-dialog__booking-only is-hidden"
-              id="sol-cap-booking-agent-1"
-              hidden
-              aria-hidden="true"
-            ></div>
-            <div
-              class="sol-cap-dialog__bubble sol-cap-dialog__bubble--guest sol-cap-dialog__booking-only is-hidden"
-              id="sol-cap-guest-2"
-              hidden
-              aria-hidden="true"
-            ></div>
-            <div
-              class="sol-cap-dialog__bubble sol-cap-dialog__bubble--agent sol-cap-dialog__service-only is-hidden"
-              id="sol-cap-service-agent-1"
-              hidden
-              aria-hidden="true"
-            ></div>
-            <div
-              class="sol-cap-dialog__bubble sol-cap-dialog__bubble--guest sol-cap-dialog__service-only is-hidden"
-              id="sol-cap-service-guest-2"
-              hidden
-              aria-hidden="true"
-            ></div>
-            <div class="sol-cap-dialog__agent-reply" id="sol-cap-agent-reply">
-              <div class="sol-cap-dialog__bubble sol-cap-dialog__bubble--agent" id="sol-cap-agent">
-                12–14 层家庭连通房可订，已避开电梯井侧。含双早，担保与取消规则已说明。
-
-好的，那取消政策是入住前一日 18:00 前免费取消吗？我还想确认儿童早餐怎么计费。
-
-点击「立即预约」可在日历里选时段，与顾问对齐细节。
-              </div>
-              <div class="sol-cap-dialog__booking-row" id="sol-cap-booking-row" aria-label="立即预约">
-                <button type="button" class="sol-cap-dialog__booking-btn" id="sol-cap-open-booking">立即预约</button>
-              </div>
-              <div class="sol-cap-dialog__service-rich is-hidden" id="sol-cap-service-rich" hidden aria-label="服务单摘要">
-                <table class="sol-cap-dialog__service-table">
-                  <thead>
-                    <tr>
-                      <th scope="col">项目</th>
-                      <th scope="col">状态</th>
-                      <th scope="col">预计</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>🧴 洗漱包 + 儿童拖鞋</td>
-                      <td>✅ 已派单</td>
-                      <td>~12 分钟</td>
-                    </tr>
-                    <tr>
-                      <td>♨️ 温水 · 1808</td>
-                      <td>⏱ 已约</td>
-                      <td>30 分钟内</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <p class="sol-cap-dialog__service-note">HS-240815-018 · 送达前轻敲 🔔</p>
-              </div>
-              <div class="sol-cap-dialog__reply-attachments is-hidden" id="sol-cap-reply-attachments" data-count="1" hidden aria-label="智能体回复中的配图">
-                <button
-                  type="button"
-                  class="sol-cap-dialog__media js-lightbox-trigger"
-                  id="sol-cap-media-0-trigger"
-                  aria-label="放大查看回复内配图 1"
-                  data-lightbox-src="../../static/imgs/cap-lobby-entrance.png"
-                  data-lightbox-alt="酒店公区入口"
-                >
-                  <span class="sol-cap-dialog__media-frame">
-                    <img
-                      id="sol-cap-media-0-img"
-                      src="../../static/imgs/cap-lobby-entrance.png"
-                      alt="酒店公区入口"
-                      width="320"
-                      height="180"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </span>
-                </button>
-                <button
-                  type="button"
-                  class="sol-cap-dialog__media js-lightbox-trigger is-hidden"
-                  id="sol-cap-media-1-trigger"
-                  hidden
-                  aria-label="放大查看回复内配图 2"
-                  data-lightbox-src=""
-                  data-lightbox-alt=""
-                >
-                  <span class="sol-cap-dialog__media-frame">
-                    <img
-                      id="sol-cap-media-1-img"
-                      src=""
-                      alt=""
-                      width="320"
-                      height="180"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </span>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="sol-cap-dialog__actions">
-            <button type="button" class="sol-cap-dialog__action is-hidden" id="sol-cap-action-primary">立即预约</button>
-            <button type="button" class="sol-cap-dialog__action sol-cap-dialog__action--ghost" id="sol-cap-action-secondary">转人工</button>
-          </div>
+          <button class="sol-tab" id="touchpoint-tab-webpush" type="button" role="tab" aria-selected="false" aria-controls="engagement-panel" tabindex="-1" data-touchpoint="webpush">
+            <span class="sol-tab__icon" aria-hidden="true">WP</span><span>WebPush</span>
+          </button>
+          <button class="sol-tab" id="touchpoint-tab-sms" type="button" role="tab" aria-selected="false" aria-controls="engagement-panel" tabindex="-1" data-touchpoint="sms">
+            <span class="sol-tab__icon" aria-hidden="true">SM</span><span>SMS</span>
+          </button>
+          <button class="sol-tab" id="touchpoint-tab-whatsapp" type="button" role="tab" aria-selected="false" aria-controls="engagement-panel" tabindex="-1" data-touchpoint="whatsapp">
+            <span class="sol-tab__icon" aria-hidden="true">WA</span><span>WhatsApp</span>
+          </button>
+          <button class="sol-tab" id="touchpoint-tab-email" type="button" role="tab" aria-selected="false" aria-controls="engagement-panel" tabindex="-1" data-touchpoint="email">
+            <span class="sol-tab__icon" aria-hidden="true">@</span><span>Email</span>
+          </button>
+          <button class="sol-tab" id="touchpoint-tab-ma" type="button" role="tab" aria-selected="false" aria-controls="engagement-panel" tabindex="-1" data-touchpoint="ma">
+            <span class="sol-tab__icon" aria-hidden="true">MA</span><span>MA Journey</span>
+          </button>
         </div>
-        <div class="sol-cap-product-cards" aria-label="产品职责分工">
-          <article class="sol-cap-product-card sol-cap-product-card--gptbots">
-            <p class="sol-cap-product-card__label">GPTBots</p>
-            <p class="sol-cap-product-card__body" id="sol-cap-gptbots-role">理解宾客意图，调用知识库与流程节点，完成预订说明和服务受理。</p>
-          </article>
-          <article class="sol-cap-product-card sol-cap-product-card--engagelab">
-            <p class="sol-cap-product-card__label">EngageLab</p>
-            <p class="sol-cap-product-card__body" id="sol-cap-engagelab-role">通过 APP Push、WebPush、SMS、WhatsApp、Email 和 MA 用户旅程完成分层触达。</p>
-          </article>
-          <article class="sol-cap-product-card sol-cap-product-card--livedesk">
-            <p class="sol-cap-product-card__label">Livedesk</p>
-            <p class="sol-cap-product-card__body" id="sol-cap-livedesk-role">接管复杂咨询、投诉与工单任务，保证人工服务有优先级和闭环记录。</p>
-          </article>
+
+        <div class="sol-engagement__panel" id="engagement-panel" role="tabpanel" aria-labelledby="touchpoint-tab-app" aria-live="polite" tabindex="0">
+          <div class="sol-engagement__message">
+            <div class="sol-message__head">
+              <span class="sol-message__brand">A</span>
+              <div><strong>Aurora Hotel</strong><small id="touchpoint-moment">抵达前 72 小时</small></div>
+              <span class="sol-message__status">Delivered</span>
+            </div>
+            <h3 id="touchpoint-title">一家人的假期，从从容出发开始</h3>
+            <p id="touchpoint-message">入住提醒、机场接送、儿童俱乐部开放时间与早餐偏好已经为您整理好。</p>
+            <button type="button" class="sol-message-action">打开智能管家 <span aria-hidden="true">→</span></button>
+          </div>
+          <dl class="sol-engagement__facts">
+            <div><dt>目标客群</dt><dd id="touchpoint-segment">已预订的亲子家庭</dd></div>
+            <div><dt>旅程触发</dt><dd id="touchpoint-trigger">入住前 72 小时自动触发</dd></div>
+            <div><dt>经营目标</dt><dd id="touchpoint-objective">降低行前不确定性并采集服务偏好</dd></div>
+          </dl>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="livedesk-arch" class="sol-arch" aria-labelledby="livedesk-arch-heading">
-    <h2 id="livedesk-arch-heading" class="sol-section-title">EngageLab + Livedesk + GPTBots：全渠道智能协同</h2>
-    <p class="sol-arch__lead">
-      假日酒店宾客从任意渠道进入，<strong>EngageLab</strong> 负责 APP Push、WebPush、SMS、WhatsApp、Email 与 MA 旅程编排，<strong>Livedesk</strong> 承接人工协作与工单闭环，<strong>GPTBots Agent</strong> 负责意图理解、知识检索与流程执行，形成完整服务链路。
-    </p>
+  <section id="concierge-lobby" class="sol-scene sol-concierge" aria-labelledby="concierge-heading">
+    <img class="sol-scene__image" src="../../static/imgs/resort-concierge-lobby-v2.png" alt="" width="1920" height="1080" loading="lazy" decoding="async" />
+    <div class="sol-scene__scrim sol-scene__scrim--concierge" aria-hidden="true"></div>
+    <div class="sol-scene__content sol-concierge__content">
+      <header class="sol-scene-head">
+        <p class="sol-eyebrow">Scene 02 · Intelligent Concierge Lobby</p>
+        <h2 id="concierge-heading">AI 承接规模与连续性，<br />人工提供判断与温度</h2>
+        <p>宾客无需理解后台系统，只会感受到一位始终在线、必要时有人接手的度假管家。</p>
+      </header>
 
-    <div class="sol-arch__diagram" role="list">
-      <article class="sol-arch__card" role="listitem" tabindex="0">
-        <div class="sol-arch__card-icon" aria-hidden="true">
-          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 28V12l12-6 12 6v16l-12 6-12-6z" stroke="currentColor" stroke-width="1.5"/><path d="M20 22v12M8 16l12 6 12-6" stroke="currentColor" stroke-width="1.5"/></svg>
+      <div class="sol-concierge__console">
+        <div class="sol-tablist sol-tablist--modes" role="tablist" aria-label="智能管家服务模式">
+          <button class="sol-tab is-active" id="concierge-tab-agent" type="button" role="tab" aria-selected="true" aria-controls="concierge-panel" tabindex="0" data-concierge-mode="agent">
+            <span class="sol-tab__icon" aria-hidden="true">AI</span><span>GPTBots AI Agent</span>
+          </button>
+          <button class="sol-tab" id="concierge-tab-livedesk" type="button" role="tab" aria-selected="false" aria-controls="concierge-panel" tabindex="-1" data-concierge-mode="livedesk">
+            <span class="sol-tab__icon" aria-hidden="true">LD</span><span>Livedesk 人工护航</span>
+          </button>
         </div>
-        <h3 class="sol-arch__card-title">全渠道接入</h3>
-        <ul class="sol-arch__card-list">
-          <li>APP Push / WebPush</li>
-          <li>SMS / WhatsApp</li>
-          <li>Email / Web Widget / API</li>
-        </ul>
-      </article>
-      <div class="sol-arch__arrow sol-arch__arrow--h" aria-hidden="true">
-        <svg width="32" height="24" viewBox="0 0 32 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 12h24m0 0l-6-6m6 6l-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+
+        <div class="sol-concierge__panel" id="concierge-panel" role="tabpanel" aria-labelledby="concierge-tab-agent" aria-live="polite" tabindex="0">
+          <aside class="sol-concierge__identity">
+            <span class="sol-concierge__mark" aria-hidden="true">A</span>
+            <p class="sol-kicker" id="concierge-status">GPTBots · 24/7 Online</p>
+            <h3 id="concierge-title">懂目的地，也记得每个家庭的偏好</h3>
+            <p id="concierge-role">多语言问答、知识检索、个性化推荐、需求采集与服务流程引导。</p>
+          </aside>
+          <div class="sol-concierge__conversation">
+            <div class="sol-chat-meta"><span>Live conversation</span><span class="sol-live-dot">Online</span></div>
+            <p class="sol-chat-line sol-chat-line--guest" id="concierge-guest">两个孩子分别 5 岁和 9 岁，明天上午有什么适合全家的活动？</p>
+            <p class="sol-chat-line sol-chat-line--service" id="concierge-reply">结合天气、年龄和您上次偏好的户外项目，我建议 09:30 的家庭帆船体验；我也可以一起确认早餐时段和接驳。</p>
+            <div class="sol-concierge__action">
+              <div><span>Next Best Action</span><strong id="concierge-action">采集参加人数并发起活动预约</strong></div>
+              <span class="sol-status" id="concierge-action-status">AI Handling</span>
+            </div>
+          </div>
+          <aside class="sol-concierge__handoff">
+            <p class="sol-kicker">协同状态</p>
+            <ol id="concierge-steps">
+              <li class="is-complete">理解意图与家庭信息</li>
+              <li class="is-active">调用度假村知识与偏好</li>
+              <li>复杂场景转人工并保留上下文</li>
+            </ol>
+            <p id="concierge-assurance">标准需求由 AI 即时闭环，敏感、紧急或高价值场景由人工无缝接手。</p>
+          </aside>
+        </div>
       </div>
-      <article class="sol-arch__card sol-arch__card--accent" role="listitem" tabindex="0">
-        <div class="sol-arch__card-icon" aria-hidden="true">
-          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="16" r="5" stroke="currentColor" stroke-width="1.5"/><circle cx="26" cy="16" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M10 28c1.5-3 4.5-5 10-5s8.5 2 10 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        </div>
-        <h3 class="sol-arch__card-title">客服平台（Livedesk）</h3>
-        <ul class="sol-arch__card-list">
-          <li>复杂问题人工介入</li>
-          <li>多语言人工服务</li>
-          <li>工单闭环管理</li>
-        </ul>
-      </article>
-      <div class="sol-arch__arrow sol-arch__arrow--h" aria-hidden="true">
-        <svg width="32" height="24" viewBox="0 0 32 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 12h24m0 0l-6-6m6 6l-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-      </div>
-      <article class="sol-arch__card sol-arch__card--highlight" role="listitem" tabindex="0">
-        <div class="sol-arch__card-icon" aria-hidden="true">
-          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="10" width="24" height="20" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M16 18h8M16 22h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="20" cy="26" r="2" fill="currentColor"/></svg>
-        </div>
-        <h3 class="sol-arch__card-title">GPTBots Agent</h3>
-        <ul class="sol-arch__card-list">
-          <li>意图识别与分类</li>
-          <li>知识库自动检索</li>
-          <li>业务流程自动执行</li>
-        </ul>
-      </article>
     </div>
+  </section>
 
-    <div class="sol-arch__livedesk">
-      <h3 class="sol-arch__subheading">Livedesk 客服工作台</h3>
-      <p class="sol-arch__livedesk-desc">
-        在统一工作台中查看多渠道会话、分配坐席并跟踪处理进度。支持为会话或工单配置<strong>优先级与重要程度</strong>（如紧急、高、普通），便于团队按 SLA 分流、升级与闭环；重要客诉可一键置顶并同步关联 GPTBots 侧上下文，避免信息断层。
-      </p>
-      <figure class="sol-arch__figure">
-        <button
-          type="button"
-          class="sol-arch__shot js-lightbox-trigger"
-          aria-label="查看 Livedesk 界面大图"
-          data-lightbox-src="../../static/imgs/Livedesk.png"
-          data-lightbox-alt="Livedesk 客服工作台界面"
-        >
-          <span class="sol-arch__shot-frame">
-            <img
-              src="../../static/imgs/Livedesk.png"
-              alt="Livedesk 客服工作台界面"
-              width="960"
-              height="540"
-              loading="lazy"
-              decoding="async"
-            />
-          </span>
+  <section id="guest-journey" class="sol-journey-stage" aria-labelledby="journey-heading">
+    <div class="sol-journey-stage__inner">
+      <header class="sol-scene-head sol-scene-head--dark">
+        <p class="sol-eyebrow">Scene 03 · Guest Journey</p>
+        <h2 id="journey-heading">从第一次心动，到下一次出发</h2>
+        <p>触达、智能接待与人工服务，围绕同一份宾客上下文持续协作。</p>
+      </header>
+
+      <div class="sol-tablist sol-tablist--journey" role="tablist" aria-label="宾客旅程阶段">
+        <button class="sol-tab is-active" id="journey-tab-prestay" type="button" role="tab" aria-selected="true" aria-controls="journey-panel" tabindex="0" data-journey-stage="prestay">
+          <span>01</span><strong>住前</strong><small>灵感 · 预订 · 行前</small>
         </button>
-        <figcaption class="sol-arch__caption">
-          界面示例：坐席可结合标签与优先级快速识别高价值会话，并与 GPTBots 自动化能力配合完成从接待到结单的全流程。
-        </figcaption>
-      </figure>
+        <button class="sol-tab" id="journey-tab-instay" type="button" role="tab" aria-selected="false" aria-controls="journey-panel" tabindex="-1" data-journey-stage="instay">
+          <span>02</span><strong>住中</strong><small>问答 · 服务 · 升级</small>
+        </button>
+        <button class="sol-tab" id="journey-tab-poststay" type="button" role="tab" aria-selected="false" aria-controls="journey-panel" tabindex="-1" data-journey-stage="poststay">
+          <span>03</span><strong>住后</strong><small>回访 · 权益 · 复购</small>
+        </button>
+      </div>
+
+      <div class="sol-journey-stage__panel" id="journey-panel" role="tabpanel" aria-labelledby="journey-tab-prestay" aria-live="polite" tabindex="0">
+        <div class="sol-journey-stage__media">
+          <img id="journey-image" src="../../static/imgs/journey-prestay-family-v2.png" alt="一家人共同规划度假行程" width="1920" height="1080" loading="lazy" decoding="async" />
+          <div class="sol-journey-stage__number" aria-hidden="true">01</div>
+        </div>
+        <div class="sol-journey-stage__story">
+          <p class="sol-kicker" id="journey-moment">Pre-stay · 住前</p>
+          <h3 id="journey-title">把行前不确定，变成值得期待的准备</h3>
+          <p id="journey-scenario">从目的地与套餐咨询，到未完成预订召回、交通指引、儿童活动和餐饮偏好采集。</p>
+          <div class="sol-journey-stage__flow" aria-label="产品协同">
+            <span id="journey-engagelab"><strong>EngageLab</strong> 识别旅程节点并主动触达</span>
+            <span id="journey-gptbots"><strong>GPTBots</strong> 承接问答、推荐与信息采集</span>
+            <span id="journey-livedesk"><strong>Livedesk</strong> 处理复杂政策与高价值机会</span>
+          </div>
+          <div class="sol-journey-stage__outcome">
+            <span>Journey Outcome</span>
+            <strong id="journey-outcome">提高响应与预订信心，让服务准备发生在到店之前</strong>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section id="journey" class="sol-journey" aria-labelledby="journey-heading">
-    <h2 id="journey-heading" class="sol-section-title">用户旅程</h2>
-    <ol class="sol-timeline sol-timeline--journey">
-      <li class="sol-timeline__item">
-        <div class="sol-timeline__rail"><span class="sol-timeline__dot" aria-hidden="true"></span></div>
-        <div class="sol-timeline__content">
-          <p class="sol-timeline__meta">阶段 1 · 意向咨询</p>
-          <div class="sol-journey__split">
-            <div class="sol-journey__main">
-              <p class="sol-timeline__title">多渠道访客进入，首轮需求快速识别</p>
-              <p class="sol-timeline__desc">客人从官网、私域或广告页进入后，GPTBots 负责房型/政策即时答疑，复杂需求由 Livedesk 人工接力，避免线索流失。</p>
-              <ul class="sol-journey__tags" aria-label="阶段一触点">
-                <li class="sol-journey__tag">官网/小程序</li>
-                <li class="sol-journey__tag">意向识别</li>
-                <li class="sol-journey__tag">房型问答</li>
-              </ul>
-            </div>
-            <aside class="sol-journey__side" aria-label="阶段一产品协同">
-              <ul class="sol-journey__flow">
-                <li><strong>Livedesk</strong> 人工接管高价值咨询</li>
-                <li><strong>GPTBots</strong> 首响答疑与意图识别</li>
-              </ul>
-            </aside>
-          </div>
-        </div>
-      </li>
-      <li class="sol-timeline__item">
-        <div class="sol-timeline__rail"><span class="sol-timeline__dot" aria-hidden="true"></span></div>
-        <div class="sol-timeline__content">
-          <p class="sol-timeline__meta">阶段 2 · 预订确认</p>
-          <div class="sol-journey__split">
-            <div class="sol-journey__main">
-              <p class="sol-timeline__title">下单引导与政策确认并行推进</p>
-              <p class="sol-timeline__desc">GPTBots 引导完成日期、人数与房型选择并解释取消/担保规则；若涉及企业协议价或复杂政策，Livedesk 快速承接，结果回传 MA 更新客群状态。</p>
-              <ul class="sol-journey__tags" aria-label="阶段二触点">
-                <li class="sol-journey__tag">预订引导</li>
-                <li class="sol-journey__tag">政策说明</li>
-                <li class="sol-journey__tag">状态回写</li>
-              </ul>
-            </div>
-            <aside class="sol-journey__side" aria-label="阶段二产品协同">
-              <ul class="sol-journey__flow">
-                <li><strong>MA</strong> 订单阶段更新与旅程分流</li>
-                <li><strong>Livedesk</strong> 复杂规则人工确认</li>
-                <li><strong>GPTBots</strong> 自动预订路径引导</li>
-              </ul>
-            </aside>
-          </div>
-        </div>
-      </li>
-      <li class="sol-timeline__item">
-        <div class="sol-timeline__rail"><span class="sol-timeline__dot" aria-hidden="true"></span></div>
-        <div class="sol-timeline__content">
-          <p class="sol-timeline__meta">阶段 3 · 行前触达</p>
-          <div class="sol-journey__split">
-            <div class="sol-journey__main">
-              <p class="sol-timeline__title">入住前提醒、偏好收集和准备联动</p>
-              <p class="sol-timeline__desc">MA 自动触发入住提醒、偏好问卷和交通信息；GPTBots 接收并解释问卷项，Livedesk 处理特殊要求并同步前台/客房准备，减少到店等待。</p>
-              <ul class="sol-journey__tags" aria-label="阶段三触点">
-                <li class="sol-journey__tag">旅程触发</li>
-                <li class="sol-journey__tag">偏好问卷</li>
-                <li class="sol-journey__tag">前置准备</li>
-              </ul>
-            </div>
-            <aside class="sol-journey__side" aria-label="阶段三产品协同">
-              <ul class="sol-journey__flow">
-                <li><strong>MA</strong> 行前消息编排与触达</li>
-                <li><strong>Livedesk</strong> 特殊需求工单协同</li>
-                <li><strong>GPTBots</strong> 偏好收集与智能解释</li>
-              </ul>
-            </aside>
-          </div>
-        </div>
-      </li>
-      <li class="sol-timeline__item">
-        <div class="sol-timeline__rail"><span class="sol-timeline__dot" aria-hidden="true"></span></div>
-        <div class="sol-timeline__content">
-          <p class="sol-timeline__meta">阶段 4 · 到店入住</p>
-          <div class="sol-journey__split">
-            <div class="sol-journey__main">
-              <p class="sol-timeline__title">到店欢迎与高峰服务分流</p>
-              <p class="sol-timeline__desc">MA 触发欢迎消息和入住须知，GPTBots 提供停车、排队、设施开放等即时问答，高峰或投诉场景由 Livedesk 人工接管，保障服务体验稳定。</p>
-              <ul class="sol-journey__tags" aria-label="阶段四触点">
-                <li class="sol-journey__tag">欢迎消息</li>
-                <li class="sol-journey__tag">入住指引</li>
-                <li class="sol-journey__tag">高峰分流</li>
-              </ul>
-            </div>
-            <aside class="sol-journey__side" aria-label="阶段四产品协同">
-              <ul class="sol-journey__flow">
-                <li><strong>MA</strong> 到店节点自动触达</li>
-                <li><strong>Livedesk</strong> 高复杂问题人工兜底</li>
-                <li><strong>GPTBots</strong> 到店实时问答分流</li>
-              </ul>
-            </aside>
-          </div>
-        </div>
-      </li>
-      <li class="sol-timeline__item">
-        <div class="sol-timeline__rail"><span class="sol-timeline__dot" aria-hidden="true"></span></div>
-        <div class="sol-timeline__content">
-          <p class="sol-timeline__meta">阶段 5 · 住中服务</p>
-          <div class="sol-journey__split">
-            <div class="sol-journey__main">
-              <p class="sol-timeline__title">住中服务受理与服务闭环</p>
-              <p class="sol-timeline__desc">GPTBots 承接客房服务、FAQ 与活动加购，标准问题自动闭环；需人工介入时由 Livedesk 转派并追踪处理进度，MA 同步行为数据用于后续分群运营。</p>
-              <ul class="sol-journey__tags" aria-label="阶段五触点">
-                <li class="sol-journey__tag">客房服务助手</li>
-                <li class="sol-journey__tag">即时 FAQ</li>
-                <li class="sol-journey__tag">活动加购</li>
-              </ul>
-            </div>
-            <aside class="sol-journey__side" aria-label="阶段五产品协同">
-              <ul class="sol-journey__flow">
-                <li><strong>MA</strong> 住中行为回流与标签更新</li>
-                <li><strong>Livedesk</strong> 工单分派与处理追踪</li>
-                <li><strong>GPTBots</strong> 高频需求自动受理</li>
-              </ul>
-            </aside>
-          </div>
-        </div>
-      </li>
-      <li class="sol-timeline__item">
-        <div class="sol-timeline__rail"><span class="sol-timeline__dot" aria-hidden="true"></span></div>
-        <div class="sol-timeline__content">
-          <p class="sol-timeline__meta">阶段 6 · 离店复购</p>
-          <div class="sol-journey__split">
-            <div class="sol-journey__main">
-              <p class="sol-timeline__title">离店回访到复购激活</p>
-              <p class="sol-timeline__desc">离店后 MA 自动发送满意度与复购权益，GPTBots 处理二次咨询并推荐下一次入住方案，Livedesk 跟进高价值线索，沉淀可复用服务策略。</p>
-              <ul class="sol-journey__tags" aria-label="阶段六触点">
-                <li class="sol-journey__tag">满意度回访</li>
-                <li class="sol-journey__tag">会员权益</li>
-                <li class="sol-journey__tag">复购激活</li>
-              </ul>
-            </div>
-            <aside class="sol-journey__side" aria-label="阶段六产品协同">
-              <ul class="sol-journey__flow">
-                <li><strong>MA</strong> 复购旅程与分层触达</li>
-                <li><strong>Livedesk</strong> 高价值线索跟进</li>
-                <li><strong>GPTBots</strong> 二次咨询与推荐转化</li>
-              </ul>
-            </aside>
-          </div>
-        </div>
-      </li>
-    </ol>
-  </section>
-
-  <section id="build-ai-agent" class="sol-build" aria-labelledby="build-ai-agent-heading">
-    <div class="sol-build__head">
-      <h2 id="build-ai-agent-heading" class="sol-section-title">如何为您的业务创建AI酒店智能体</h2>
-      <p class="sol-section-sub">从配置能力到可视化构建与多渠道集成，以统一方案快速落地酒店客服与运营自动化。</p>
+  <section id="group-value" class="sol-value-band" aria-labelledby="value-heading">
+    <div class="sol-value-band__inner">
+      <div class="sol-value-band__statement">
+        <p class="sol-eyebrow">Group-Level Value</p>
+        <h2 id="value-heading">一套宾客上下文，连接全球触点、智能服务与人工团队</h2>
+        <p>把获客、预订、入住、服务与复购，组织成可持续运营的宾客体验闭环。</p>
+      </div>
+      <dl class="sol-value-band__proofs">
+        <div><dt>24/7</dt><dd>智能管家持续在线</dd></div>
+        <div><dt>3 stages</dt><dd>住前、住中、住后连续服务</dd></div>
+        <div><dt>1 context</dt><dd>跨渠道与团队共享上下文</dd></div>
+        <div><dt>Human ready</dt><dd>复杂场景随时人工接力</dd></div>
+      </dl>
+      <ul class="sol-value-band__capabilities">
+        <li>全球多语言服务一致性</li>
+        <li>家庭偏好持续沉淀与复用</li>
+        <li>主动触达与个性化推荐</li>
+        <li>工单优先级、SLA 与闭环</li>
+      </ul>
+      <button class="sol-primary-action" id="sol-cap-open-booking" type="button">预约方案演示 <span aria-hidden="true">→</span></button>
+      <div class="sol-value-band__brands" aria-label="解决方案产品">
+        <img src="../../static/imgs/Engagelablogo.svg" alt="EngageLab" width="132" height="36" loading="lazy" decoding="async" />
+        <img src="../../static/imgs/GPTBotsLogo.png" alt="GPTBots" width="120" height="36" loading="lazy" decoding="async" />
+        <span>Livedesk</span>
+      </div>
     </div>
-
-    <section class="sol-build__block" aria-labelledby="build-simple-heading">
-      <div class="sol-build__block-head">
-        <h3 id="build-simple-heading" class="sol-build__block-title">简单配置，强大效果</h3>
-        <p class="sol-build__block-sub">围绕酒店核心场景，先把高频咨询和关键服务流程跑通，再逐步扩展深度能力。</p>
-      </div>
-      <div class="sol-build__cards sol-build__cards--three">
-        <article class="sol-build-card">
-          <div class="sol-build-card__icon" aria-hidden="true">📚</div>
-          <h4 class="sol-build-card__title">RAG 知识库</h4>
-          <p class="sol-build-card__desc">连接酒店知识文档，让 AI 在房型、政策、活动和周边问答中保持统一口径并持续更新。</p>
-          <ul class="sol-build-card__list">
-            <li>房型与价格政策说明</li>
-            <li>促销活动与权益细则</li>
-            <li>常见问题与到店指南</li>
-            <li>宴会与会务资料接入</li>
-          </ul>
-        </article>
-        <article class="sol-build-card">
-          <div class="sol-build-card__icon" aria-hidden="true">🔌</div>
-          <h4 class="sol-build-card__title">API 集成</h4>
-          <p class="sol-build-card__desc">对接酒店业务系统，支持订单状态查询、会员权益识别、可售房态验证等实时操作。</p>
-          <ul class="sol-build-card__list">
-            <li>订单与入住状态查询</li>
-            <li>会员等级与积分识别</li>
-            <li>可售房与库存校验</li>
-            <li>账单与发票信息同步</li>
-          </ul>
-        </article>
-        <article class="sol-build-card">
-          <div class="sol-build-card__icon" aria-hidden="true">👥</div>
-          <h4 class="sol-build-card__title">转人工规则</h4>
-          <p class="sol-build-card__desc">为投诉、退款争议、异常账户等高风险场景设定分流规则，确保服务稳定与体验一致。</p>
-          <ul class="sol-build-card__list">
-            <li>投诉与争议问题升级</li>
-            <li>复杂订单人工接管</li>
-            <li>表单收集与留资转派</li>
-            <li>服务质检与会话复盘</li>
-          </ul>
-        </article>
-      </div>
-    </section>
-
-    <section class="sol-build__block" aria-labelledby="build-visual-heading">
-      <div class="sol-build__block-head">
-        <h3 id="build-visual-heading" class="sol-build__block-title">强大的可视化工具</h3>
-        <p class="sol-build__block-sub">使用直观的可视化界面构建复杂的 AI 工作流并管理知识库。</p>
-      </div>
-      <div class="sol-build__cards sol-build__cards--three">
-        <article class="sol-build-media-card">
-          <h4 class="sol-build-media-card__title">可视化 Flow Agent 设计</h4>
-          <p class="sol-build-media-card__desc">使用直观的拖放画布构建复杂 AI 工作流，连接 LLM、知识检索、分类器等组件，创建精细客服流程。</p>
-          <ul class="sol-build-media-card__list">
-            <li>Flow Agent 画布</li>
-            <li>拖放式节点化设计</li>
-            <li>内置 LLM 和知识检索</li>
-            <li>流程控制：分类器、条件、If/Else</li>
-            <li>人工接管和表单收集</li>
-            <li>实时调试和测试</li>
-          </ul>
-          <button class="sol-build-media-card__media js-lightbox-trigger" type="button" aria-label="查看可视化 Flow Agent 设计原图" data-lightbox-src="../../static/imgs/viz-flow-agent-design.png" data-lightbox-alt="可视化 Flow Agent 设计">
-            <img src="../../static/imgs/viz-flow-agent-design.png" alt="可视化 Flow Agent 设计" loading="lazy" decoding="async" />
-          </button>
-        </article>
-        <article class="sol-build-media-card">
-          <h4 class="sol-build-media-card__title">可视化知识库管理</h4>
-          <p class="sol-build-media-card__desc">使用直观可视化界面管理知识库，支持多格式数据接入与跨 Bot 批量共享。</p>
-          <ul class="sol-build-media-card__list">
-            <li>支持 PDF、Word、Excel、Markdown</li>
-            <li>分类知识库管理</li>
-            <li>批量共享文档到多个 Bot</li>
-            <li>内置检索测试</li>
-            <li>自动索引和语义搜索</li>
-          </ul>
-          <button class="sol-build-media-card__media js-lightbox-trigger" type="button" aria-label="查看可视化知识库管理原图" data-lightbox-src="../../static/imgs/viz-knowledge-base.png" data-lightbox-alt="可视化知识库管理">
-            <img src="../../static/imgs/viz-knowledge-base.png" alt="可视化知识库管理" loading="lazy" decoding="async" />
-          </button>
-        </article>
-        <article class="sol-build-media-card">
-          <h4 class="sol-build-media-card__title">数据洞察 · 可视化数据分析</h4>
-          <p class="sol-build-media-card__desc">通过实时与历史分析仪表板持续监控 AI Agent 服务表现，支撑业务优化决策。</p>
-          <ul class="sol-build-media-card__list">
-            <li>实时数据与分时间段筛选</li>
-            <li>积分和 Token 消耗追踪</li>
-            <li>转人工率监控</li>
-            <li>会话与交互数据分析</li>
-            <li>新用户与活跃用户统计</li>
-          </ul>
-          <button class="sol-build-media-card__media js-lightbox-trigger" type="button" aria-label="查看可视化数据分析原图" data-lightbox-src="../../static/imgs/viz-data-analytics.png" data-lightbox-alt="可视化数据分析">
-            <img src="../../static/imgs/viz-data-analytics.png" alt="可视化数据分析" loading="lazy" decoding="async" />
-          </button>
-        </article>
-      </div>
-    </section>
-
-    <section class="sol-build__block" aria-labelledby="build-integration-heading">
-      <div class="sol-build__block-head">
-        <p class="sol-build__eyebrow">集成方式</p>
-        <h3 id="build-integration-heading" class="sol-build__block-title">灵活的集成方式</h3>
-        <p class="sol-build__block-sub">多种集成方式，将 AI Agent 部署到任意触点，无缝融入现有技术栈。</p>
-      </div>
-      <div class="sol-build__cards sol-build__cards--three">
-        <article class="sol-build-integration-card">
-          <h4 class="sol-build-integration-card__title">API 集成</h4>
-          <p class="sol-build-integration-card__desc">通过 RESTful API 完成业务编排与系统联动，适配酒店已有技术架构。</p>
-          <button class="sol-build-integration-card__media js-lightbox-trigger" type="button" aria-label="查看 API 集成原图" data-lightbox-src="../../static/imgs/api_integration.png" data-lightbox-alt="API 集成">
-            <img src="../../static/imgs/api_integration.png" alt="API 集成" loading="lazy" decoding="async" />
-          </button>
-        </article>
-        <article class="sol-build-integration-card">
-          <h4 class="sol-build-integration-card__title">Web 集成</h4>
-          <p class="sol-build-integration-card__desc">通过 iframe、组件、分享链接等方式快速嵌入官网和活动页面。</p>
-          <button class="sol-build-integration-card__media js-lightbox-trigger" type="button" aria-label="查看 Web 集成原图" data-lightbox-src="../../static/imgs/web_integration.png" data-lightbox-alt="Web 集成">
-            <img src="../../static/imgs/web_integration.png" alt="Web 集成" loading="lazy" decoding="async" />
-          </button>
-        </article>
-        <article class="sol-build-integration-card">
-          <h4 class="sol-build-integration-card__title">第三方平台</h4>
-          <p class="sol-build-integration-card__desc">支持 WhatsApp、Telegram、Discord、LINE、企业微信等多渠道接入。</p>
-          <button class="sol-build-integration-card__media js-lightbox-trigger" type="button" aria-label="查看第三方平台集成原图" data-lightbox-src="../../static/imgs/third_party_integration.png" data-lightbox-alt="第三方平台集成">
-            <img src="../../static/imgs/third_party_integration.png" alt="第三方平台集成" loading="lazy" decoding="async" />
-          </button>
-        </article>
-      </div>
-    </section>
   </section>
 
   <div class="sol-calendly-modal" id="sol-calendly-modal" hidden aria-hidden="true">
     <div class="sol-calendly-modal__backdrop" data-calendly-close tabindex="-1"></div>
     <div class="sol-calendly-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="sol-calendly-modal-title">
       <div class="sol-calendly-modal__head">
-        <h2 id="sol-calendly-modal-title" class="sol-calendly-modal__title">预约沟通时段</h2>
+        <h2 id="sol-calendly-modal-title">预约方案演示</h2>
         <button type="button" class="sol-calendly-modal__close" data-calendly-close aria-label="关闭预约窗口">×</button>
       </div>
-      <div class="sol-calendly-modal__body">
-        <iframe
-          class="sol-calendly-modal__iframe"
-          title="Calendly 预约"
-          src="https://calendly.com/lyx710935/30min?hide_gdpr_banner=1"
-          loading="lazy"
-        ></iframe>
-      </div>
+      <iframe title="Calendly 预约" src="https://calendly.com/lyx710935/30min?hide_gdpr_banner=1" loading="lazy"></iframe>
     </div>
   </div>
 
-  <div class="sol-lightbox" id="sol-lightbox" hidden aria-hidden="true">
-    <div class="sol-lightbox__backdrop" data-lightbox-close></div>
-    <div class="sol-lightbox__dialog" role="dialog" aria-modal="true" aria-label="图片预览">
-      <button type="button" class="sol-lightbox__close" aria-label="关闭预览" data-lightbox-close>×</button>
-      <img id="sol-lightbox-img" src="" alt="" />
-    </div>
-  </div>
-
-  <div class="sol-widget-hint" aria-hidden="true">
-    <span class="sol-widget-hint__text">体验AI Agent智能客服</span>
-  </div>
-
-  <footer class="sol-cta">
-    <h2>联系商务与技术支持</h2>
-    <p>若需进一步技术对接、试点范围或与 EngageLab 能力映射，请联系你的客户经理或在本 Demo 基础上扩展后端与集成。</p>
-    <p class="sol-cta__contact">（占位）商务邮箱 · 售前顾问 · 集成文档</p>
-    <div class="sol-cta__brands" aria-label="EngageLab 与 GPTBots">
-      <a class="sol-cta__brand-link" href="https://www.engagelab.com/" target="_blank" rel="noopener noreferrer">
-        <img class="sol-cta__brand-img" src="../../static/imgs/Engagelablogo.svg" alt="EngageLab" width="132" height="36" loading="lazy" decoding="async" />
-      </a>
-      <a class="sol-cta__brand-link" href="https://www.gptbots.ai/zh_CN" target="_blank" rel="noopener noreferrer">
-        <img class="sol-cta__brand-img" src="../../static/imgs/GPTBotsLogo.png" alt="GPTBots" width="120" height="36" loading="lazy" decoding="async" />
-      </a>
-    </div>
-  </footer>
+  <div class="sol-widget-hint" aria-hidden="true">体验 AI Agent 智能客服</div>
 </main>
 
   
